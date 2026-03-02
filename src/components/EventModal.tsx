@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -14,15 +14,32 @@ interface EventModalProps {
 
 export default function EventModal({ event, onClose }: EventModalProps) {
   const router = useRouter();
+  const [translateX, setTranslateX] = useState('100%');
+  const [backdropOpacity, setBackdropOpacity] = useState(0);
+
+  // Slide in on mount — defer one frame so the transition fires
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      setTranslateX('0%');
+      setBackdropOpacity(1);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const handleClose = () => {
+    setTranslateX('100%');
+    setBackdropOpacity(0);
+    setTimeout(onClose, 170);
+  };
 
   // Close on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
     };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
+  }, []);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -41,16 +58,20 @@ export default function EventModal({ event, onClose }: EventModalProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[rgba(15,23,42,0.45)] z-40 transition-opacity"
-        onClick={onClose}
+        className="fixed inset-0 bg-[rgba(15,23,42,0.45)] z-40"
+        style={{ opacity: backdropOpacity, transition: 'opacity 200ms ease' }}
+        onClick={handleClose}
       />
 
-      {/* Modal Panel - slides in from right */}
-      <div className="fixed right-0 top-0 bottom-0 w-full md:w-[600px] lg:w-[700px] bg-surface z-50 overflow-y-auto shadow-[var(--shadow)] animate-in slide-in-from-right duration-300">
+      {/* Modal Panel */}
+      <div
+        className="fixed right-0 top-0 bottom-0 w-full md:w-[600px] lg:w-[700px] bg-surface z-50 overflow-y-auto shadow-[var(--shadow)]"
+        style={{ transform: `translateX(${translateX})`, transition: 'transform 300ms ease' }}
+      >
         {/* Header Bar */}
         <div className="sticky top-0 bg-surface border-b border-border px-6 py-4 flex items-center justify-between z-10 backdrop-blur-sm bg-surface/95">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="text-muted hover:text-text transition-colors p-2 -ml-2"
             aria-label="Close"
           >

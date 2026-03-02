@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Event } from '@/data/events';
 import { Society } from '@/supabase_lib/types';
-import { filterEvents, sortEvents, getTrendingEvents, SortOption } from '@/utils/eventUtils';
+import { filterEvents, sortEvents, SortOption } from '@/utils/eventUtils';
 import SearchBar from '@/components/SearchBar';
 import FilterPills from '@/components/FilterPills';
 import SortDropdown from '@/components/SortDropdown';
@@ -54,7 +54,7 @@ export default function DiscoverPageClient({
     return filtered;
   }, [events, searchQuery, selectedTag, sortBy]);
 
-  const popularEvents = useMemo(() => getTrendingEvents(events, 6), [events]);
+  const popularEvents = useMemo(() => events.slice(0, 6), [events]);
 
   return (
     <>
@@ -87,7 +87,7 @@ export default function DiscoverPageClient({
               <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">
                 Popular events
               </h2>
-              <Link href="#" className="text-text no-underline font-medium text-sm hover:underline hover:text-muted transition-colors">
+              <Link href="/all-events" className="text-text no-underline font-medium text-sm hover:underline hover:text-muted transition-colors">
                 See all
               </Link>
             </div>

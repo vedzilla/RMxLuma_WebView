@@ -2,14 +2,24 @@ import { Suspense } from 'react';
 import { getEvents, getEventTags, getSocieties } from '@/supabase_lib';
 import DiscoverPageClient from './DiscoverPageClient';
 
-export const revalidate = 300; // revalidate every 5 minutes
+export const dynamic = 'force-dynamic';
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const result = [...arr];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
 
 async function DiscoverPage() {
-  const [events, tags, societies] = await Promise.all([
+  const [rawEvents, tags, societies] = await Promise.all([
     getEvents(),
     getEventTags(),
     getSocieties(),
   ]);
+  const events = shuffleArray(rawEvents);
 
   // Compute event count per society from the fetched events
   const societyEventCounts = new Map<string, number>();
