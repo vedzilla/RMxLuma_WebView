@@ -55,6 +55,9 @@ export { getCategories } from './categories';
 // Cities
 export { getCities, getCityBySlug } from './cities';
 
+// Users
+export { getUserCount } from './users';
+
 // Transform utilities (useful if callers have raw DB rows)
 export {
   generateSlug,
