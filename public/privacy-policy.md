@@ -6,7 +6,7 @@
 
 ## 1. Introduction
 
-RedefineMe Ltd ("RedefineMe", "we", "us", or "our") operates the RedefineMe mobile application ("the App"), available on Android. RedefineMe is a university society event aggregator that helps students at UK universities discover events run by their societies.
+RedefineMe Ltd ("RedefineMe", "we", "us", or "our") operates the RedefineMe mobile application ("the App"), available on Android and iOS. RedefineMe is a university society event aggregator that helps students at UK universities discover events run by their societies.
 
 This Privacy Policy explains what personal data we collect, why we collect it, how we use it, and your rights under UK data protection law (UK GDPR and the Data Protection Act 2018).
 
@@ -29,7 +29,9 @@ When you create an account, we collect:
 | Email address | To create and identify your account |
 | Full name | To personalise your experience |
 | University | To show you events relevant to your institution |
-| Course and year of study | To surface more relevant event recommendations |
+| Study level | To surface more relevant event recommendations |
+| Interests | To personalise your event feed and recommendations |
+| Profile picture (optional) | To personalise your account and in-app profile |
 
 When you use the App, we also store:
 
@@ -41,16 +43,25 @@ When you use the App, we also store:
 
 When you use the App, Supabase (our backend provider) issues and stores a **session authentication token** to keep you signed in. This token is stored securely on your device and transmitted only to Supabase servers to verify your identity. We do not log IP addresses beyond what Supabase retains for security and abuse prevention purposes in the normal course of operating its service.
 
+We also collect **analytics data** through PostHog, our analytics provider. This includes:
+
+- Screen views and time spent on each screen
+- Interaction events (e.g. liking, RSVPing to, or sharing an event; tapping a category or university; performing a search)
+- Authentication events (e.g. sign-in method used, onboarding completion)
+- Non-identifying metadata associated with your account (university, study level, number of interests selected)
+
+Analytics data is sent to PostHog's **EU servers** (Frankfurt, Germany). PostHog does not receive your name, email address, or other directly identifying information. When you are signed in, your anonymous user ID is linked to the above metadata to help us understand how the App is used and improve it.
+
 ### (c) Information we do NOT collect
 
 To be clear about the limits of our data collection:
 
 - We do **not** collect your device's GPS location or coarse network location
 - We do **not** collect device identifiers (IDFA, Android Advertising ID, IMEI, etc.)
-- We do **not** collect push notification tokens (push notifications are not yet implemented)
+- We do **not** send push notification tokens to external services (notifications are scheduled locally on your device)
 - We do **not** collect any financial or payment information
 - We do **not** read, store, or process the content of any messages or communications
-- We do **not** use advertising SDKs or analytics SDKs in the App
+- We do **not** use advertising SDKs in the App
 
 ---
 
@@ -61,9 +72,13 @@ To be clear about the limits of our data collection:
 | Email address | Account creation, account recovery, service communications (e.g. security alerts) | Performance of a contract (Article 6(1)(b)) |
 | Full name | Personalising your in-app experience | Performance of a contract (Article 6(1)(b)) |
 | University | Filtering events to your institution | Performance of a contract (Article 6(1)(b)) |
-| Course and year of study | Improving the relevance of event recommendations | Legitimate interests (Article 6(1)(f)) — to provide a useful service |
+| Study level | Improving the relevance of event recommendations | Legitimate interests (Article 6(1)(f)) — to provide a useful service |
+| Interests | Personalising your event feed and recommendations | Legitimate interests (Article 6(1)(f)) — to provide a useful service |
+| Profile picture | Displaying your avatar within the App | Performance of a contract (Article 6(1)(b)) |
 | Saved events, RSVPs, shares | Persisting your preferences and activity across devices and sessions | Performance of a contract (Article 6(1)(b)) |
 | Session token | Keeping you authenticated | Performance of a contract (Article 6(1)(b)) |
+| Analytics data | Understanding how the App is used and improving the service | Legitimate interests (Article 6(1)(f)) — to improve and maintain the App |
+| Aggregated event interaction data | Providing societies with anonymous analytics about their events via the Society Dashboard | Legitimate interests (Article 6(1)(f)) — to help societies understand and improve their events |
 
 We do not use your personal data for automated decision-making or profiling that produces legal or similarly significant effects.
 
@@ -77,6 +92,18 @@ We share data only with the following parties, solely to operate the App:
 
 **Supabase Inc.**
 Our database and authentication provider. Supabase acts as a data processor on our behalf under a Data Processing Agreement. All data is stored in Supabase's **eu-central-1** region (Frankfurt, Germany), within the EU. Supabase's privacy policy is available at [supabase.com/privacy](https://supabase.com/privacy).
+
+**PostHog Inc.**
+Our analytics provider. PostHog acts as a data processor on our behalf. It receives anonymised interaction events, screen views, search queries, authentication method, and non-identifying account metadata (university, study level, interests count). All analytics data is processed on PostHog's **EU servers** (Frankfurt, Germany). PostHog does not receive your name or email address. PostHog's privacy policy is available at [posthog.com/privacy](https://posthog.com/privacy).
+
+**Apple Inc. (Apple Sign In)**
+If you choose to sign in with Apple, your name and email address are shared with Apple as part of the standard Apple Sign In authentication flow. Apple acts as an identity provider; we receive an authentication token from Apple to verify your identity. Apple's privacy policy is available at [apple.com/legal/privacy](https://www.apple.com/legal/privacy/).
+
+**Google LLC (Google OAuth)**
+If you choose to sign in with Google, your email address and profile information are shared with Google as part of the standard Google OAuth authentication flow. Google acts as an identity provider; we receive an authentication token from Google to verify your identity. Google's privacy policy is available at [policies.google.com/privacy](https://policies.google.com/privacy).
+
+**University societies (via the Society Dashboard)**
+We provide university societies with access to an analytics dashboard that displays **aggregated, anonymous statistics** about how users interact with their events. This may include the number of event views, clicks, RSVPs, shares, and other engagement metrics. **No personally identifiable information** (such as names, email addresses, or individual user profiles) is shared with societies. Societies cannot identify or contact individual users through the dashboard.
 
 **Expo / Expo Application Services (EAS)**
 The framework used to build and distribute the App. Expo may process limited technical metadata (e.g. build artefacts) during the app delivery process, but does not receive or process your personal account data. Expo's privacy policy is at [expo.dev/privacy](https://expo.dev/privacy).
@@ -139,7 +166,18 @@ We do not knowingly collect personal data from anyone under the age of 18. If yo
 
 ---
 
-## 9. Third-Party Links
+## 9. Guest Mode
+
+You may browse the App without creating an account by using guest mode. When using guest mode:
+
+- **No personal data** is stored on our servers. You do not provide a name, email address, or any other account information.
+- **Anonymous analytics data** (such as screen views and interaction events) may still be collected by PostHog to help us understand how the App is used.
+- Any interactions you make (e.g. liking or RSVPing to events) are **not saved** and will be lost when you leave guest mode or close the App.
+- To access the full functionality of the App, you will need to create an account.
+
+---
+
+## 10. Third-Party Links
 
 Event listings in the App may include links to external websites for event registration or further information (for example, a society's website or a ticketing platform). These links are provided for convenience and are not operated by RedefineMe.
 
@@ -147,25 +185,29 @@ We have no control over, and accept no responsibility for, the privacy practices
 
 ---
 
-## 10. Sponsored and Promoted Content
+## 11. Sponsored and Promoted Content
 
 Some events displayed in the App may be sponsored or promoted by university societies or other organisations. Where this is the case, the event will be clearly labelled.
 
-At this stage, we do not collect any personal data from the societies or organisations whose events are promoted. No targeting of users based on personal data is used for sponsored content decisions.
+We do not collect any personal data from the societies or organisations whose events are promoted. No targeting of users based on personal data is used for sponsored content decisions.
+
+Societies may have access to **aggregated, anonymous analytics** about how users interact with their promoted events (see Section 4 for details). This data does not identify individual users.
 
 If our approach to sponsored content changes in a way that involves new data processing, this policy will be updated accordingly.
 
 ---
 
-## 11. Push Notifications
+## 12. Notifications
 
-Push notifications are **not currently implemented** in the App. We do not collect push notification tokens at this time.
+The App uses a **local notification** system. The App periodically checks our server for any pending notifications relevant to you (such as event reminders or announcements) and schedules them as local notifications on your device.
 
-If we introduce push notifications in the future, we will request your explicit permission before sending any notifications, and this Privacy Policy will be updated to describe how notification preferences and tokens are handled.
+- We do **not** collect or transmit push notification tokens to any external service (e.g. Apple Push Notification Service or Firebase Cloud Messaging).
+- Notification permission is requested through your device's standard permission prompt. You can disable notifications at any time via your device's settings.
+- Notification IDs are stored locally on your device to prevent duplicate notifications.
 
 ---
 
-## 12. Changes to This Policy
+## 13. Changes to This Policy
 
 We may update this Privacy Policy from time to time. When we make material changes, we will notify you by:
 
@@ -178,7 +220,7 @@ We encourage you to review this policy periodically.
 
 ---
 
-## 13. Contact Us
+## 14. Contact Us
 
 If you have any questions about this Privacy Policy, your data, or your rights, please get in touch:
 
