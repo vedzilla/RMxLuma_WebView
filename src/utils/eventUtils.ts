@@ -15,7 +15,7 @@ export function sortEvents(events: Event[], sortBy: SortOption): Event[] {
       );
     
     case 'trending':
-      return sorted.sort((a, b) => b.interestedCount - a.interestedCount);
+      return sorted.sort((a, b) => b.attendingCount - a.attendingCount);
     
     case 'newest':
       return sorted.sort((a, b) => 
@@ -95,11 +95,11 @@ export function getThisWeekEvents(events: Event[]): Event[] {
 }
 
 /**
- * Get trending events (sorted by interestedCount)
+ * Get trending events (sorted by attendingCount)
  */
 export function getTrendingEvents(events: Event[], limit: number = 6): Event[] {
   return [...events]
-    .sort((a, b) => b.interestedCount - a.interestedCount)
+    .sort((a, b) => b.attendingCount - a.attendingCount)
     .slice(0, limit);
 }
 
