@@ -104,12 +104,13 @@ export default function EventModal({ event, onClose }: EventModalProps) {
         {/* Content */}
         <div className="px-6 py-6">
           {/* Event Image */}
-          <div className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden mb-6">
+          <div className="relative w-full rounded-xl overflow-hidden mb-6">
             <Image
               src={event.imageUrl}
               alt={event.title}
-              fill
-              className="object-cover"
+              width={700}
+              height={700}
+              className="w-full h-auto"
               sizes="(max-width: 768px) 100vw, 700px"
               priority
             />
