@@ -1,0 +1,107 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { getEvents } from '@/supabase_lib/events';
+import { getSocieties } from '@/supabase_lib/societies';
+import { getUniversities } from '@/supabase_lib/universities';
+import AdminSignOutButton from './AdminSignOutButton';
+import { MOCK_APPLICATIONS } from './mockApplications';
+
+export default async function AdminDashboard() {
+  const [events, societies, universities] = await Promise.all([
+    getEvents({ upcomingOnly: false }),
+    getSocieties(),
+    getUniversities(),
+  ]);
+
+  const pendingApplications = MOCK_APPLICATIONS.length;
+
+  const stats = [
+    { label: 'Total Events', value: events.length },
+    { label: 'Societies', value: societies.length },
+    { label: 'Universities', value: universities.length },
+    { label: 'Pending Applications', value: pendingApplications, href: '/admin/applications' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[var(--bg)]">
+      {/* Top bar */}
+      <header className="sticky top-0 z-30 bg-[var(--surface)] border-b border-[var(--border)] px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Image
+            src="/logos/rm-dot-logo.png"
+            alt="RedefineMe"
+            width={120}
+            height={30}
+          />
+          <span className="text-xs font-medium text-[var(--muted)] bg-[var(--accentSoft)] text-[var(--accent)] px-2 py-0.5 rounded-full">
+            Admin
+          </span>
+        </div>
+        <AdminSignOutButton />
+      </header>
+
+      {/* Dashboard content */}
+      <main className="max-w-5xl mx-auto px-6 py-10">
+        <h1 className="text-2xl font-semibold text-[var(--text)] mb-2">
+          Dashboard
+        </h1>
+        <p className="text-[var(--muted)] mb-8">
+          Welcome to the RedefineMe admin panel.
+        </p>
+
+        {/* Stat cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          {stats.map((stat) => {
+            const content = (
+              <>
+                <p className="text-sm text-[var(--muted)] mb-1">{stat.label}</p>
+                <p className="text-2xl font-semibold text-[var(--text)]">
+                  {stat.value}
+                </p>
+              </>
+            );
+
+            return stat.href ? (
+              <Link
+                key={stat.label}
+                href={stat.href}
+                className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] p-5 hover:border-[var(--accent)] transition-colors"
+              >
+                {content}
+              </Link>
+            ) : (
+              <div
+                key={stat.label}
+                className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] p-5"
+              >
+                {content}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Quick links */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link
+            href="/admin/applications"
+            className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] p-5 hover:border-[var(--accent)] transition-colors group"
+          >
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                Society Applications
+              </p>
+              {pendingApplications > 0 && (
+                <span className="text-xs font-medium bg-[var(--accent)] text-white px-2 py-0.5 rounded-full">
+                  {pendingApplications}
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-[var(--muted)] mt-1">
+              Review and approve society ownership requests
+            </p>
+          </Link>
+        </div>
+      </main>
+    </div>
+  );
+}
