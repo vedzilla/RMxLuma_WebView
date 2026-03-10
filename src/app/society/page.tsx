@@ -2,22 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createAuthServerClient } from '@/supabase_lib/auth/server';
+import { getSocietyAccountsForUser } from '@/supabase_lib/societies';
 import SocietySignOutButton from './[societyId]/dashboard/SocietySignOutButton';
-
-const mockSocieties = [
-  {
-    id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-    name: 'Manchester Coding Society',
-    imageUrl: '/logos/rm-dot-logo.png',
-    university: 'University of Manchester',
-  },
-  {
-    id: 'e5f6a7b8-c9d0-1234-ef56-ab7890123456',
-    name: 'UoM Photography Club',
-    imageUrl: '/logos/rm-dot-logo.png',
-    university: 'University of Manchester',
-  },
-];
 
 export default async function SocietyPickerPage() {
   const supabase = await createAuthServerClient();
@@ -26,6 +12,8 @@ export default async function SocietyPickerPage() {
   if (!user) {
     redirect('/auth');
   }
+
+  const accounts = await getSocietyAccountsForUser(supabase, user.id);
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
@@ -54,27 +42,52 @@ export default async function SocietyPickerPage() {
           Select a society to manage.
         </p>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {mockSocieties.map((society) => (
-            <Link
-              key={society.id}
-              href={`/society/${society.id}/dashboard`}
-              className="flex items-center gap-4 p-4 bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] hover:border-[var(--accent)] hover:shadow-md transition-all"
-            >
-              <Image
-                src={society.imageUrl}
-                alt={society.name}
-                width={48}
-                height={48}
-                className="rounded-full object-cover"
-              />
-              <div>
-                <p className="font-medium text-[var(--text)]">{society.name}</p>
-                <p className="text-sm text-[var(--muted)]">{society.university}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {accounts.length === 0 ? (
+          <p className="text-[var(--muted)]">
+            You don&apos;t have access to any societies yet.
+          </p>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2">
+            {accounts.map((account) => {
+              const society = account.societies;
+              if (!society) return null;
+              const status = account.society_account_approval_status.name;
+              const isApproved = status === 'approved' || status === 'trusted';
+
+              return (
+                <Link
+                  key={account.id}
+                  href={isApproved ? `/society/${society.id}/dashboard` : '#'}
+                  aria-disabled={!isApproved}
+                  className={`flex items-center gap-4 p-4 bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] transition-all ${
+                    isApproved
+                      ? 'hover:border-[var(--accent)] hover:shadow-md'
+                      : 'opacity-60 cursor-not-allowed'
+                  }`}
+                >
+                  <Image
+                    src={society.image_url || '/logos/rm-dot-logo.png'}
+                    alt={society.name}
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-medium text-[var(--text)]">{society.name}</p>
+                    <p className="text-sm text-[var(--muted)]">
+                      {society.universities?.name ?? 'Unknown university'}
+                    </p>
+                    {!isApproved && (
+                      <p className="text-xs text-[var(--muted)] mt-0.5 capitalize">
+                        {status}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </main>
     </div>
   );

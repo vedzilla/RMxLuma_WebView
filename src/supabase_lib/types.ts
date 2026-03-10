@@ -13,6 +13,8 @@ export interface EventRow {
   attending: number;
   source_post_url: string | null;
   post_id: string | null;
+  source: string;
+  created_by_society_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -81,6 +83,8 @@ export interface CategoryRow {
 export interface PostImageRow {
   id: string;
   full_url: string;
+  small_url: string | null;
+  summary: string | null;
   created_at: string;
 }
 
@@ -104,8 +108,67 @@ export interface N8nEventStatusRow {
 
 export interface UserRow {
   id: string;
-  role: string;
+  university_id: string | null;
+  study_level_id: string | null;
+  profile_url: string | null;
   created_at: string;
+  updated_at: string;
+}
+
+export interface UserRoleRow {
+  id: string;
+  name: string;
+}
+
+export interface UsersRolesRow {
+  id: string;
+  user_id: string;
+  role_id: string;
+  created_at: string;
+}
+
+export interface SocietyProfileRow {
+  id: string;
+  society_id: string;
+  name: string;
+  handle: string;
+  description: string | null;
+  image_url: string | null;
+  follow_count: number;
+  event_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SocietyBioLinkRow {
+  id: string;
+  society_id: string;
+  url: string;
+  created_at: string;
+}
+
+export interface SocietyAccountApprovalStatusRow {
+  id: string;
+  name: string;
+}
+
+export interface SocietyAccountRow {
+  id: string;
+  auth_user_id: string;
+  society_id: string;
+  status_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StudyLevelRow {
+  id: string;
+  name: string;
+}
+
+export interface InteractionTypeRow {
+  id: string;
+  name: string;
 }
 
 // Joined shape returned by getEvents() — events with nested relations.
@@ -190,4 +253,18 @@ export interface City {
 export interface Category {
   id: string;
   name: string;
+}
+
+// ---- Society account joined types ----
+
+// SocietyAccount with nested approval status name.
+export interface SocietyAccountWithStatus extends SocietyAccountRow {
+  society_account_approval_status: Pick<SocietyAccountApprovalStatusRow, 'name'>;
+}
+
+// SocietyAccount with nested society and university — used by the society picker page.
+export interface SocietyAccountWithSociety extends SocietyAccountWithStatus {
+  societies: (SocietyRow & {
+    universities: Pick<UniversityRow, 'id' | 'name'> | null;
+  }) | null;
 }

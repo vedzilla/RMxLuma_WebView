@@ -20,6 +20,16 @@ export type {
   EventImageRow,
   N8nEventStatusRow,
   UserRow,
+  UserRoleRow,
+  UsersRolesRow,
+  SocietyProfileRow,
+  SocietyBioLinkRow,
+  SocietyAccountRow,
+  SocietyAccountApprovalStatusRow,
+  SocietyAccountWithStatus,
+  SocietyAccountWithSociety,
+  StudyLevelRow,
+  InteractionTypeRow,
   EventWithRelations,
   SocietyWithUniversity,
 } from './types';
@@ -42,6 +52,8 @@ export {
   getSocieties,
   getSocietyByHandle,
   getSocietiesByUniversity,
+  getSocietyAccountsForUser,
+  getSocietyAccount,
 } from './societies';
 
 // Universities
@@ -57,7 +69,7 @@ export { getCategories } from './categories';
 export { getCities, getCityBySlug } from './cities';
 
 // Users
-export { getUserCount, getUserRole, isAdmin } from './users';
+export { getUserCount, getUserRole, getUserRoles, isAdmin } from './users';
 
 // Transform utilities (useful if callers have raw DB rows)
 export {

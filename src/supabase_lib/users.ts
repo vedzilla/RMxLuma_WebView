@@ -21,26 +21,44 @@ export async function getUserCount(): Promise<number> {
 }
 
 /**
- * Fetch the role for a given user from the `users` table.
- * Requires an authenticated Supabase client (server-side with session cookies).
- * Returns the role string, or null if the user has no row or the query fails.
+ * Fetch all role names for a given user via the users_roles junction table.
+ * Returns an array of role name strings (e.g. ['user', 'admin']).
+ */
+export async function getUserRoles(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('users_roles')
+    .select('user_roles(name)')
+    .eq('user_id', userId);
+
+  if (error) {
+    console.error('[supabase_lib] getUserRoles error:', error.message);
+    return [];
+  }
+
+  return (data ?? [])
+    .map((row: { user_roles: { name: string } | { name: string }[] | null }) => {
+      const role = row.user_roles;
+      if (!role) return undefined;
+      if (Array.isArray(role)) return role[0]?.name;
+      return role.name;
+    })
+    .filter((name): name is string => !!name);
+}
+
+/**
+ * Fetch the primary role for a given user.
+ * Returns the first role name, or null if the user has no roles.
+ * Kept for backwards compatibility — prefer getUserRoles() for multi-role checks.
  */
 export async function getUserRole(
   supabase: SupabaseClient,
   userId: string
 ): Promise<string | null> {
-  const { data, error } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', userId)
-    .single();
-
-  if (error) {
-    console.error('[supabase_lib] getUserRole error:', error.message);
-    return null;
-  }
-
-  return data?.role ?? null;
+  const roles = await getUserRoles(supabase, userId);
+  return roles[0] ?? null;
 }
 
 /**
@@ -50,6 +68,6 @@ export async function isAdmin(
   supabase: SupabaseClient,
   userId: string
 ): Promise<boolean> {
-  const role = await getUserRole(supabase, userId);
-  return role === 'admin';
+  const roles = await getUserRoles(supabase, userId);
+  return roles.includes('admin');
 }
