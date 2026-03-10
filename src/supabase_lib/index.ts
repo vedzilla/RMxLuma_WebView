@@ -54,6 +54,8 @@ export {
   getSocietiesByUniversity,
   getSocietyAccountsForUser,
   getSocietyAccount,
+  getPendingSocietyAccounts,
+  getApprovalStatuses,
 } from './societies';
 
 // Universities

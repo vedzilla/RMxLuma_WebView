@@ -1,19 +1,22 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { createAuthServerClient } from '@/supabase_lib/auth/server';
 import { getEvents } from '@/supabase_lib/events';
-import { getSocieties } from '@/supabase_lib/societies';
+import { getSocieties, getPendingSocietyAccounts } from '@/supabase_lib/societies';
 import { getUniversities } from '@/supabase_lib/universities';
 import AdminSignOutButton from './AdminSignOutButton';
-import { MOCK_APPLICATIONS } from './mockApplications';
 
 export default async function AdminDashboard() {
-  const [events, societies, universities] = await Promise.all([
+  const supabase = await createAuthServerClient();
+
+  const [events, societies, universities, pendingAccounts] = await Promise.all([
     getEvents({ upcomingOnly: false }),
     getSocieties(),
     getUniversities(),
+    getPendingSocietyAccounts(supabase),
   ]);
 
-  const pendingApplications = MOCK_APPLICATIONS.length;
+  const pendingApplications = pendingAccounts.length;
 
   const stats = [
     { label: 'Total Events', value: events.length },

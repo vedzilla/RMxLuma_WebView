@@ -4,29 +4,94 @@ import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import AdminSignOutButton from '../AdminSignOutButton';
-import { MOCK_APPLICATIONS, type Application } from '../mockApplications';
+import { createAuthBrowserClient } from '@/supabase_lib/auth/browser';
+
+interface Application {
+  id: string;
+  authUserId: string;
+  societyId: string;
+  societyName: string;
+  appliedAt: string;
+}
+
+interface ApprovalStatus {
+  id: string;
+  name: string;
+}
+
+interface ApplicationsPageClientProps {
+  initialApplications: Application[];
+  approvalStatuses: ApprovalStatus[];
+}
 
 type ResolvingState = { id: string; action: 'approve' | 'deny' };
 
-export default function ApplicationsPageClient() {
-  const [applications, setApplications] = useState<Application[]>(MOCK_APPLICATIONS);
+export default function ApplicationsPageClient({
+  initialApplications,
+  approvalStatuses,
+}: ApplicationsPageClientProps) {
+  const [applications, setApplications] = useState<Application[]>(initialApplications);
   const [search, setSearch] = useState('');
   const [resolving, setResolving] = useState<ResolvingState | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleAction = useCallback((id: string, action: 'approve' | 'deny') => {
-    setResolving({ id, action });
-    setTimeout(() => {
-      setApplications((prev) => prev.filter((a) => a.id !== id));
+  const handleAction = useCallback(async (app: Application, action: 'approve' | 'deny') => {
+    setResolving({ id: app.id, action });
+    setError(null);
+
+    const statusName = action === 'approve' ? 'approved' : 'rejected';
+    const statusId = approvalStatuses.find((s) => s.name === statusName)?.id;
+
+    if (!statusId) {
+      setError(`Could not find "${statusName}" status. Please refresh and try again.`);
       setResolving(null);
-    }, 800);
-  }, []);
+      return;
+    }
+
+    try {
+      const supabase = createAuthBrowserClient();
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        setError('Session expired. Please sign in again.');
+        setResolving(null);
+        return;
+      }
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/society-account-set-approval`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            society_id: app.societyId,
+            auth_user_id: app.authUserId,
+            status_id: statusId,
+          }),
+        }
+      );
+
+      if (res.ok) {
+        setApplications((prev) => prev.filter((a) => a.id !== app.id));
+      } else {
+        const body = await res.text();
+        setError(`Failed to ${action}: ${body || res.statusText}`);
+      }
+    } catch (err) {
+      setError(`Network error: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    }
+
+    setResolving(null);
+  }, [approvalStatuses]);
 
   const query = search.toLowerCase().trim();
   const filtered = applications.filter(
     (a) =>
-      a.userName.toLowerCase().includes(query) ||
       a.societyName.toLowerCase().includes(query) ||
-      a.email.toLowerCase().includes(query)
+      a.authUserId.toLowerCase().includes(query)
   );
 
   // Group by society
@@ -82,6 +147,13 @@ export default function ApplicationsPageClient() {
           Review and approve society ownership requests from committee members.
         </p>
 
+        {/* Error banner */}
+        {error && (
+          <div className="mb-4 px-4 py-3 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm">
+            {error}
+          </div>
+        )}
+
         {/* Search */}
         <div className="relative mb-8">
           <svg
@@ -98,7 +170,7 @@ export default function ApplicationsPageClient() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by user name, society, or email..."
+            placeholder="Search by society or user ID..."
             className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] text-sm placeholder:text-[var(--muted)] outline-none transition-shadow focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
           />
         </div>
@@ -145,25 +217,17 @@ export default function ApplicationsPageClient() {
                               ? 'rgba(34, 197, 94, 0.1)'
                               : 'rgba(239, 68, 68, 0.1)'
                             : undefined,
-                          opacity: isResolving ? 0 : 1,
-                          transform: isResolving ? 'translateX(20px)' : 'translateX(0)',
+                          opacity: isResolving ? 0.5 : 1,
                         }}
                       >
                         {/* Left: user info */}
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-medium text-sm text-[var(--text)]">
-                              {app.userName}
-                            </span>
                             <span className="text-xs text-[var(--muted)] font-mono">
-                              {app.userId}
-                            </span>
-                            <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--accentSoft)] text-[var(--accent)] font-medium">
-                              {app.role}
+                              {app.authUserId.slice(0, 8)}...
                             </span>
                           </div>
                           <div className="flex items-center gap-3 mt-1 text-xs text-[var(--muted)]">
-                            <span>{app.email}</span>
                             <span>Applied {new Date(app.appliedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                           </div>
                         </div>
@@ -171,14 +235,14 @@ export default function ApplicationsPageClient() {
                         {/* Right: action buttons */}
                         <div className="flex items-center gap-2 shrink-0">
                           <button
-                            onClick={() => handleAction(app.id, 'approve')}
+                            onClick={() => handleAction(app, 'approve')}
                             disabled={!!resolving}
                             className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             Approve
                           </button>
                           <button
-                            onClick={() => handleAction(app.id, 'deny')}
+                            onClick={() => handleAction(app, 'deny')}
                             disabled={!!resolving}
                             className="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >

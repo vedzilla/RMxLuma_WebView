@@ -6,6 +6,7 @@ import type {
   SocietyWithUniversity,
   SocietyAccountWithStatus,
   SocietyAccountWithSociety,
+  SocietyAccountApprovalStatusRow,
 } from './types';
 
 const SOCIETY_SELECT = `
@@ -90,6 +91,61 @@ export async function getSocietyAccountsForUser(
   }
 
   return (data ?? []) as unknown as SocietyAccountWithSociety[];
+}
+
+/**
+ * Fetch all society_accounts with "pending" approval status, joined with societies.
+ * Used by the admin applications page.
+ */
+export async function getPendingSocietyAccounts(
+  supabase: SupabaseClient
+): Promise<SocietyAccountWithSociety[]> {
+  // Look up the "pending" status ID
+  const { data: statusData, error: statusError } = await supabase
+    .from('society_account_approval_status')
+    .select('id')
+    .eq('name', 'pending')
+    .single();
+
+  if (statusError || !statusData) {
+    console.error('[supabase_lib] getPendingSocietyAccounts: could not find pending status:', statusError?.message);
+    return [];
+  }
+
+  const { data, error } = await supabase
+    .from('society_accounts')
+    .select(`
+      *,
+      society_account_approval_status(name),
+      societies(*, universities(id, name))
+    `)
+    .eq('status_id', statusData.id)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('[supabase_lib] getPendingSocietyAccounts error:', error.message);
+    return [];
+  }
+
+  return (data ?? []) as unknown as SocietyAccountWithSociety[];
+}
+
+/**
+ * Fetch all approval status lookup rows.
+ */
+export async function getApprovalStatuses(
+  supabase: SupabaseClient
+): Promise<SocietyAccountApprovalStatusRow[]> {
+  const { data, error } = await supabase
+    .from('society_account_approval_status')
+    .select('*');
+
+  if (error) {
+    console.error('[supabase_lib] getApprovalStatuses error:', error.message);
+    return [];
+  }
+
+  return (data ?? []) as SocietyAccountApprovalStatusRow[];
 }
 
 /**
