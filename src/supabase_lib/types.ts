@@ -102,6 +102,12 @@ export interface N8nEventStatusRow {
   updated_at: string;
 }
 
+export interface UserRow {
+  id: string;
+  role: string;
+  created_at: string;
+}
+
 // Joined shape returned by getEvents() — events with nested relations.
 export interface EventWithRelations extends EventRow {
   categories: CategoryRow | null;

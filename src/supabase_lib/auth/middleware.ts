@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { isAdmin } from '@/supabase_lib/users';
 
 export function createMiddlewareClient(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -26,4 +27,31 @@ export function createMiddlewareClient(request: NextRequest) {
   );
 
   return { supabase, response };
+}
+
+export async function updateSession(request: NextRequest) {
+  const { supabase, response } = createMiddlewareClient(request);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth';
+      return NextResponse.redirect(url);
+    }
+
+    // Verify the user has admin role
+    if (!(await isAdmin(supabase, user.id))) {
+      await supabase.auth.signOut();
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth';
+      url.searchParams.set('error', 'unauthorized');
+      return NextResponse.redirect(url);
+    }
+  }
+
+  return response;
 }

@@ -19,6 +19,7 @@ export type {
   PostImageRow,
   EventImageRow,
   N8nEventStatusRow,
+  UserRow,
   EventWithRelations,
   SocietyWithUniversity,
 } from './types';
@@ -56,7 +57,7 @@ export { getCategories } from './categories';
 export { getCities, getCityBySlug } from './cities';
 
 // Users
-export { getUserCount } from './users';
+export { getUserCount, getUserRole, isAdmin } from './users';
 
 // Transform utilities (useful if callers have raw DB rows)
 export {
