@@ -84,13 +84,13 @@ export default function CategoryCard({ categoryName, count, onClick }: CategoryC
       onClick={onClick}
       className="block bg-surface border border-border rounded-[var(--radius)] px-5 py-4 text-left cursor-pointer transition-all duration-[0.12s] hover:border-text hover:bg-[rgba(15,23,42,0.02)]"
     >
-      <div className="w-5 h-5 mb-[10px] text-muted flex items-center justify-start" style={{ color }}>
+      <div className="w-5 h-5 mb-[10px] text-subtle flex items-center justify-start" style={{ color }}>
         {icon}
       </div>
       <div className="font-semibold text-[15px] text-text tracking-[-0.01em] mb-1">
         {categoryName}
       </div>
-      <div className="text-xs text-muted font-normal">
+      <div className="text-xs text-subtle font-normal">
         {count} events
       </div>
     </Link>

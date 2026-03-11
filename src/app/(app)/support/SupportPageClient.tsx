@@ -84,7 +84,7 @@ export default function SupportPageClient() {
       <div className="max-w-3xl mx-auto">
         <Link
           href="/discover"
-          className="inline-flex items-center text-sm text-muted hover:text-accent mb-6 transition-colors"
+          className="inline-flex items-center text-sm text-subtle hover:text-brand mb-6 transition-colors"
         >
           ← Back to Discover
         </Link>
@@ -92,7 +92,7 @@ export default function SupportPageClient() {
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-text mb-2">Support</h1>
-          <p className="text-muted">
+          <p className="text-subtle">
             Need help? Check the FAQs below or get in touch — we&apos;re happy to help.
           </p>
         </div>
@@ -113,12 +113,12 @@ export default function SupportPageClient() {
                   className="w-full flex items-center justify-between px-6 py-4 text-left"
                 >
                   <span className="font-medium text-text">{faq.question}</span>
-                  <span className="text-muted ml-4 flex-shrink-0 text-lg leading-none">
+                  <span className="text-subtle ml-4 flex-shrink-0 text-lg leading-none">
                     {openIndex === i ? '−' : '+'}
                   </span>
                 </button>
                 {openIndex === i && (
-                  <div className="px-6 pb-5 text-muted leading-relaxed border-t border-border pt-4">
+                  <div className="px-6 pb-5 text-subtle leading-relaxed border-t border-border pt-4">
                     {faq.answer}
                   </div>
                 )}
@@ -136,7 +136,7 @@ export default function SupportPageClient() {
             <div className="w-9 h-9 rounded-full bg-bg border border-border flex items-center justify-center flex-shrink-0 mt-0.5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 text-muted"
+                className="w-4 h-4 text-subtle"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -149,14 +149,14 @@ export default function SupportPageClient() {
               </svg>
             </div>
             <div>
-              <p className="text-sm text-muted mb-1">Email us directly at</p>
+              <p className="text-sm text-subtle mb-1">Email us directly at</p>
               <a
                 href="mailto:admin@redefine-me.com"
-                className="text-accent hover:text-accentHover font-medium transition-colors"
+                className="text-brand hover:text-brand-hover font-medium transition-colors"
               >
                 admin@redefine-me.com
               </a>
-              <p className="text-sm text-muted mt-1">
+              <p className="text-sm text-subtle mt-1">
                 We aim to respond within 1–2 business days.
               </p>
             </div>
@@ -171,11 +171,11 @@ export default function SupportPageClient() {
           {submitted ? (
             <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-sm border border-border px-8 py-10 text-center">
               <p className="text-lg font-semibold text-text mb-2">Your email client should have opened.</p>
-              <p className="text-muted text-sm">
+              <p className="text-subtle text-sm">
                 If it didn&apos;t,{' '}
                 <a
                   href="mailto:admin@redefine-me.com"
-                  className="text-accent hover:text-accentHover underline"
+                  className="text-brand hover:text-brand-hover underline"
                 >
                   click here to email us directly
                 </a>
@@ -183,7 +183,7 @@ export default function SupportPageClient() {
               </p>
               <button
                 onClick={() => setSubmitted(false)}
-                className="mt-6 text-sm text-muted hover:text-text transition-colors underline"
+                className="mt-6 text-sm text-subtle hover:text-text transition-colors underline"
               >
                 Send another message
               </button>
@@ -204,7 +204,7 @@ export default function SupportPageClient() {
                       value={form.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text placeholder-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 transition"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text placeholder-subtle text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 transition"
                     />
                   </div>
                   <div>
@@ -219,7 +219,7 @@ export default function SupportPageClient() {
                       value={form.email}
                       onChange={handleChange}
                       placeholder="you@example.com"
-                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text placeholder-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 transition"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text placeholder-subtle text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 transition"
                     />
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export default function SupportPageClient() {
                     name="subject"
                     value={form.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 transition"
+                    className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 transition"
                   >
                     {subjectOptions.map((opt) => (
                       <option key={opt} value={opt}>
@@ -255,13 +255,13 @@ export default function SupportPageClient() {
                     value={form.message}
                     onChange={handleChange}
                     placeholder="Tell us how we can help..."
-                    className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text placeholder-muted text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 transition resize-none"
+                    className="w-full px-4 py-2.5 rounded-lg border border-border bg-bg text-text placeholder-subtle text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 transition resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-8 py-3 bg-text text-surface font-semibold rounded-lg hover:bg-muted transition-colors text-sm"
+                  className="w-full sm:w-auto px-8 py-3 bg-text text-surface font-semibold rounded-lg hover:bg-subtle transition-colors text-sm"
                 >
                   Send Message
                 </button>

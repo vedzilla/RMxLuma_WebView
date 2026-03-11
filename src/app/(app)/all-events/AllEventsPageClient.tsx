@@ -56,7 +56,7 @@ export default function AllEventsPageClient({ events, tags }: AllEventsPageClien
         <h1 className="m-0 text-[36px] font-semibold text-text tracking-[-0.03em] leading-[1.1]">
           All events
         </h1>
-        <p className="mt-2 text-muted text-[15px] font-normal leading-[1.5] tracking-[-0.01em]">
+        <p className="mt-2 text-subtle text-[15px] font-normal leading-[1.5] tracking-[-0.01em]">
           Every upcoming society event, sorted by date.
         </p>
         <div className="flex flex-wrap gap-3 mt-4 items-center">
@@ -85,7 +85,7 @@ export default function AllEventsPageClient({ events, tags }: AllEventsPageClien
         </div>
 
         {filteredEvents.length === 0 && (
-          <p className="text-muted text-[15px] mt-6">No events match your search.</p>
+          <p className="text-subtle text-[15px] mt-6">No events match your search.</p>
         )}
 
         {hasMore && (

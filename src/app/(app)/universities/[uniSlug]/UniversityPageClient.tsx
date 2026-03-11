@@ -53,7 +53,7 @@ export default function UniversityPageClient({ uniSlug, universityName, events, 
         <h1 className="text-4xl md:text-5xl font-bold text-text mb-4">
           {universityName} events
         </h1>
-        <p className="text-lg text-muted mb-6">
+        <p className="text-lg text-subtle mb-6">
           Discover society events at {universityName}. Get the app for personalized recommendations.
         </p>
         <Link
@@ -81,7 +81,7 @@ export default function UniversityPageClient({ uniSlug, universityName, events, 
       <div className="mb-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-text">Events</h2>
-          <span className="text-sm text-muted">{universityEvents.length} events</span>
+          <span className="text-sm text-subtle">{universityEvents.length} events</span>
         </div>
         <EventGrid events={universityEvents} onEventClick={openEvent} />
       </div>

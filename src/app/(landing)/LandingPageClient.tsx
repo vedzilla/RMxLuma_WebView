@@ -104,7 +104,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-border mb-8"
               >
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-xs text-muted font-medium">Live in Manchester</span>
+                <span className="text-xs text-subtle font-medium">Live in Manchester</span>
               </motion.div>
 
               {/* Main Heading - BIGGER */}
@@ -124,7 +124,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-muted text-[17px] leading-[1.6] mb-5 max-w-md mx-auto lg:mx-0"
+                className="text-subtle text-[17px] leading-[1.6] mb-5 max-w-md mx-auto lg:mx-0"
               >
                 Never miss a society event again. {formatCompactNumber(societyCount)} events from Manchester universities, one platform.
               </motion.p>
@@ -134,7 +134,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-muted text-[15px] mb-8 flex items-center justify-center lg:justify-start gap-1.5"
+                className="text-subtle text-[15px] mb-8 flex items-center justify-center lg:justify-start gap-1.5"
               >
                 <span>Find events from</span>
                 <span className="relative inline-block min-w-[180px] h-[22px]">
@@ -186,17 +186,17 @@ export default function LandingPageClient({ societyCount, universityCount, stude
               >
                 <div>
                   <p className="text-xl font-bold text-text">{formatCompactNumber(societyCount)}</p>
-                  <p className="text-muted text-xs">Societies</p>
+                  <p className="text-subtle text-xs">Societies</p>
                 </div>
                 <div className="w-px h-8 bg-border" />
                 <div>
                   <p className="text-xl font-bold text-text">{universityCount}</p>
-                  <p className="text-muted text-xs">Universities</p>
+                  <p className="text-subtle text-xs">Universities</p>
                 </div>
                 <div className="w-px h-8 bg-border" />
                 <div>
                   <p className="text-xl font-bold text-text">{formatCompactNumber(studentCount)}</p>
-                  <p className="text-muted text-xs">Students</p>
+                  <p className="text-subtle text-xs">Students</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -241,7 +241,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                         {/* Subtle glow ring */}
                         <div className="absolute -inset-1 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full blur-sm -z-10" />
                         {/* Logo image */}
-                        {!failedImages.has(i) ? (
+                        {society.imageUrl && !failedImages.has(i) ? (
                           <img
                             src={society.imageUrl}
                             alt={society.name}
@@ -274,7 +274,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
       {/* Trust Section */}
       <section className="relative z-10 border-t border-border bg-surface/30 backdrop-blur-sm">
         <div className="max-w-[1200px] mx-auto px-6 py-10 text-center">
-          <p className="text-muted text-[15px]">
+          <p className="text-subtle text-[15px]">
             <span className="font-semibold text-text">{formatCompactNumber(societyCount)} societies</span> from{' '}
             <span className="font-semibold text-text">{universityCount} universities</span> in{' '}
             <span className="font-semibold text-text">Manchester</span>
@@ -282,7 +282,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
           </p>
           <div className="mt-6 flex justify-center items-center gap-10 opacity-40">
             {featuredUniversities.map((name) => (
-              <span key={name} className="text-lg font-bold text-muted">{name}</span>
+              <span key={name} className="text-lg font-bold text-subtle">{name}</span>
             ))}
           </div>
         </div>

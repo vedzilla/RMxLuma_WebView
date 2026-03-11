@@ -17,7 +17,7 @@ export default function FilterPills({ tags, selectedTag, onTagSelect }: FilterPi
         className={`inline-flex items-center gap-1.5 px-3 py-[10px] rounded-full text-[13px] font-bold cursor-pointer transition-all hover:brightness-95 hover:scale-[1.02] ${
           !selectedTag
             ? 'bg-text text-surface border border-text'
-            : 'bg-surface text-muted border border-border hover:bg-bg'
+            : 'bg-surface text-subtle border border-border hover:bg-bg'
         }`}
       >
         <LayoutGrid size={14} strokeWidth={2.5} />

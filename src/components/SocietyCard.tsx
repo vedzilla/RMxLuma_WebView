@@ -25,7 +25,7 @@ export default function SocietyCard({ name, category, eventCount, initials, imag
         <div className="font-semibold text-[15px] text-text tracking-[-0.01em] mb-1">
           {name}
         </div>
-        <div className="text-xs text-muted font-medium">
+        <div className="text-xs text-subtle font-medium">
           {category} • {eventCount} upcoming events
         </div>
       </div>

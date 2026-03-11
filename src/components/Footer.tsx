@@ -26,7 +26,7 @@ export default function Footer() {
                 aria-hidden
               />
             </div>
-            <p className="text-sm text-muted">
+            <p className="text-sm text-subtle">
               Discover society events across the UK
             </p>
           </div>
@@ -35,17 +35,17 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-text mb-4">Explore</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="text-sm text-muted hover:text-text transition-colors">
+                <Link href="/" className="text-sm text-subtle hover:text-text transition-colors">
                   Discover Events
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-sm text-muted hover:text-text transition-colors">
+                <Link href="/about" className="text-sm text-subtle hover:text-text transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/support" className="text-sm text-muted hover:text-text transition-colors">
+                <Link href="/support" className="text-sm text-subtle hover:text-text transition-colors">
                   Support
                 </Link>
               </li>
@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted">
+        <div className="mt-8 pt-8 border-t border-border text-center text-sm text-subtle">
           <p>© 2026 Redefine Me. All rights reserved.</p>
         </div>
       </div>

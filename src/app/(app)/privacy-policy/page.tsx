@@ -17,18 +17,18 @@ const components: Components = {
     <h3 className="text-base font-semibold text-text mb-2 mt-6">{children}</h3>
   ),
   p: ({ children }) => (
-    <p className="text-muted leading-relaxed mb-4">{children}</p>
+    <p className="text-subtle leading-relaxed mb-4">{children}</p>
   ),
   a: ({ href, children }) => (
-    <a href={href} className="text-accent hover:text-accentHover underline" target="_blank" rel="noopener noreferrer">
+    <a href={href} className="text-brand hover:text-brand-hover underline" target="_blank" rel="noopener noreferrer">
       {children}
     </a>
   ),
   ul: ({ children }) => (
-    <ul className="list-disc pl-6 mb-4 space-y-1 text-muted">{children}</ul>
+    <ul className="list-disc pl-6 mb-4 space-y-1 text-subtle">{children}</ul>
   ),
   ol: ({ children }) => (
-    <ol className="list-decimal pl-6 mb-4 space-y-1 text-muted">{children}</ol>
+    <ol className="list-decimal pl-6 mb-4 space-y-1 text-subtle">{children}</ol>
   ),
   li: ({ children }) => <li className="leading-relaxed">{children}</li>,
   strong: ({ children }) => (
@@ -46,7 +46,7 @@ const components: Components = {
     </th>
   ),
   td: ({ children }) => (
-    <td className="py-2 px-3 border-b border-border text-muted">{children}</td>
+    <td className="py-2 px-3 border-b border-border text-subtle">{children}</td>
   ),
 };
 
@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
       <div className="max-w-3xl mx-auto">
         <Link
           href="/discover"
-          className="inline-flex items-center text-sm text-muted hover:text-accent mb-6 transition-colors"
+          className="inline-flex items-center text-sm text-subtle hover:text-brand mb-6 transition-colors"
         >
           ← Back to Discover
         </Link>

@@ -52,7 +52,7 @@ export default function CityPageClient({ citySlug, cityName, events, tags }: Cit
         <h1 className="text-4xl md:text-5xl font-bold text-text mb-4">
           Events in {cityName}
         </h1>
-        <p className="text-lg text-muted mb-6">
+        <p className="text-lg text-subtle mb-6">
           Discover society events happening in {cityName}. Get the app for personalized recommendations.
         </p>
         <Link
@@ -78,7 +78,7 @@ export default function CityPageClient({ citySlug, cityName, events, tags }: Cit
       <div className="mb-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-text">Events</h2>
-          <span className="text-sm text-muted">{cityEvents.length} events</span>
+          <span className="text-sm text-subtle">{cityEvents.length} events</span>
         </div>
         <EventGrid events={cityEvents} onEventClick={openEvent} />
       </div>

@@ -72,7 +72,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
         <div className="sticky top-0 bg-surface border-b border-border px-6 py-4 flex items-center justify-between z-10 backdrop-blur-sm bg-surface/95">
           <button
             onClick={handleClose}
-            className="text-muted hover:text-text transition-colors p-2 -ml-2"
+            className="text-subtle hover:text-text transition-colors p-2 -ml-2"
             aria-label="Close"
           >
             ←
@@ -80,7 +80,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={copyLink}
-              className="text-sm font-medium text-text hover:text-muted transition-colors flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-bg"
+              className="text-sm font-medium text-text hover:text-subtle transition-colors flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-bg"
             >
               <span>Copy Link</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -91,7 +91,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
               href={event.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-text hover:text-muted transition-colors flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-bg"
+              className="text-sm font-medium text-text hover:text-subtle transition-colors flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-bg"
             >
               <span>Event Page</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -122,7 +122,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
           </h1>
 
           {/* Host */}
-          <div className="flex items-center gap-2 mb-6 text-muted">
+          <div className="flex items-center gap-2 mb-6 text-subtle">
             <div className="w-6 h-6 rounded-full bg-bg border border-border flex items-center justify-center text-xs font-semibold">
               {event.societyName.charAt(0)}
             </div>
@@ -149,25 +149,25 @@ export default function EventModal({ event, onClose }: EventModalProps) {
               </div>
               <div>
                 <div className="font-semibold text-text">{formatDate(event.startDateTime)}</div>
-                <div className="text-sm text-muted">{formatTime(event.startDateTime)} {event.endDateTime && `- ${formatTime(event.endDateTime)}`}</div>
+                <div className="text-sm text-subtle">{formatTime(event.startDateTime)} {event.endDateTime && `- ${formatTime(event.endDateTime)}`}</div>
               </div>
             </div>
           </div>
 
           {/* Location */}
           <div className="mb-6 flex items-start gap-3">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-muted mt-0.5">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-subtle mt-0.5">
               <path d="M10 2C7.24 2 5 4.24 5 7C5 11.5 10 18 10 18C10 18 15 11.5 15 7C15 4.24 12.76 2 10 2ZM10 9.5C8.62 9.5 7.5 8.38 7.5 7C7.5 5.62 8.62 4.5 10 4.5C11.38 4.5 12.5 5.62 12.5 7C12.5 8.38 11.38 9.5 10 9.5Z" fill="currentColor"/>
             </svg>
             <div className="flex-1">
               <div className="font-semibold text-text mb-1">{event.locationName}</div>
-              <div className="text-sm text-muted">{event.city}, {event.city}</div>
+              <div className="text-sm text-subtle">{event.city}, {event.city}</div>
             </div>
             <a
               href={`https://maps.google.com/?q=${encodeURIComponent(event.locationName + ', ' + event.city)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted hover:text-text"
+              className="text-subtle hover:text-text"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M6 3H13V10M13 3L3 13M13 3L10 3M13 3L13 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -178,7 +178,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
           {/* Description */}
           <div className="mb-6">
             <h2 className="text-lg font-semibold text-text mb-3">About this event</h2>
-            <p className="text-muted leading-relaxed whitespace-pre-line">{event.description}</p>
+            <p className="text-subtle leading-relaxed whitespace-pre-line">{event.description}</p>
           </div>
 
           {/* Tags */}
@@ -186,7 +186,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
             {event.tags.map(tag => (
               <span
                 key={tag}
-                className="px-3 py-1.5 text-sm text-muted bg-bg rounded-lg border border-border"
+                className="px-3 py-1.5 text-sm text-subtle bg-bg rounded-lg border border-border"
               >
                 {tag}
               </span>
@@ -194,7 +194,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
           </div>
 
           {/* Social Proof */}
-          <div className="flex items-center gap-6 mb-6 text-sm text-muted">
+          <div className="flex items-center gap-6 mb-6 text-sm text-subtle">
             <span>{event.interestedCount} interested</span>
             <span>{event.attendingCount} attending</span>
           </div>
@@ -211,7 +211,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
                 </div>
                 <div className="text-sm text-text">
                   <div className="font-semibold">Registration required</div>
-                  <div className="text-muted">Click below to register on the society's platform</div>
+                  <div className="text-subtle">Click below to register on the society's platform</div>
                 </div>
               </div>
             </div>
@@ -219,7 +219,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
               href={event.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full px-6 py-3 bg-text text-surface rounded-lg font-semibold text-center hover:bg-muted transition-colors mb-3"
+              className="block w-full px-6 py-3 bg-text text-surface rounded-lg font-semibold text-center hover:bg-subtle transition-colors mb-3"
             >
               Register Now
             </a>

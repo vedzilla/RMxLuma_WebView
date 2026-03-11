@@ -76,14 +76,14 @@ export default function CategoryPageClient({
               {categoryName}
             </h1>
             <div className="flex items-center gap-6 mb-6">
-              <div className="flex items-center gap-2 text-muted">
+              <div className="flex items-center gap-2 text-subtle">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <rect x="3" y="4" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                   <path d="M3 8h14M8 4v4" stroke="currentColor" strokeWidth="1.5"/>
                 </svg>
                 <span className="font-semibold text-text">{eventCount} Events</span>
               </div>
-              <div className="flex items-center gap-2 text-muted">
+              <div className="flex items-center gap-2 text-subtle">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <circle cx="10" cy="7" r="3" stroke="currentColor" strokeWidth="1.5" fill="none"/>
                   <path d="M5 17c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" strokeWidth="1.5" fill="none"/>
@@ -91,8 +91,8 @@ export default function CategoryPageClient({
                 <span className="font-semibold text-text">{subscriberCount.toLocaleString()} Subscribers</span>
               </div>
             </div>
-            <p className="text-lg text-muted mb-8 leading-relaxed">{description}</p>
-            <button className="px-6 py-3 bg-text text-surface rounded-lg font-semibold hover:bg-muted transition-colors">
+            <p className="text-lg text-subtle mb-8 leading-relaxed">{description}</p>
+            <button className="px-6 py-3 bg-text text-surface rounded-lg font-semibold hover:bg-subtle transition-colors">
               Subscribe
             </button>
           </div>
@@ -107,7 +107,7 @@ export default function CategoryPageClient({
               {keywords.map((keyword, idx) => (
                 <div
                   key={idx}
-                  className="text-muted font-semibold text-xs tracking-wider uppercase"
+                  className="text-subtle font-semibold text-xs tracking-wider uppercase"
                   style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
                 >
                   {keyword}
@@ -115,7 +115,7 @@ export default function CategoryPageClient({
               ))}
             </div>
             <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-xs">
-              <span className="text-muted font-medium">DISCOVER</span>
+              <span className="text-subtle font-medium">DISCOVER</span>
               <span className="font-bold text-text uppercase">{categoryName.toUpperCase()} EVENTS</span>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function CategoryPageClient({
               <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">
                 Popular Calendars
               </h2>
-              <Link href="#" className="text-text no-underline font-medium text-sm hover:underline hover:text-muted transition-colors">
+              <Link href="#" className="text-text no-underline font-medium text-sm hover:underline hover:text-subtle transition-colors">
                 View all
               </Link>
             </div>
@@ -152,7 +152,7 @@ export default function CategoryPageClient({
         <div>
           <div className="flex items-baseline justify-between gap-[10px] mb-6">
             <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">Events</h2>
-            <span className="text-sm text-muted">{categoryEvents.length} events</span>
+            <span className="text-sm text-subtle">{categoryEvents.length} events</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
             {categoryEvents.map(event => (

@@ -33,29 +33,29 @@ export default function EventDetail({ event, allEvents }: EventDetailProps) {
       {/* Key Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 p-6 bg-bg rounded-xl">
         <div>
-          <p className="text-sm text-muted mb-1">Date & Time</p>
+          <p className="text-sm text-subtle mb-1">Date & Time</p>
           <p className="font-semibold text-text">
             {formatDate(event.startDateTime)} • {formatTime(event.startDateTime)}
           </p>
         </div>
         <div>
-          <p className="text-sm text-muted mb-1">Location</p>
+          <p className="text-sm text-subtle mb-1">Location</p>
           <p className="font-semibold text-text">{event.locationName}</p>
         </div>
         <div>
-          <p className="text-sm text-muted mb-1">City</p>
+          <p className="text-sm text-subtle mb-1">City</p>
           <p className="font-semibold text-text">{event.city}</p>
         </div>
         <div>
-          <p className="text-sm text-muted mb-1">University</p>
+          <p className="text-sm text-subtle mb-1">University</p>
           <p className="font-semibold text-text">{event.university}</p>
         </div>
         <div>
-          <p className="text-sm text-muted mb-1">Host</p>
+          <p className="text-sm text-subtle mb-1">Host</p>
           <p className="font-semibold text-text">{event.societyName}</p>
         </div>
         <div>
-          <p className="text-sm text-muted mb-1">Price</p>
+          <p className="text-sm text-subtle mb-1">Price</p>
           <p className="font-semibold text-text">{event.priceLabel}</p>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function EventDetail({ event, allEvents }: EventDetailProps) {
       {/* Description */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-text mb-4">About this event</h2>
-        <p className="text-muted leading-relaxed whitespace-pre-line">{event.description}</p>
+        <p className="text-subtle leading-relaxed whitespace-pre-line">{event.description}</p>
       </div>
 
       {/* Tags */}
@@ -71,7 +71,7 @@ export default function EventDetail({ event, allEvents }: EventDetailProps) {
         {event.tags.map(tag => (
           <span
             key={tag}
-            className="px-3 py-1.5 text-sm text-muted bg-bg rounded-lg border border-border"
+            className="px-3 py-1.5 text-sm text-subtle bg-bg rounded-lg border border-border"
           >
             {tag}
           </span>
@@ -79,7 +79,7 @@ export default function EventDetail({ event, allEvents }: EventDetailProps) {
       </div>
 
       {/* Social Proof */}
-      <div className="flex items-center gap-6 mb-8 text-sm text-muted">
+      <div className="flex items-center gap-6 mb-8 text-sm text-subtle">
         <span>{event.interestedCount} interested</span>
         <span>{event.attendingCount} attending</span>
       </div>
@@ -90,7 +90,7 @@ export default function EventDetail({ event, allEvents }: EventDetailProps) {
           href={event.externalUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 px-6 py-3 bg-text text-surface rounded-lg font-semibold text-center hover:bg-muted transition-colors"
+          className="flex-1 px-6 py-3 bg-text text-surface rounded-lg font-semibold text-center hover:bg-subtle transition-colors"
         >
           Register
         </a>

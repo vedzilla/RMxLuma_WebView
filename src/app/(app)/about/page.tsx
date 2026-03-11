@@ -7,7 +7,7 @@ export default function AboutPage() {
         About Redefine Me
       </h1>
       
-      <div className="prose prose-lg max-w-none space-y-6 text-muted">
+      <div className="prose prose-lg max-w-none space-y-6 text-subtle">
         <p>
           Redefine Me helps you discover society events across UK universities. We're the public discovery layer that connects you with events happening at universities near you.
         </p>
@@ -30,11 +30,11 @@ export default function AboutPage() {
           <h2 className="text-2xl font-semibold text-text mb-4">
             Get the App
           </h2>
-          <p className="mb-6 text-muted">
+          <p className="mb-6 text-subtle">
             Download our app for personalized event recommendations based on your interests, location, and university.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="px-6 py-3 bg-text text-surface rounded-lg font-semibold hover:bg-muted transition-colors">
+            <button className="px-6 py-3 bg-text text-surface rounded-lg font-semibold hover:bg-subtle transition-colors">
               Download for iOS
             </button>
             <button className="px-6 py-3 border border-border text-text rounded-lg font-semibold hover:bg-bg transition-colors">
@@ -44,7 +44,7 @@ export default function AboutPage() {
         </div>
         
         <div className="mt-8">
-          <Link href="/" className="text-accent hover:underline font-medium">
+          <Link href="/" className="text-brand hover:underline font-medium">
             ← Back to events
           </Link>
         </div>

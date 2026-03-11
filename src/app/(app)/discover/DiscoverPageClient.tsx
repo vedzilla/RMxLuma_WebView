@@ -71,7 +71,7 @@ export default function DiscoverPageClient({
           <h1 className="m-0 text-[36px] font-semibold text-text tracking-[-0.03em] leading-[1.1]">
             Discover events in Manchester
           </h1>
-          <div className="mt-2 text-muted text-[15px] font-normal leading-[1.5] tracking-[-0.01em]">
+          <div className="mt-2 text-subtle text-[15px] font-normal leading-[1.5] tracking-[-0.01em]">
             Society events + curated city events. Register externally — we personalise what you see.
           </div>
 
@@ -93,7 +93,7 @@ export default function DiscoverPageClient({
             <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">
               Upcoming events
             </h2>
-            <Link href="/all-events" className="text-text no-underline font-medium text-sm hover:underline hover:text-muted transition-colors">
+            <Link href="/all-events" className="text-text no-underline font-medium text-sm hover:underline hover:text-subtle transition-colors">
               See all
             </Link>
           </div>
@@ -104,7 +104,7 @@ export default function DiscoverPageClient({
               ))}
             </div>
           ) : (
-            <p className="mt-3 text-muted text-sm">No events match your search.</p>
+            <p className="mt-3 text-subtle text-sm">No events match your search.</p>
           )}
         </div>
 
