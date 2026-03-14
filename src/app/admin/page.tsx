@@ -103,6 +103,18 @@ export default async function AdminDashboard() {
               Review and approve society ownership requests
             </p>
           </Link>
+
+          <Link
+            href="/admin/statistics"
+            className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] p-5 hover:border-[var(--accent)] transition-colors group"
+          >
+            <p className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+              Analytics & Statistics
+            </p>
+            <p className="text-xs text-[var(--muted)] mt-1">
+              View app usage analytics from PostHog
+            </p>
+          </Link>
         </div>
       </main>
     </div>
