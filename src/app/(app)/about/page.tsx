@@ -34,12 +34,12 @@ export default function AboutPage() {
             Download our app for personalized event recommendations based on your interests, location, and university.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="px-6 py-3 bg-text text-surface rounded-lg font-semibold hover:bg-subtle transition-colors">
+            <a className="px-6 py-3 bg-text text-surface rounded-lg font-semibold hover:bg-subtle transition-colors" href="https://apps.apple.com/gb/app/redefine-me/id6759492024">
               Download for iOS
-            </button>
-            <button className="px-6 py-3 border border-border text-text rounded-lg font-semibold hover:bg-bg transition-colors">
+            </a>
+            <a className="px-6 py-3 border border-border text-text rounded-lg font-semibold hover:bg-bg transition-colors">
               Download for Android
-            </button>
+            </a>
           </div>
         </div>
         
