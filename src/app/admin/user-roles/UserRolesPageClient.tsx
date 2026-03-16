@@ -383,17 +383,13 @@ export default function UserRolesPageClient({ societies }: UserRolesPageClientPr
                     )}
                   </div>
 
-                  {/* Accordion content */}
-                  {isExpanded && (
-                    <div className="border-t border-[var(--border)]">
-                      {/* Table header */}
-                      <div className="hidden sm:grid grid-cols-[1fr_1fr_180px_140px] gap-2 px-5 py-2 bg-[var(--bg)] text-xs font-medium text-[var(--muted)]">
-                        <span>Name</span>
-                        <span>Email</span>
-                        <span>Role</span>
-                        <span className="text-right">Actions</span>
-                      </div>
-
+                  {/* Accordion content — animated via CSS grid-rows */}
+                  <div
+                    className="grid transition-[grid-template-rows] duration-500 ease-in-out"
+                    style={{ gridTemplateRows: isExpanded ? '1fr' : '0fr' }}
+                  >
+                    <div className="overflow-hidden min-h-0">
+                      <div className={`border-t border-[var(--border)] transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>
                       {/* Member rows */}
                       <div className="divide-y divide-[var(--border)]">
                         {society.members.map((member) => {
@@ -402,34 +398,39 @@ export default function UserRolesPageClient({ societies }: UserRolesPageClientPr
                           return (
                             <div
                               key={member.id}
-                              className="px-5 py-3 flex flex-col sm:grid sm:grid-cols-[1fr_1fr_180px_140px] sm:items-center gap-2"
+                              className="px-5 py-3 flex items-center gap-3"
                             >
-                              <div className="flex items-center gap-2">
-                                {displayRole === 'President' && (
-                                  <span className="text-amber-500 shrink-0" title="President">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                                    </svg>
+                              {/* Name + email */}
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center gap-2">
+                                  {displayRole === 'President' && (
+                                    <span className="text-amber-500 shrink-0" title="President">
+                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                                      </svg>
+                                    </span>
+                                  )}
+                                  <span className="text-sm font-medium text-[var(--text)]">
+                                    {member.name}
                                   </span>
-                                )}
-                                <span className="text-sm font-medium text-[var(--text)]">
-                                  {member.name}
+                                  {isPending && (
+                                    <span className="text-[10px] font-medium text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded shrink-0">
+                                      Unsaved
+                                    </span>
+                                  )}
+                                </div>
+                                <span className="text-xs text-[var(--muted)] truncate block">
+                                  {member.email}
                                 </span>
-                                {isPending && (
-                                  <span className="text-[10px] font-medium text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">
-                                    Unsaved
-                                  </span>
-                                )}
                               </div>
-                              <span className="text-sm text-[var(--muted)] truncate">
-                                {member.email}
-                              </span>
+
+                              {/* Role dropdown */}
                               <select
                                 value={displayRole}
                                 onChange={(e) =>
                                   handleRoleChange(society.id, member.id, e.target.value as CommitteeRole)
                                 }
-                                className={`text-xs px-2 py-1.5 rounded-lg border bg-[var(--surface)] text-[var(--text)] outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent ${
+                                className={`shrink-0 text-xs px-2 py-1.5 rounded-lg border bg-[var(--surface)] text-[var(--text)] outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent ${
                                   isPending ? 'border-amber-300' : 'border-[var(--border)]'
                                 }`}
                               >
@@ -439,7 +440,9 @@ export default function UserRolesPageClient({ societies }: UserRolesPageClientPr
                                   </option>
                                 ))}
                               </select>
-                              <div className="flex items-center gap-1.5 sm:justify-end">
+
+                              {/* Actions */}
+                              <div className="flex items-center gap-1.5 shrink-0">
                                 {displayRole !== 'President' && (
                                   <button
                                     onClick={() =>
@@ -481,7 +484,8 @@ export default function UserRolesPageClient({ societies }: UserRolesPageClientPr
                         </button>
                       </div>
                     </div>
-                  )}
+                    </div>
+                  </div>
                 </div>
               );
             })}
