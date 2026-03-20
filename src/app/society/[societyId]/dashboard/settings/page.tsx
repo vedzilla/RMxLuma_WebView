@@ -24,7 +24,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Image, Instagram, LogOut } from "lucide-react";
+import { Image, Instagram, LogOut, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 
 const approvalStatusColors: Record<string, string> = {
@@ -353,8 +353,17 @@ export default function SettingsPage() {
 
       <Separator />
 
-      {/* Sign out */}
-      <div className="flex justify-end">
+      {/* Reset & Sign out */}
+      <div className="flex justify-between">
+        <Button
+          variant="outline"
+          onClick={() => {
+            toast.info("Reset back to Instagram — not yet implemented");
+          }}
+        >
+          <RotateCcw className="mr-2 h-4 w-4" />
+          Reset back to Instagram
+        </Button>
         <Button variant="outline" onClick={handleSignOut}>
           <LogOut className="mr-2 h-4 w-4" />
           Sign Out
