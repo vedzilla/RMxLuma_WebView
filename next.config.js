@@ -12,7 +12,7 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://prod.spline.design https://unpkg.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob: https://dgzzf6k1ibya0.cloudfront.net https://redefine-me-image-bucket.s3.amazonaws.com https://*.cdninstagram.com https://images.unsplash.com https://via.placeholder.com",
+              "img-src 'self' data: blob: https://dgzzf6k1ibya0.cloudfront.net https://redefine-me-image-bucket.s3.amazonaws.com https://*.cdninstagram.com https://images.unsplash.com https://via.placeholder.com https://redefine-me.supabase.co",
               "connect-src 'self' https://redefine-me.supabase.co https://prod.spline.design https://unpkg.com",
               "frame-src 'self' https://prod.spline.design",
               "object-src 'none'",
