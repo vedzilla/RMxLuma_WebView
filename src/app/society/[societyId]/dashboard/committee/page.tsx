@@ -147,6 +147,7 @@ export default function CommitteePage() {
   const [requests, setRequests] = useState<ApprovalRequest[]>(INITIAL_REQUESTS);
   const [showRejected, setShowRejected] = useState(false);
   const [removingMemberId, setRemovingMemberId] = useState<string | null>(null);
+  const [showDeleteAllConfirm, setShowDeleteAllConfirm] = useState(false);
 
   const pendingRequests = requests.filter((r) => r.status === 'pending');
   const rejectedRequests = requests.filter((r) => r.status === 'rejected');
@@ -233,14 +234,26 @@ export default function CommitteePage() {
             <CardTitle className="text-lg">Members</CardTitle>
             <Badge variant="secondary">{members.length}</Badge>
           </div>
-          <Button
-            size="sm"
-            onClick={() => toast.info('Add member coming soon')}
-            className="gap-1.5"
-          >
-            <UserPlus className="h-4 w-4" />
-            Add Member
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className="gap-1.5 border-red-200 text-red-700 hover:bg-red-50"
+              disabled={members.length === 0}
+              onClick={() => setShowDeleteAllConfirm(true)}
+            >
+              <Trash2 className="h-4 w-4" />
+              Delete All
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => toast.info('Add member coming soon')}
+              className="gap-1.5"
+            >
+              <UserPlus className="h-4 w-4" />
+              Add Member
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           {members.length === 0 ? (
@@ -473,6 +486,48 @@ export default function CommitteePage() {
           </div>
         );
       })()}
+
+      {/* Delete all confirmation modal */}
+      {showDeleteAllConfirm && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+          onClick={() => setShowDeleteAllConfirm(false)}
+        >
+          <div
+            className="bg-card rounded-xl border border-border p-6 max-w-sm w-full mx-4 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-base font-semibold text-foreground mb-2">
+              Delete All Members
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Are you sure you want to remove all{' '}
+              <span className="font-medium text-foreground">{members.length}</span>{' '}
+              member{members.length !== 1 ? 's' : ''} from the committee?
+            </p>
+            <div className="flex items-center justify-end gap-2 mt-5">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowDeleteAllConfirm(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={() => {
+                  setMembers([]);
+                  setShowDeleteAllConfirm(false);
+                  toast.success('All members removed');
+                }}
+              >
+                Delete All
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
