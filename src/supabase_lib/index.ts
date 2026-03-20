@@ -1,4 +1,4 @@
-// supabase_lib — public read-only data access for the RedefineMe web app.
+// supabase_lib — data access layer for the RedefineMe web app.
 // All functions fetch live data from Supabase and return typed frontend objects.
 
 export { getClient } from './client';
@@ -36,6 +36,10 @@ export type {
   InteractionTypeRow,
   EventWithRelations,
   SocietyWithUniversity,
+  ScheduleEntryInput,
+  CreateEventInput,
+  UpdateEventInput,
+  DeleteEventInput,
 } from './types';
 
 // Events
@@ -47,6 +51,7 @@ export {
   getEventCities,
   getEventTags,
   getEventUniversities,
+  getEventsForSociety,
 } from './events';
 
 export type { GetEventsOptions } from './events';
@@ -84,6 +89,9 @@ export { getCities, getCityBySlug } from './cities';
 
 // Users
 export { getUserCount, getUserRole, getUserRoles, isAdmin, getSocietyUserDetails } from './users';
+
+// Event management (authenticated — edge functions)
+export { createEvent, updateEvent, deleteEvent } from './event-management';
 
 // Transform utilities (useful if callers have raw DB rows)
 export {

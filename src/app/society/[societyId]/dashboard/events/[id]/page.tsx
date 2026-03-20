@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDashboardNav } from "@/hooks/useDashboardNav";
@@ -48,8 +48,14 @@ export default function EventDetailPage() {
   const router = useRouter();
   const nav = useDashboardNav();
   const { society } = useSocietyAuth();
-  const { events, deleteEvent } = useEvents(society?.id);
+  const { events, loading, fetchEvents, deleteEvent } = useEvents(society?.id);
   const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    if (society?.id) {
+      fetchEvents();
+    }
+  }, [society?.id, fetchEvents]);
 
   const event = events.find((e) => e.id === params.id);
 
@@ -68,6 +74,20 @@ export default function EventDetailPage() {
       setDeleting(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="h-8 w-64 animate-pulse rounded bg-muted" />
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-24 animate-pulse rounded bg-muted" />
+          ))}
+        </div>
+        <div className="h-64 animate-pulse rounded bg-muted" />
+      </div>
+    );
+  }
 
   if (!event) {
     return (

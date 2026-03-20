@@ -1,7 +1,9 @@
+import { SupabaseClient } from '@supabase/supabase-js';
 import { getClient } from './client';
 import { transformEvent, generateSlug } from './transform';
 import { getCities } from './cities';
 import type { Event, EventWithRelations } from './types';
+import type { DashboardEvent } from '@/lib/supabase/types';
 
 // Supabase select string that joins all needed relations.
 const EVENT_SELECT = `
@@ -151,4 +153,100 @@ export async function getEventTags(): Promise<string[]> {
 export async function getEventUniversities(): Promise<string[]> {
   const events = await getEvents({ upcomingOnly: false });
   return Array.from(new Set(events.map(e => e.university))).sort();
+}
+
+// ---- Dashboard (authenticated) ----
+
+// Select string for dashboard event queries — includes multi-category and status joins.
+const DASHBOARD_EVENT_SELECT = `
+  *,
+  categories(id, name),
+  event_categories(categories(id, name)),
+  event_societies!inner(society_id),
+  event_images(post_id, image_index, post_images(full_url)),
+  schedule_entries(id, scheduled_at, is_end_schedule, schedule_order, location_id, locations(id, name, google_maps_url)),
+  n8n_event_status(status)
+`.trim();
+
+/** Transform a raw dashboard event row into a DashboardEvent. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function toDashboardEvent(row: any): DashboardEvent {
+  // Categories: prefer event_categories junction, fall back to legacy FK
+  const categories: string[] =
+    row.event_categories?.length > 0
+      ? row.event_categories
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .map((ec: any) => ec.categories?.name)
+          .filter(Boolean)
+      : row.categories
+        ? [row.categories.name]
+        : [];
+
+  // Status: latest from n8n_event_status, default to "live"
+  const status: string = row.n8n_event_status?.[0]?.status ?? 'live';
+
+  // Sort schedule entries by order
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sortedEntries = [...(row.schedule_entries ?? [])].sort(
+    (a: any, b: any) => a.schedule_order - b.schedule_order
+  );
+  const startEntry = sortedEntries.find(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (e: any) => !e.is_end_schedule
+  );
+
+  // Primary image (lowest index)
+  const sortedImages = [...(row.event_images ?? [])].sort(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (a: any, b: any) => (a.image_index ?? 0) - (b.image_index ?? 0)
+  );
+
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    date: startEntry?.scheduled_at ?? null,
+    status,
+    source: row.source ?? 'scraped',
+    likes: row.likes ?? 0,
+    attending: row.attending ?? 0,
+    categories,
+    imageUrl: sortedImages[0]?.post_images?.full_url ?? null,
+    registrationUrl: row.registration_url,
+    isOnline: row.is_online ?? false,
+    isFree: row.is_free ?? true,
+    price: row.price,
+    schedules: sortedEntries.map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (e: any) => ({
+        scheduledAt: e.scheduled_at,
+        isEnd: e.is_end_schedule,
+        order: e.schedule_order,
+        locationName: e.locations?.name ?? null,
+        locationId: e.location_id ?? null,
+        locationGoogleMapsUrl: e.locations?.google_maps_url ?? null,
+      })
+    ),
+  };
+}
+
+/**
+ * Fetch all events belonging to a society (via event_societies junction).
+ * Requires an authenticated Supabase client.
+ */
+export async function getEventsForSociety(
+  supabase: SupabaseClient,
+  societyId: string
+): Promise<DashboardEvent[]> {
+  const { data, error } = await supabase
+    .from('events')
+    .select(DASHBOARD_EVENT_SELECT)
+    .eq('event_societies.society_id', societyId);
+
+  if (error) {
+    console.error('[supabase_lib] getEventsForSociety error:', error.message);
+    return [];
+  }
+
+  return (data ?? []).map(toDashboardEvent);
 }

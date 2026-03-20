@@ -5,6 +5,7 @@ import { useDashboardNav } from "@/hooks/useDashboardNav";
 import { useSocietyAuth } from "@/hooks/useSocietyAuth";
 import { useEvents } from "@/hooks/useEvents";
 import { EventForm, type EventFormData } from "@/components/events/EventForm";
+import { mockCategories } from "@/lib/mock-data";
 import { toast } from "sonner";
 
 export default function CreateEventPage() {
@@ -15,8 +16,12 @@ export default function CreateEventPage() {
 
   const handleSubmit = async (formData: EventFormData & { images: File[] }) => {
     try {
-      const { images: _removed, ...eventData } = formData;
-      await createEvent(eventData);
+      // Resolve category IDs to names for the edge function
+      const categoryNames = formData.categoryIds
+        .map((id) => mockCategories.find((c) => c.id === id)?.name)
+        .filter((name): name is string => !!name);
+
+      await createEvent(formData, categoryNames);
 
       toast.success("Event created successfully.");
       router.push(nav.href("/events"));
