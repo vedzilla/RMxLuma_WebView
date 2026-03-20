@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 interface EngagementChartProps {
   data: Array<{ date: string; likes: number; attending: number; views: number }>;
   loading?: boolean;
+  hasEvents?: boolean;
 }
 
 const chartConfig: ChartConfig = {
@@ -20,7 +21,7 @@ const chartConfig: ChartConfig = {
   views: { label: "Views", color: "var(--chart-3)" },
 };
 
-export function EngagementChart({ data, loading }: EngagementChartProps) {
+export function EngagementChart({ data, loading, hasEvents = true }: EngagementChartProps) {
   return (
     <Card>
       <CardHeader>
@@ -29,6 +30,12 @@ export function EngagementChart({ data, loading }: EngagementChartProps) {
       <CardContent>
         {loading ? (
           <div className="h-[300px] animate-pulse rounded bg-muted" />
+        ) : !hasEvents ? (
+          <div className="flex h-[300px] items-center justify-center rounded bg-muted/50">
+            <p className="text-sm text-muted-foreground">
+              Create an event to view these details
+            </p>
+          </div>
         ) : (
           <ChartContainer config={chartConfig} className="h-[300px] w-full">
             <LineChart data={data}>

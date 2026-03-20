@@ -93,6 +93,9 @@ export { getUserCount, getUserRole, getUserRoles, isAdmin, getSocietyUserDetails
 // Event management (authenticated — edge functions)
 export { createEvent, updateEvent, deleteEvent } from './event-management';
 
+// Analytics (authenticated — edge functions)
+export { fetchSocietyAnalytics, fetchPostHogAnalytics } from './analytics';
+
 // Transform utilities (useful if callers have raw DB rows)
 export {
   generateSlug,

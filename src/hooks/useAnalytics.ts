@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from "react";
 import type { AnalyticsData, PostHogAnalyticsData } from "@/lib/supabase/types";
-import { getMockAnalytics, getMockPostHogAnalytics } from "@/lib/mock-data";
+import { createAuthBrowserClient } from "@/supabase_lib/auth/browser";
+import { fetchSocietyAnalytics, fetchPostHogAnalytics } from "@/supabase_lib/analytics";
 
 type TimeRange = "7d" | "30d" | "90d";
 
@@ -14,17 +15,44 @@ export function useAnalytics(societyId: string | undefined) {
 
   const fetchAnalytics = useCallback(
     async (timeRange: TimeRange = "30d") => {
+      if (!societyId) return;
       setLoading(true);
       setError(null);
 
-      // Simulate network delay
-      await new Promise((r) => setTimeout(r, 300));
+      try {
+        const supabase = createAuthBrowserClient();
+        const [analyticsResult, posthogResult] = await Promise.allSettled([
+          fetchSocietyAnalytics(supabase, societyId, timeRange),
+          fetchPostHogAnalytics(supabase, societyId, timeRange),
+        ]);
 
-      setAnalytics(getMockAnalytics(timeRange));
-      setPosthogData(getMockPostHogAnalytics());
-      setLoading(false);
+        if (analyticsResult.status === "fulfilled") {
+          setAnalytics(analyticsResult.value);
+        } else {
+          console.error("[useAnalytics] analytics fetch failed:", analyticsResult.reason);
+          setAnalytics(null);
+          setError(
+            analyticsResult.reason instanceof Error
+              ? analyticsResult.reason.message
+              : "Failed to load analytics"
+          );
+        }
+
+        if (posthogResult.status === "fulfilled") {
+          setPosthogData(posthogResult.value);
+        } else {
+          // PostHog failure is non-fatal — views will show as 0
+          console.warn("[useAnalytics] PostHog fetch failed:", posthogResult.reason);
+          setPosthogData(null);
+        }
+      } catch (err) {
+        console.error("[useAnalytics] unexpected error:", err);
+        setError(err instanceof Error ? err.message : "Failed to load analytics");
+      } finally {
+        setLoading(false);
+      }
     },
-    []
+    [societyId]
   );
 
   return { analytics, posthogData, loading, error, fetchAnalytics };

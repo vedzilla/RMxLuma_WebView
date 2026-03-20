@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/table";
 import { Users, Eye, Heart, CalendarCheck, Plus } from "lucide-react";
 import { formatDate } from "@/lib/utils";
-import { getMockEngagementData } from "@/lib/mock-data";
 
 type TimeRange = "7d" | "30d" | "90d";
 
@@ -45,7 +44,43 @@ export default function OverviewPage() {
     .sort((a, b) => b.likes + b.attending - (a.likes + a.attending))
     .slice(0, 5);
 
-  const engagementData = useMemo(() => getMockEngagementData(timeRange), [timeRange]);
+  const engagementData = useMemo(() => {
+    if (events.length === 0) return [];
+
+    const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
+    const dateMap = new Map<string, { date: string; likes: number; attending: number; views: number }>();
+
+    // Initialise all dates in range with zeroes
+    const now = new Date();
+    for (let i = days; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const key = d.toISOString().split("T")[0];
+      dateMap.set(key, { date: key, likes: 0, attending: 0, views: 0 });
+    }
+
+    // Build eventId → views lookup from PostHog data
+    const viewsMap = new Map<string, number>();
+    if (posthogData?.viewsByEvent) {
+      for (const v of posthogData.viewsByEvent) {
+        viewsMap.set(v.eventId, v.views);
+      }
+    }
+
+    // Place each event's engagement on its date
+    for (const event of events) {
+      if (!event.date) continue;
+      const dateKey = event.date.split("T")[0];
+      const entry = dateMap.get(dateKey);
+      if (entry) {
+        entry.likes += event.likes;
+        entry.attending += event.attending;
+        entry.views += viewsMap.get(event.id) ?? 0;
+      }
+    }
+
+    return Array.from(dateMap.values());
+  }, [events, posthogData, timeRange]);
 
   return (
     <div className="space-y-6">
@@ -94,7 +129,7 @@ export default function OverviewPage() {
       </div>
 
       {/* Engagement chart */}
-      <EngagementChart data={engagementData} loading={analyticsLoading} />
+      <EngagementChart data={engagementData} loading={analyticsLoading} hasEvents={events.length > 0} />
 
       {/* Top events table */}
       <Card>
