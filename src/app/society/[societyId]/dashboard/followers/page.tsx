@@ -1,25 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSocietyAuth } from "@/hooks/useSocietyAuth";
-import { useAnalytics } from "@/hooks/useAnalytics";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { DateRangeFilter } from "@/components/dashboard/DateRangeFilter";
 import { FollowerGrowthChart } from "@/components/charts/FollowerGrowthChart";
-import { Users } from "lucide-react";
+import { Users, Info } from "lucide-react";
 
 type TimeRange = "7d" | "30d" | "90d";
 
+function generateMockGrowth(days: number): Array<{ date: string; count: number }> {
+  const data: Array<{ date: string; count: number }> = [];
+  const now = new Date();
+  for (let i = days; i >= 0; i--) {
+    const date = new Date(now);
+    date.setDate(date.getDate() - i);
+    data.push({
+      date: date.toISOString().split("T")[0],
+      count: Math.floor(Math.random() * 8) + 1,
+    });
+  }
+  return data;
+}
+
 export default function FollowersPage() {
-  const { society } = useSocietyAuth();
-  const { analytics, loading, fetchAnalytics } = useAnalytics(society?.id);
+  const { profile, loading } = useSocietyAuth();
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
 
-  useEffect(() => {
-    if (society?.id) {
-      fetchAnalytics(timeRange);
-    }
-  }, [society?.id, timeRange, fetchAnalytics]);
+  const days = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
+  const mockGrowth = useMemo(() => generateMockGrowth(days), [days]);
 
   return (
     <div className="space-y-6">
@@ -36,16 +45,19 @@ export default function FollowersPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
           title="Total Followers"
-          value={analytics?.followerCount ?? 0}
+          value={profile?.follow_count ?? 0}
           icon={Users}
           loading={loading}
         />
       </div>
 
-      <FollowerGrowthChart
-        data={analytics?.followerGrowth ?? []}
-        loading={loading}
-      />
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Info className="h-4 w-4 shrink-0" />
+          <span>Growth chart shows demo data. Real historical tracking coming soon.</span>
+        </div>
+        <FollowerGrowthChart data={mockGrowth} loading={loading} />
+      </div>
     </div>
   );
 }
