@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDashboardNav } from "@/hooks/useDashboardNav";
@@ -29,8 +30,15 @@ export function Sidebar() {
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-border bg-card">
       <div className="flex h-16 items-center border-b border-border px-6">
-        <Link href={nav.href("/overview")} className="flex items-center gap-2">
-          <span className="text-xl font-bold text-foreground">RedefineMe</span>
+        <Link href={nav.href("/overview")} className="flex items-center">
+          <Image
+            src="/logos/Redefine Me logo wno bg.png"
+            alt="Redefine Me"
+            width={640}
+            height={144}
+            className="h-[154px] w-auto"
+            priority
+          />
         </Link>
       </div>
       <nav className="flex-1 space-y-1 p-4">

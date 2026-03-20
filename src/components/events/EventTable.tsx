@@ -173,9 +173,9 @@ export function EventTable({ events, loading, basePath = "" }: EventTableProps) 
   });
 
   const statusFilter =
-    (table.getColumn("status")?.getFilterValue() as string) ?? "all";
+    (table.getColumn("status")?.getFilterValue() as string) ?? "All";
   const sourceFilter =
-    (table.getColumn("source")?.getFilterValue() as string) ?? "all";
+    (table.getColumn("source")?.getFilterValue() as string) ?? "All";
 
   if (loading) {
     return (
@@ -201,14 +201,14 @@ export function EventTable({ events, loading, basePath = "" }: EventTableProps) 
           onValueChange={(val) =>
             table
               .getColumn("status")
-              ?.setFilterValue(val === "all" ? undefined : val)
+              ?.setFilterValue(val === "All" ? undefined : val)
           }
         >
           <SelectTrigger className="w-[140px]">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="All">All statuses</SelectItem>
             <SelectItem value="live">Live</SelectItem>
             <SelectItem value="ingested">Pending</SelectItem>
             <SelectItem value="approved">Approved</SelectItem>
@@ -220,14 +220,14 @@ export function EventTable({ events, loading, basePath = "" }: EventTableProps) 
           onValueChange={(val) =>
             table
               .getColumn("source")
-              ?.setFilterValue(val === "all" ? undefined : val)
+              ?.setFilterValue(val === "All" ? undefined : val)
           }
         >
           <SelectTrigger className="w-[140px]">
             <SelectValue placeholder="Source" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All sources</SelectItem>
+            <SelectItem value="All">All sources</SelectItem>
             <SelectItem value="scraped">Scraped</SelectItem>
             <SelectItem value="manual">Manual</SelectItem>
           </SelectContent>

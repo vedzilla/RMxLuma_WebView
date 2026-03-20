@@ -28,6 +28,8 @@ export type {
   SocietyAccountApprovalStatusRow,
   SocietyAccountWithStatus,
   SocietyAccountWithSociety,
+  SocietyManagementPermRow,
+  SocietyCommitteePermWithName,
   StudyLevelRow,
   InteractionTypeRow,
   EventWithRelations,
@@ -58,6 +60,10 @@ export {
   getApprovalStatuses,
   updateSocietyProfileDetails,
   updateSocietyProfileImage,
+  getSocietyAccountsForSociety,
+  getManagementPermissions,
+  getCommitteePermissions,
+  toggleCommitteePermission,
 } from './societies';
 
 // Universities

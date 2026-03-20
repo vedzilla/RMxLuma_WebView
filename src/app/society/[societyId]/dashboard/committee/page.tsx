@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import {
@@ -11,117 +11,39 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { UserPlus, Trash2, ChevronDown, Check, X } from 'lucide-react';
-
-// ---- Constants ----
-
-const COMMITTEE_ROLES = [
-  'President',
-  'Vice President',
-  'Treasurer',
-  'Secretary',
-  'Social Sec',
-  'Events Officer',
-  'Welfare Officer',
-  'Inclusions Officer',
-  'Member',
-] as const;
-
-const PERMISSIONS = [
-  'event_management',
-  'society_profile',
-  'member_management',
-  'view_analytics',
-] as const;
+import { ChevronDown, Check, X, AlertCircle } from 'lucide-react';
+import { useDashboardContext } from '@/components/dashboard/DashboardContext';
+import { useSocietyAuth } from '@/hooks/useSocietyAuth';
+import { createAuthBrowserClient } from '@/supabase_lib/auth/browser';
+import {
+  getSocietyAccountsForSociety,
+  getManagementPermissions,
+  getCommitteePermissions,
+  toggleCommitteePermission,
+} from '@/supabase_lib/societies';
+import { getSocietyUserDetails } from '@/supabase_lib/users';
+import type { SocietyManagementPermRow } from '@/supabase_lib/types';
 
 // ---- Types ----
 
 interface CommitteeMember {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  permissions: string[];
+  accountId: string;
+  authUserId: string;
+  name: string | null;
+  email: string | null;
+  status: string;
+  permissions: string[]; // permission IDs currently granted
+  createdAt: string;
 }
 
 interface ApprovalRequest {
-  id: string;
-  name: string;
-  email: string;
+  accountId: string;
+  authUserId: string;
+  name: string | null;
+  email: string | null;
   requestedAt: string;
   status: 'pending' | 'rejected';
 }
-
-// ---- Mock Data ----
-
-const INITIAL_MEMBERS: CommitteeMember[] = [
-  {
-    id: 'm1',
-    name: 'Alice Johnson',
-    email: 'alice.j@student.manchester.ac.uk',
-    role: 'President',
-    permissions: ['event_management', 'society_profile', 'member_management', 'view_analytics'],
-  },
-  {
-    id: 'm2',
-    name: 'Ben Carter',
-    email: 'ben.carter@student.manchester.ac.uk',
-    role: 'Vice President',
-    permissions: ['event_management', 'society_profile', 'view_analytics'],
-  },
-  {
-    id: 'm3',
-    name: 'Chloe Williams',
-    email: 'chloe.w@student.manchester.ac.uk',
-    role: 'Treasurer',
-    permissions: ['view_analytics'],
-  },
-  {
-    id: 'm4',
-    name: 'David Lee',
-    email: 'david.lee@student.manchester.ac.uk',
-    role: 'Events Officer',
-    permissions: ['event_management'],
-  },
-  {
-    id: 'm5',
-    name: 'Emma Patel',
-    email: 'emma.p@student.manchester.ac.uk',
-    role: 'Social Sec',
-    permissions: ['event_management', 'society_profile'],
-  },
-];
-
-const INITIAL_REQUESTS: ApprovalRequest[] = [
-  {
-    id: 'r1',
-    name: 'Fatima Khan',
-    email: 'fatima.k@student.manchester.ac.uk',
-    requestedAt: '2026-03-18T10:30:00Z',
-    status: 'pending',
-  },
-  {
-    id: 'r2',
-    name: 'George Chen',
-    email: 'george.c@student.manchester.ac.uk',
-    requestedAt: '2026-03-15T14:20:00Z',
-    status: 'pending',
-  },
-  {
-    id: 'r3',
-    name: 'Hannah Brooks',
-    email: 'hannah.b@student.manchester.ac.uk',
-    requestedAt: '2026-03-10T09:00:00Z',
-    status: 'rejected',
-  },
-  {
-    id: 'r4',
-    name: 'Ian Murray',
-    email: 'ian.m@student.manchester.ac.uk',
-    requestedAt: '2026-03-05T11:45:00Z',
-    status: 'rejected',
-  },
-];
 
 // ---- Helpers ----
 
@@ -143,75 +65,241 @@ function formatDate(iso: string): string {
 // ---- Component ----
 
 export default function CommitteePage() {
-  const [members, setMembers] = useState<CommitteeMember[]>(INITIAL_MEMBERS);
-  const [requests, setRequests] = useState<ApprovalRequest[]>(INITIAL_REQUESTS);
-  const [showRejected, setShowRejected] = useState(false);
-  const [removingMemberId, setRemovingMemberId] = useState<string | null>(null);
-  const [showDeleteAllConfirm, setShowDeleteAllConfirm] = useState(false);
+  const { societyId } = useDashboardContext();
+  const { user, loading: authLoading } = useSocietyAuth();
 
-  const pendingRequests = requests.filter((r) => r.status === 'pending');
-  const rejectedRequests = requests.filter((r) => r.status === 'rejected');
+  const [members, setMembers] = useState<CommitteeMember[]>([]);
+  const [pendingRequests, setPendingRequests] = useState<ApprovalRequest[]>([]);
+  const [rejectedRequests, setRejectedRequests] = useState<ApprovalRequest[]>([]);
+  const [availablePermissions, setAvailablePermissions] = useState<SocietyManagementPermRow[]>([]);
+  const [showRejected, setShowRejected] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [dataError, setDataError] = useState<string | null>(null);
+  const [togglingPermissions, setTogglingPermissions] = useState<Set<string>>(new Set());
+
+  // ---- Data Fetching ----
+
+  const fetchCommitteeData = useCallback(async () => {
+    if (!user) return;
+
+    setDataLoading(true);
+    setDataError(null);
+
+    try {
+      const supabase = createAuthBrowserClient();
+
+      // Fetch accounts and permissions in parallel
+      const [accounts, perms] = await Promise.all([
+        getSocietyAccountsForSociety(supabase, societyId),
+        getManagementPermissions(supabase),
+      ]);
+
+      setAvailablePermissions(perms);
+
+      // Split accounts by status
+      const memberAccounts = accounts.filter(
+        (a) => {
+          const status = a.society_account_approval_status?.name;
+          return status === 'approved' || status === 'trusted';
+        }
+      );
+      const pending = accounts.filter(
+        (a) => a.society_account_approval_status?.name === 'pending'
+      );
+      const rejected = accounts.filter(
+        (a) => a.society_account_approval_status?.name === 'rejected'
+      );
+
+      // Fetch committee permissions and user details in parallel
+      const memberAccountIds = memberAccounts.map((a) => a.id);
+      const allAccounts = [...memberAccounts, ...pending, ...rejected];
+
+      const [committeePerms, ...userDetails] = await Promise.all([
+        getCommitteePermissions(supabase, memberAccountIds),
+        ...allAccounts.map((a) => getSocietyUserDetails(supabase, a.auth_user_id)),
+      ]);
+
+      // Build a map of accountId → permission IDs
+      const permsByAccount = new Map<string, string[]>();
+      for (const cp of committeePerms) {
+        const existing = permsByAccount.get(cp.society_account_id) ?? [];
+        existing.push(cp.permission_id);
+        permsByAccount.set(cp.society_account_id, existing);
+      }
+
+      // Build a map of authUserId → user details
+      const detailsByUserId = new Map<string, { name: string | null; email: string | null }>();
+      allAccounts.forEach((account, i) => {
+        detailsByUserId.set(account.auth_user_id, userDetails[i]);
+      });
+
+      // Build member list
+      setMembers(
+        memberAccounts.map((a) => {
+          const details = detailsByUserId.get(a.auth_user_id);
+          return {
+            accountId: a.id,
+            authUserId: a.auth_user_id,
+            name: details?.name ?? null,
+            email: details?.email ?? null,
+            status: a.society_account_approval_status?.name ?? 'approved',
+            permissions: permsByAccount.get(a.id) ?? [],
+            createdAt: a.created_at,
+          };
+        })
+      );
+
+      // Build request lists
+      const buildRequest = (a: typeof accounts[number]): ApprovalRequest => {
+        const details = detailsByUserId.get(a.auth_user_id);
+        return {
+          accountId: a.id,
+          authUserId: a.auth_user_id,
+          name: details?.name ?? null,
+          email: details?.email ?? null,
+          requestedAt: a.created_at,
+          status: a.society_account_approval_status?.name as 'pending' | 'rejected',
+        };
+      };
+
+      setPendingRequests(pending.map(buildRequest));
+      setRejectedRequests(rejected.map(buildRequest));
+    } catch (err) {
+      console.error('[CommitteePage] fetch error:', err);
+      setDataError('Failed to load committee data. Please try again.');
+    } finally {
+      setDataLoading(false);
+    }
+  }, [user, societyId]);
+
+  const hasFetched = useRef(false);
+  useEffect(() => {
+    if (user && !hasFetched.current) {
+      hasFetched.current = true;
+      fetchCommitteeData();
+    }
+  }, [user, fetchCommitteeData]);
 
   // ---- Handlers ----
 
-  const handleRoleChange = (memberId: string, newRole: string) => {
-    setMembers((prev) =>
-      prev.map((m) => (m.id === memberId ? { ...m, role: newRole } : m))
+  const handlePermissionToggle = useCallback(
+    async (accountId: string, authUserId: string, permissionId: string) => {
+      const toggleKey = `${accountId}:${permissionId}`;
+
+      // Prevent double-clicks while in flight
+      if (togglingPermissions.has(toggleKey)) return;
+
+      // Optimistic update
+      setMembers((prev) =>
+        prev.map((m) => {
+          if (m.accountId !== accountId) return m;
+          const has = m.permissions.includes(permissionId);
+          return {
+            ...m,
+            permissions: has
+              ? m.permissions.filter((p) => p !== permissionId)
+              : [...m.permissions, permissionId],
+          };
+        })
+      );
+
+      setTogglingPermissions((prev) => new Set(prev).add(toggleKey));
+
+      try {
+        const supabase = createAuthBrowserClient();
+        const result = await toggleCommitteePermission(supabase, authUserId, societyId, permissionId);
+
+        if (result.success) {
+          const permName = formatPermissionName(result.permissionName ?? '');
+          toast.success(`${permName} ${result.action}`);
+        } else {
+          // Revert optimistic update
+          setMembers((prev) =>
+            prev.map((m) => {
+              if (m.accountId !== accountId) return m;
+              const has = m.permissions.includes(permissionId);
+              return {
+                ...m,
+                permissions: has
+                  ? m.permissions.filter((p) => p !== permissionId)
+                  : [...m.permissions, permissionId],
+              };
+            })
+          );
+          toast.error(result.error ?? 'Failed to toggle permission');
+        }
+      } catch {
+        // Revert on network error
+        setMembers((prev) =>
+          prev.map((m) => {
+            if (m.accountId !== accountId) return m;
+            const has = m.permissions.includes(permissionId);
+            return {
+              ...m,
+              permissions: has
+                ? m.permissions.filter((p) => p !== permissionId)
+                : [...m.permissions, permissionId],
+            };
+          })
+        );
+        toast.error('Network error — please try again');
+      } finally {
+        setTogglingPermissions((prev) => {
+          const next = new Set(prev);
+          next.delete(toggleKey);
+          return next;
+        });
+      }
+    },
+    [societyId, togglingPermissions]
+  );
+
+  // ---- Loading / Error States ----
+
+  if (authLoading || dataLoading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Committee</h1>
+          <p className="text-muted-foreground">Loading committee data…</p>
+        </div>
+        <div className="space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-24 animate-pulse rounded-xl bg-muted" />
+          ))}
+        </div>
+      </div>
     );
-    const member = members.find((m) => m.id === memberId);
-    toast.success(`${member?.name ?? 'Member'} role updated to ${newRole}`);
-  };
+  }
 
-  const handlePermissionToggle = (memberId: string, permission: string) => {
-    setMembers((prev) =>
-      prev.map((m) => {
-        if (m.id !== memberId) return m;
-        const has = m.permissions.includes(permission);
-        return {
-          ...m,
-          permissions: has
-            ? m.permissions.filter((p) => p !== permission)
-            : [...m.permissions, permission],
-        };
-      })
+  if (dataError) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Committee</h1>
+          <p className="text-muted-foreground">
+            Manage your society&apos;s committee members and access requests.
+          </p>
+        </div>
+        <Card>
+          <CardContent className="py-12 text-center">
+            <AlertCircle className="h-8 w-8 text-destructive mx-auto mb-3" />
+            <p className="text-sm text-muted-foreground mb-4">{dataError}</p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                hasFetched.current = false;
+                fetchCommitteeData();
+              }}
+            >
+              Try Again
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
-  };
-
-  const handleRemoveMember = () => {
-    if (!removingMemberId) return;
-    const member = members.find((m) => m.id === removingMemberId);
-    setMembers((prev) => prev.filter((m) => m.id !== removingMemberId));
-    setRemovingMemberId(null);
-    toast.success(`${member?.name ?? 'Member'} removed from committee`);
-  };
-
-  const handleApprove = (requestId: string) => {
-    const request = requests.find((r) => r.id === requestId);
-    if (!request) return;
-
-    setRequests((prev) => prev.filter((r) => r.id !== requestId));
-    setMembers((prev) => [
-      ...prev,
-      {
-        id: `approved-${requestId}`,
-        name: request.name,
-        email: request.email,
-        role: 'Member',
-        permissions: [],
-      },
-    ]);
-    toast.success(`${request.name} approved and added as Member`);
-  };
-
-  const handleDeny = (requestId: string) => {
-    const request = requests.find((r) => r.id === requestId);
-    if (!request) return;
-
-    setRequests((prev) =>
-      prev.map((r) => (r.id === requestId ? { ...r, status: 'rejected' as const } : r))
-    );
-    toast.success(`${request.name} denied`);
-  };
+  }
 
   // ---- Render ----
 
@@ -226,33 +314,13 @@ export default function CommitteePage() {
       </div>
 
       {/* ============================================================ */}
-      {/* SECTION 1: MEMBERS MANAGEMENT                                */}
+      {/* SECTION 1: MEMBERS                                           */}
       {/* ============================================================ */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <div className="flex items-center gap-3">
             <CardTitle className="text-lg">Members</CardTitle>
             <Badge variant="secondary">{members.length}</Badge>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              className="gap-1.5 border-red-200 text-red-700 hover:bg-red-50"
-              disabled={members.length === 0}
-              onClick={() => setShowDeleteAllConfirm(true)}
-            >
-              <Trash2 className="h-4 w-4" />
-              Delete All
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => toast.info('Add member coming soon')}
-              className="gap-1.5"
-            >
-              <UserPlus className="h-4 w-4" />
-              Add Member
-            </Button>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -263,59 +331,51 @@ export default function CommitteePage() {
           ) : (
             <div className="divide-y divide-border">
               {members.map((member) => (
-                <div key={member.id} className="px-6 py-4">
+                <div key={member.accountId} className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     {/* Name + email */}
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-foreground">
-                        {member.name}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium text-foreground">
+                          {member.name ?? 'Unknown User'}
+                        </p>
+                        {member.status === 'trusted' && (
+                          <Badge variant="secondary" className="text-[10px]">
+                            Trusted
+                          </Badge>
+                        )}
+                      </div>
                       <p className="text-xs text-muted-foreground truncate">
-                        {member.email}
+                        {member.email ?? member.authUserId.slice(0, 8) + '…'}
                       </p>
                     </div>
-
-                    {/* Role dropdown */}
-                    <select
-                      value={member.role}
-                      onChange={(e) => handleRoleChange(member.id, e.target.value)}
-                      className="shrink-0 text-xs px-2 py-1.5 rounded-lg border border-border bg-card text-foreground outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    >
-                      {COMMITTEE_ROLES.map((role) => (
-                        <option key={role} value={role}>
-                          {role}
-                        </option>
-                      ))}
-                    </select>
-
-                    {/* Remove button */}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="shrink-0 h-8 w-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
-                      onClick={() => setRemovingMemberId(member.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
                   </div>
 
                   {/* Permission toggles */}
                   <div className="flex flex-wrap gap-3 mt-2.5 ml-0 sm:ml-1">
-                    {PERMISSIONS.map((perm) => {
-                      const isChecked = member.permissions.includes(perm);
+                    {availablePermissions.map((perm) => {
+                      const isChecked = member.permissions.includes(perm.id);
+                      const toggleKey = `${member.accountId}:${perm.id}`;
+                      const isToggling = togglingPermissions.has(toggleKey);
                       return (
                         <label
-                          key={perm}
-                          className="flex items-center gap-1.5 cursor-pointer select-none"
+                          key={perm.id}
+                          className={cn(
+                            'flex items-center gap-1.5 select-none',
+                            isToggling ? 'opacity-50 cursor-wait' : 'cursor-pointer'
+                          )}
                         >
                           <input
                             type="checkbox"
                             checked={isChecked}
-                            onChange={() => handlePermissionToggle(member.id, perm)}
+                            disabled={isToggling}
+                            onChange={() =>
+                              handlePermissionToggle(member.accountId, member.authUserId, perm.id)
+                            }
                             className="h-3.5 w-3.5 rounded border-border text-primary focus:ring-primary focus:ring-offset-0"
                           />
                           <span className="text-[11px] text-muted-foreground">
-                            {formatPermissionName(perm)}
+                            {formatPermissionName(perm.name)}
                           </span>
                         </label>
                       );
@@ -329,7 +389,7 @@ export default function CommitteePage() {
       </Card>
 
       {/* ============================================================ */}
-      {/* SECTION 2: APPROVALS                                         */}
+      {/* SECTION 2: PENDING APPROVALS                                 */}
       {/* ============================================================ */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
@@ -347,15 +407,15 @@ export default function CommitteePage() {
             <div className="divide-y divide-border">
               {pendingRequests.map((request) => (
                 <div
-                  key={request.id}
+                  key={request.accountId}
                   className="px-6 py-4 flex items-center gap-3"
                 >
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-foreground">
-                      {request.name}
+                      {request.name ?? 'Unknown User'}
                     </p>
                     <p className="text-xs text-muted-foreground truncate">
-                      {request.email}
+                      {request.email ?? request.authUserId.slice(0, 8) + '…'}
                     </p>
                   </div>
                   <span className="text-xs text-muted-foreground shrink-0 hidden sm:block">
@@ -366,7 +426,7 @@ export default function CommitteePage() {
                       size="sm"
                       variant="outline"
                       className="gap-1.5 border-emerald-200 text-emerald-700 hover:bg-emerald-50"
-                      onClick={() => handleApprove(request.id)}
+                      onClick={() => toast.info('Approve coming soon')}
                     >
                       <Check className="h-3.5 w-3.5" />
                       Approve
@@ -375,7 +435,7 @@ export default function CommitteePage() {
                       size="sm"
                       variant="outline"
                       className="gap-1.5 border-red-200 text-red-700 hover:bg-red-50"
-                      onClick={() => handleDeny(request.id)}
+                      onClick={() => toast.info('Deny coming soon')}
                     >
                       <X className="h-3.5 w-3.5" />
                       Deny
@@ -415,15 +475,15 @@ export default function CommitteePage() {
                   <div className="divide-y divide-red-100">
                     {rejectedRequests.map((request) => (
                       <div
-                        key={request.id}
+                        key={request.accountId}
                         className="px-6 py-4 flex items-center gap-3"
                       >
                         <div className="min-w-0 flex-1">
                           <p className="text-sm font-medium text-foreground">
-                            {request.name}
+                            {request.name ?? 'Unknown User'}
                           </p>
                           <p className="text-xs text-muted-foreground truncate">
-                            {request.email}
+                            {request.email ?? request.authUserId.slice(0, 8) + '…'}
                           </p>
                         </div>
                         <span className="text-xs text-muted-foreground shrink-0 hidden sm:block">
@@ -440,90 +500,6 @@ export default function CommitteePage() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Remove member confirmation modal */}
-      {removingMemberId && (() => {
-        const member = members.find((m) => m.id === removingMemberId);
-        if (!member) return null;
-
-        return (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-            onClick={() => setRemovingMemberId(null)}
-          >
-            <div
-              className="bg-card rounded-xl border border-border p-6 max-w-sm w-full mx-4 shadow-xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="text-base font-semibold text-foreground mb-2">
-                Remove Member
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Are you sure you want to remove{' '}
-                <span className="font-medium text-foreground">{member.name}</span> from
-                the committee?
-              </p>
-              <div className="flex items-center justify-end gap-2 mt-5">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setRemovingMemberId(null)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={handleRemoveMember}
-                >
-                  Remove
-                </Button>
-              </div>
-            </div>
-          </div>
-        );
-      })()}
-
-      {/* Delete all confirmation modal */}
-      {showDeleteAllConfirm && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-          onClick={() => setShowDeleteAllConfirm(false)}
-        >
-          <div
-            className="bg-card rounded-xl border border-border p-6 max-w-sm w-full mx-4 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-base font-semibold text-foreground mb-2">
-              Delete All Members
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Are you sure you want to remove all{' '}
-              <span className="font-medium text-foreground">{members.length}</span>{' '}
-              member{members.length !== 1 ? 's' : ''} from the committee?
-            </p>
-            <div className="flex items-center justify-end gap-2 mt-5">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowDeleteAllConfirm(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => {
-                  setMembers([]);
-                  setShowDeleteAllConfirm(false);
-                  toast.success('All members removed');
-                }}
-              >
-                Delete All
-              </Button>
             </div>
           </div>
         </div>

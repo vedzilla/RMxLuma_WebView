@@ -7,6 +7,8 @@ import type {
   SocietyAccountWithStatus,
   SocietyAccountWithSociety,
   SocietyAccountApprovalStatusRow,
+  SocietyManagementPermRow,
+  SocietyCommitteePermWithName,
 } from './types';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -314,5 +316,113 @@ export async function updateSocietyProfileImage(
   } catch (err) {
     console.error('[supabase_lib] updateSocietyProfileImage error:', err);
     return { imageUrl: null, error: 'Network error' };
+  }
+}
+
+/**
+ * Fetch all society_accounts for a given society, joined with approval status.
+ * Used by the committee page to list members and pending/rejected requests.
+ */
+export async function getSocietyAccountsForSociety(
+  supabase: SupabaseClient,
+  societyId: string
+): Promise<SocietyAccountWithStatus[]> {
+  const { data, error } = await supabase
+    .from('society_accounts')
+    .select('*, society_account_approval_status(name)')
+    .eq('society_id', societyId)
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    console.error('[supabase_lib] getSocietyAccountsForSociety error:', error.message);
+    return [];
+  }
+
+  return (data ?? []) as unknown as SocietyAccountWithStatus[];
+}
+
+/**
+ * Fetch all rows from the society_management_perms lookup table.
+ */
+export async function getManagementPermissions(
+  supabase: SupabaseClient
+): Promise<SocietyManagementPermRow[]> {
+  const { data, error } = await supabase
+    .from('society_management_perms')
+    .select('*')
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('[supabase_lib] getManagementPermissions error:', error.message);
+    return [];
+  }
+
+  return (data ?? []) as SocietyManagementPermRow[];
+}
+
+/**
+ * Fetch all granted permissions for a set of society account IDs,
+ * joined with the permission name from society_management_perms.
+ */
+export async function getCommitteePermissions(
+  supabase: SupabaseClient,
+  accountIds: string[]
+): Promise<SocietyCommitteePermWithName[]> {
+  if (accountIds.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from('society_committee_perms')
+    .select('*, society_management_perms(id, name)')
+    .in('society_account_id', accountIds);
+
+  if (error) {
+    console.error('[supabase_lib] getCommitteePermissions error:', error.message);
+    return [];
+  }
+
+  return (data ?? []) as unknown as SocietyCommitteePermWithName[];
+}
+
+/**
+ * Toggle a committee member's permission via the toggle-committee-member-permissions edge function.
+ * Grants the permission if not present, revokes if already granted.
+ */
+export async function toggleCommitteePermission(
+  supabase: SupabaseClient,
+  userId: string,
+  societyId: string,
+  permissionId: string
+): Promise<{ success: boolean; action?: 'granted' | 'revoked'; permissionName?: string; error?: string }> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return { success: false, error: 'Session expired — please sign in again' };
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/toggle-committee-member-permissions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        society_id: societyId,
+        permission_id: permissionId,
+      }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      return { success: false, error: data.error ?? `HTTP ${res.status}` };
+    }
+
+    const data = await res.json();
+    return {
+      success: true,
+      action: data.action,
+      permissionName: data.permission_name,
+    };
+  } catch (err) {
+    console.error('[supabase_lib] toggleCommitteePermission error:', err);
+    return { success: false, error: 'Network error' };
   }
 }

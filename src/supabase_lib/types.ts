@@ -255,6 +255,22 @@ export interface Category {
   name: string;
 }
 
+// ---- Society management permission types ----
+
+/** Row from the society_management_perms lookup table. */
+export interface SocietyManagementPermRow {
+  id: string;
+  name: string;
+}
+
+/** Row from the society_committee_perms junction table, with the permission name joined. */
+export interface SocietyCommitteePermWithName {
+  id: string;
+  society_account_id: string;
+  permission_id: string;
+  society_management_perms: Pick<SocietyManagementPermRow, 'id' | 'name'>;
+}
+
 // ---- Society account joined types ----
 
 // SocietyAccount with nested approval status name.
