@@ -187,6 +187,43 @@ export interface EventWithRelations extends EventRow {
   schedule_entries: ScheduleEntryWithLocation[];
 }
 
+// ---- Event management (edge function) types ----
+
+export interface ScheduleEntryInput {
+  scheduled_at: string;
+  is_end_schedule?: boolean;
+  schedule_order?: number;
+  location_id?: string;
+}
+
+export interface CreateEventInput {
+  society_id: string;
+  title: string;
+  description: string;
+  categories: string[];
+  schedule: ScheduleEntryInput[];
+  is_online?: boolean;
+  is_free?: boolean;
+  price?: string;
+  registration_url?: string;
+}
+
+export interface UpdateEventInput {
+  event_id: string;
+  title?: string;
+  description?: string;
+  categories?: string[];
+  schedule?: ScheduleEntryInput[];
+  is_online?: boolean;
+  is_free?: boolean;
+  price?: string | null;
+  registration_url?: string | null;
+}
+
+export interface DeleteEventInput {
+  event_id: string;
+}
+
 // Shape returned by getSocieties() — societies with nested university.
 export interface SocietyWithUniversity extends SocietyRow {
   universities: UniversityRow | null;
