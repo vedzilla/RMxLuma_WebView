@@ -1,19 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { AlertCircle } from "lucide-react";
-import { mockCategories } from "@/lib/mock-data";
+import type { Category } from "@/supabase_lib/types";
 
 interface CategorySelectorProps {
   value: string[];
   onChange: (ids: string[]) => void;
+  categories: Category[];
+  loading?: boolean;
 }
 
-export function CategorySelector({ value, onChange }: CategorySelectorProps) {
-  const categories = mockCategories;
-  const loading = false;
+export function CategorySelector({ value, onChange, categories, loading = false }: CategorySelectorProps) {
 
   function toggleCategory(id: string) {
     if (value.includes(id)) {

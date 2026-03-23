@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useDashboardNav } from "@/hooks/useDashboardNav";
 import { useSocietyAuth } from "@/hooks/useSocietyAuth";
 import { useEvents } from "@/hooks/useEvents";
+import { useCategories } from "@/hooks/useCategories";
 import { EventForm, type EventFormData } from "@/components/events/EventForm";
 import { dashboardScheduleToForm } from "@/utils/scheduleTransform";
-import { mockCategories } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -18,6 +18,7 @@ export default function EditEventPage() {
   const nav = useDashboardNav();
   const { society } = useSocietyAuth();
   const { events, loading, fetchEvents, updateEvent } = useEvents(society?.id);
+  const { categories, loading: categoriesLoading } = useCategories();
 
   useEffect(() => {
     if (society?.id) {
@@ -50,9 +51,9 @@ export default function EditEventPage() {
 
   const isScraped = event.source === "scraped";
 
-  // Reverse-map category names to mock IDs for the form
+  // Reverse-map category names to real IDs for the form
   const categoryIds = event.categories
-    .map((name) => mockCategories.find((c) => c.name === name)?.id)
+    .map((name) => categories.find((c) => c.name === name)?.id)
     .filter((id): id is string => !!id);
 
   const initialData = {
@@ -70,12 +71,7 @@ export default function EditEventPage() {
     if (!params.id) return;
 
     try {
-      // Resolve category IDs to names for the edge function
-      const categoryNames = formData.categoryIds
-        .map((id) => mockCategories.find((c) => c.id === id)?.name)
-        .filter((name): name is string => !!name);
-
-      await updateEvent(params.id, formData, categoryNames);
+      await updateEvent(params.id, formData, formData.categoryIds);
       toast.success("Event updated successfully.");
       router.push(nav.href(`/events/${params.id}`));
     } catch (err) {
@@ -101,6 +97,8 @@ export default function EditEventPage() {
         isScraped={isScraped}
         onSubmit={handleSubmit}
         submitLabel="Save Changes"
+        categories={categories}
+        categoriesLoading={categoriesLoading}
       />
     </div>
   );

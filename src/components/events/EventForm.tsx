@@ -15,6 +15,7 @@ import { ScheduleBuilder, type ScheduleEntry } from "@/components/events/Schedul
 import { ImageUploader } from "@/components/events/ImageUploader";
 import { CategorySelector } from "@/components/events/CategorySelector";
 import { AlertTriangle, Loader2 } from "lucide-react";
+import type { Category } from "@/supabase_lib/types";
 
 const eventFormSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -54,6 +55,8 @@ interface EventFormProps {
   isScraped?: boolean;
   onSubmit: (data: EventFormData & { images: File[] }) => Promise<void>;
   submitLabel?: string;
+  categories: Category[];
+  categoriesLoading?: boolean;
 }
 
 const defaultSchedule: ScheduleEntry = {
@@ -68,6 +71,8 @@ export function EventForm({
   isScraped,
   onSubmit,
   submitLabel = "Create Event",
+  categories,
+  categoriesLoading,
 }: EventFormProps) {
   const [images, setImages] = useState<File[]>(initialData?.images ?? []);
   const [submitting, setSubmitting] = useState(false);
@@ -147,7 +152,7 @@ export function EventForm({
               name="categoryIds"
               control={control}
               render={({ field }) => (
-                <CategorySelector value={field.value} onChange={field.onChange} />
+                <CategorySelector value={field.value} onChange={field.onChange} categories={categories} loading={categoriesLoading} />
               )}
             />
             {errors.categoryIds && (

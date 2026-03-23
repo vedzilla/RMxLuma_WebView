@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useDashboardNav } from "@/hooks/useDashboardNav";
 import { useSocietyAuth } from "@/hooks/useSocietyAuth";
 import { useEvents } from "@/hooks/useEvents";
+import { useCategories } from "@/hooks/useCategories";
 import { EventForm, type EventFormData } from "@/components/events/EventForm";
-import { mockCategories } from "@/lib/mock-data";
 import { toast } from "sonner";
 
 export default function CreateEventPage() {
@@ -13,12 +13,13 @@ export default function CreateEventPage() {
   const nav = useDashboardNav();
   const { society } = useSocietyAuth();
   const { createEvent } = useEvents(society?.id);
+  const { categories, loading: categoriesLoading } = useCategories();
 
   const handleSubmit = async (formData: EventFormData & { images: File[] }) => {
     try {
       // Resolve category IDs to names for the edge function
       const categoryNames = formData.categoryIds
-        .map((id) => mockCategories.find((c) => c.id === id)?.name)
+        .map((id) => categories.find((c) => c.id === id)?.name)
         .filter((name): name is string => !!name);
 
       await createEvent(formData, categoryNames);
@@ -41,7 +42,7 @@ export default function CreateEventPage() {
         </p>
       </div>
 
-      <EventForm onSubmit={handleSubmit} />
+      <EventForm onSubmit={handleSubmit} categories={categories} categoriesLoading={categoriesLoading} />
     </div>
   );
 }
