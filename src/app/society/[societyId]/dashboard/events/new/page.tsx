@@ -17,12 +17,7 @@ export default function CreateEventPage() {
 
   const handleSubmit = async (formData: EventFormData & { images: File[] }) => {
     try {
-      // Resolve category IDs to names for the edge function
-      const categoryNames = formData.categoryIds
-        .map((id) => categories.find((c) => c.id === id)?.name)
-        .filter((name): name is string => !!name);
-
-      await createEvent(formData, categoryNames);
+      await createEvent(formData, formData.categoryIds);
 
       toast.success("Event created successfully.");
       router.push(nav.href("/events"));

@@ -200,6 +200,7 @@ export interface CreateEventInput {
   society_id: string;
   title: string;
   description: string;
+  /** Category UUIDs */
   categories: string[];
   schedule: ScheduleEntryInput[];
   is_online?: boolean;
@@ -212,6 +213,7 @@ export interface UpdateEventInput {
   event_id: string;
   title?: string;
   description?: string;
+  /** Category UUIDs */
   categories?: string[];
   schedule?: ScheduleEntryInput[];
   is_online?: boolean;
