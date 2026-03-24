@@ -9,6 +9,7 @@ import { GlobalSpotlight } from '@/components/ui/spotlight';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { formatCompactNumber } from '@/utils/formatUtils';
+import { PublicButton } from '@/components/ui/PublicButton';
 
 // Fixed positions for orbiting logos around the robot
 const logoPositions = [
@@ -160,21 +161,19 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                 transition={{ delay: 0.6, duration: 0.6 }}
                 className="flex flex-wrap gap-3 justify-center lg:justify-start"
               >
-                <Link
-                  href="/discover"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-text text-white font-medium rounded-lg hover:bg-gray-800 transition-all text-sm group"
-                >
-                  Explore Events
-                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-transparent text-text font-medium rounded-lg border border-border hover:bg-surface hover:border-text/30 transition-all text-sm"
-                >
-                  Learn More
-                </Link>
+                <PublicButton asChild className="group">
+                  <Link href="/discover">
+                    Explore Events
+                    <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </PublicButton>
+                <PublicButton variant="outline" asChild>
+                  <Link href="/about">
+                    Learn More
+                  </Link>
+                </PublicButton>
               </motion.div>
 
               {/* Stats */}

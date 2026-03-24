@@ -4,6 +4,7 @@ import { Event } from '@/data/events';
 import { formatDate, formatTime } from '@/utils/dateUtils';
 import EventCard from './EventCard';
 import { getRelatedEvents } from '@/utils/eventUtils';
+import { PublicButton } from '@/components/ui/PublicButton';
 
 interface EventDetailProps {
   event: Event;
@@ -86,20 +87,20 @@ export default function EventDetail({ event, allEvents }: EventDetailProps) {
 
       {/* CTAs */}
       <div className="flex flex-col sm:flex-row gap-4 mb-12">
-        <a
-          href={event.externalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 px-6 py-3 bg-text text-surface rounded-lg font-semibold text-center hover:bg-subtle transition-colors"
-        >
-          Register
-        </a>
-        <Link
-          href="/about"
-          className="flex-1 px-6 py-3 border border-border text-text rounded-lg font-semibold text-center hover:bg-bg transition-colors"
-        >
-          Get reminders in the app
-        </Link>
+        <PublicButton asChild className="flex-1 text-center">
+          <a
+            href={event.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Register
+          </a>
+        </PublicButton>
+        <PublicButton variant="outline" asChild className="flex-1 text-center">
+          <Link href="/about">
+            Get reminders in the app
+          </Link>
+        </PublicButton>
       </div>
 
       {/* Related Events */}

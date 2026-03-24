@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Event } from '@/data/events';
 import { formatDate, formatTime } from '@/utils/dateUtils';
+import { PublicButton } from '@/components/ui/PublicButton';
 
 interface EventModalProps {
   event: Event;
@@ -215,24 +216,23 @@ export default function EventModal({ event, onClose }: EventModalProps) {
                 </div>
               </div>
             </div>
-            <a
-              href={event.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full px-6 py-3 bg-text text-surface rounded-lg font-semibold text-center hover:bg-subtle transition-colors mb-3"
-            >
-              Register Now
-            </a>
-            <Link
-              href="/about"
-              className="block w-full px-6 py-3 border border-border text-text rounded-lg font-medium text-center hover:bg-bg transition-colors"
-            >
-              Get reminders in the app
-            </Link>
+            <PublicButton asChild className="w-full text-center mb-3">
+              <a
+                href={event.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Register Now
+              </a>
+            </PublicButton>
+            <PublicButton variant="outline" asChild className="w-full text-center">
+              <Link href="/about">
+                Get reminders in the app
+              </Link>
+            </PublicButton>
           </div>
         </div>
       </div>
     </>
   );
 }
-

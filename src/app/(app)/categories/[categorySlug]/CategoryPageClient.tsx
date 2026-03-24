@@ -10,6 +10,7 @@ import SortDropdown from '@/components/SortDropdown';
 import EventCard from '@/components/EventCard';
 import EventModal from '@/components/EventModal';
 import SocietyCard from '@/components/SocietyCard';
+import { PublicButton } from '@/components/ui/PublicButton';
 
 interface CategoryPageClientProps {
   categoryName: string;
@@ -92,9 +93,9 @@ export default function CategoryPageClient({
               </div>
             </div>
             <p className="text-lg text-subtle mb-8 leading-relaxed">{description}</p>
-            <button className="px-6 py-3 bg-text text-surface rounded-lg font-semibold hover:bg-subtle transition-colors">
+            <PublicButton>
               Subscribe
-            </button>
+            </PublicButton>
           </div>
 
           <div className="bg-bg border border-border rounded-[var(--radius)] p-8 relative min-h-[500px]">

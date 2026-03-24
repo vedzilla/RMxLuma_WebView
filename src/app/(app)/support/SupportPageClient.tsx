@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { PublicButton } from '@/components/ui/PublicButton';
 
 const faqs = [
   {
@@ -259,12 +260,9 @@ export default function SupportPageClient() {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto px-8 py-3 bg-text text-surface font-semibold rounded-lg hover:bg-subtle transition-colors text-sm"
-                >
+                <PublicButton type="submit" className="w-full sm:w-auto px-8">
                   Send Message
-                </button>
+                </PublicButton>
               </form>
             </div>
           )}

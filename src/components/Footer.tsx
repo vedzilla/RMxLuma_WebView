@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { PublicButton } from '@/components/ui/PublicButton';
 
 export default function Footer() {
   return (
@@ -28,7 +29,7 @@ export default function Footer() {
               Discover society events across the UK
             </p>
           </div>
-          
+
           <div>
             <p className="text-sm font-semibold text-text mb-4">Explore</p>
             <ul className="space-y-1">
@@ -54,18 +55,17 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <p className="text-sm font-semibold text-text mb-4">Get Started</p>
-            <Link
-              href="/about"
-              className="inline-block px-4 py-2 text-sm font-medium text-text border border-border rounded-lg hover:bg-bg transition-colors"
-            >
-              Get the App
-            </Link>
+            <PublicButton variant="outline" asChild className="px-4 py-2 font-medium">
+              <Link href="/about">
+                Get the App
+              </Link>
+            </PublicButton>
           </div>
         </div>
-        
+
         <div className="mt-8 pt-8 border-t border-border text-center text-sm text-subtle">
           <p>© 2026 Redefine Me. All rights reserved.</p>
         </div>
@@ -73,8 +73,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-
-
-
-
