@@ -33,24 +33,24 @@ export default function Footer() {
           
           <div>
             <h3 className="text-sm font-semibold text-text mb-4">Explore</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               <li>
-                <Link href="/" className="text-sm text-subtle hover:text-text transition-colors">
+                <Link href="/" className="inline-block py-2 text-sm text-subtle hover:text-text transition-colors">
                   Discover Events
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-sm text-subtle hover:text-text transition-colors">
+                <Link href="/about" className="inline-block py-2 text-sm text-subtle hover:text-text transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/help" className="text-sm text-subtle hover:text-text transition-colors">
+                <Link href="/help" className="inline-block py-2 text-sm text-subtle hover:text-text transition-colors">
                   Help
                 </Link>
               </li>
               <li>
-                <Link href="/support" className="text-sm text-subtle hover:text-text transition-colors">
+                <Link href="/support" className="inline-block py-2 text-sm text-subtle hover:text-text transition-colors">
                   Support
                 </Link>
               </li>
