@@ -7,9 +7,10 @@ import { formatDateTime } from '@/utils/dateUtils';
 interface EventCardProps {
   event: Event;
   onClick?: () => void;
+  priority?: boolean;
 }
 
-export default function EventCard({ event, onClick }: EventCardProps) {
+export default function EventCard({ event, onClick, priority }: EventCardProps) {
   return (
     <div
       onClick={onClick}
@@ -23,6 +24,7 @@ export default function EventCard({ event, onClick }: EventCardProps) {
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={priority}
         />
       </div>
 

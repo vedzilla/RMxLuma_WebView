@@ -99,8 +99,8 @@ export default function DiscoverPageClient({
           </div>
           {filteredEvents.length > 0 ? (
             <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
-              {filteredEvents.slice(0, 6).map(event => (
-                <EventCard key={event.id} event={event} onClick={() => openEvent(event.slug)} />
+              {filteredEvents.slice(0, 6).map((event, index) => (
+                <EventCard key={event.id} event={event} onClick={() => openEvent(event.slug)} priority={index < 3} />
               ))}
             </div>
           ) : (
