@@ -34,7 +34,7 @@ export default function Header({ cities, universities }: HeaderProps) {
   return (
     <>
     <div className="sticky top-0 z-50 bg-bg border-b border-border">
-      <div className="max-w-[1120px] mx-auto px-[18px]">
+      <div className="max-w-[1120px] mx-auto px-5">
         <div className="flex items-center justify-between gap-3 h-16">
           {/* Logo — crossfade between dot and no-dot variants over 6s */}
           <Link href="/" className="-ml-10 relative w-[128px] h-[128px] block flex-shrink-0">
@@ -58,7 +58,7 @@ export default function Header({ cities, universities }: HeaderProps) {
           </Link>
 
           {/* Navigation */}
-          <nav className="desktop-only flex items-center gap-[14px] text-subtle font-medium text-sm tracking-[-0.01em]">
+          <nav className="desktop-only flex items-center gap-3.5 text-subtle font-medium text-sm tracking-[-0.01em]">
             <Link href="/" className="text-inherit no-underline px-[10px] py-2 rounded-[10px] hover:bg-[rgba(15,23,42,0.04)] hover:text-text transition-colors">
               Discover
             </Link>
@@ -111,10 +111,10 @@ export default function Header({ cities, universities }: HeaderProps) {
           </nav>
 
           {/* Actions */}
-          <div className="flex gap-[10px] items-center">
+          <div className="flex gap-2.5 items-center">
             <Link
               href="/about"
-              className="px-4 py-[10px] text-sm font-medium text-text border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all"
+              className="px-4 py-2.5 text-sm font-medium text-text border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all"
             >
               Get the App
             </Link>

@@ -35,7 +35,7 @@ async function DiscoverPage() {
   const featuredSocieties = withEvents.slice(0, 6);
 
   return (
-    <Suspense fallback={<div className="max-w-[1120px] mx-auto px-[18px] py-8">Loading...</div>}>
+    <Suspense fallback={<div className="max-w-[1120px] mx-auto px-5 py-8">Loading...</div>}>
       <DiscoverPageClient
         events={events}
         tags={tags}

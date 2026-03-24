@@ -37,9 +37,9 @@ export default function EventCard({ event, onClick, priority }: EventCardProps) 
       </div>
 
       {/* Card Body */}
-      <div className="p-[14px]">
+      <div className="p-3.5">
         {/* Meta Info */}
-        <div className="flex gap-[10px] items-center text-subtle font-medium text-[11px] tracking-[-0.01em] uppercase mb-2">
+        <div className="flex gap-2.5 items-center text-subtle font-medium text-[11px] tracking-[-0.01em] uppercase mb-2">
           <span>{formatDateTime(event.startDateTime)}</span>
           {event.interestedCount > 50 && (
             <span className="px-2 py-1 rounded bg-[rgba(239,68,68,0.08)] text-red font-medium text-[10px] uppercase tracking-[0.5px] border-none">
@@ -49,7 +49,7 @@ export default function EventCard({ event, onClick, priority }: EventCardProps) 
         </div>
 
         {/* Title */}
-        <div className="my-[10px] mb-2 text-base font-bold text-text tracking-[-0.02em] leading-[1.3]">
+        <div className="my-2.5 mb-2 text-base font-bold text-text tracking-[-0.02em] leading-[1.3]">
           {event.title}
         </div>
 
@@ -59,11 +59,11 @@ export default function EventCard({ event, onClick, priority }: EventCardProps) 
         </div>
 
         {/* Footer */}
-        <div className="mt-[14px] flex justify-between items-center">
+        <div className="mt-3.5 flex justify-between items-center">
           <div className="text-subtle text-xs font-medium tracking-[-0.01em]">
             {event.priceLabel} • {event.interestedCount} going
           </div>
-          <div className="border border-border bg-transparent text-text px-[14px] py-2 rounded-lg font-medium text-xs cursor-pointer transition-all duration-200 hover:bg-[rgba(15,23,42,0.04)] hover:border-text hover:-translate-y-0.5">
+          <div className="border border-border bg-transparent text-text px-3.5 py-2 rounded-lg font-medium text-xs cursor-pointer transition-all duration-200 hover:bg-[rgba(15,23,42,0.04)] hover:border-text hover:-translate-y-0.5">
             Register
           </div>
         </div>

@@ -50,9 +50,9 @@ export default function AllEventsPageClient({ events, tags }: AllEventsPageClien
   const hasMore = visibleCount < filteredEvents.length;
 
   return (
-    <div className="max-w-[1120px] mx-auto px-[18px]">
+    <div className="max-w-[1120px] mx-auto px-5">
       {/* Hero */}
-      <div className="pt-[22px] pb-2">
+      <div className="pt-6 pb-2">
         <h1 className="m-0 text-[36px] font-semibold text-text tracking-[-0.03em] leading-[1.1]">
           All events
         </h1>
@@ -71,14 +71,14 @@ export default function AllEventsPageClient({ events, tags }: AllEventsPageClien
       </div>
 
       {/* Grid section */}
-      <div className="mt-[26px]">
-        <div className="flex items-baseline justify-between gap-[10px]">
+      <div className="mt-7">
+        <div className="flex items-baseline justify-between gap-2.5">
           <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">
             {filteredEvents.length} upcoming events
           </h2>
         </div>
 
-        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
+        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {visibleEvents.map(event => (
             <EventCard key={event.id} event={event} onClick={() => openEvent(event.slug)} />
           ))}

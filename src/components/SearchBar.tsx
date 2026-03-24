@@ -8,7 +8,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onChange, placeholder = "Search events, societies, or keywords…" }: SearchBarProps) {
   return (
-    <div className="flex-[1_1_360px] flex items-center gap-[10px] bg-surface border border-border rounded-[14px] px-3 py-3 shadow-[var(--shadowSoft)]">
+    <div className="flex-[1_1_360px] flex items-center gap-2.5 bg-surface border border-border rounded-[14px] px-3 py-3 shadow-[var(--shadowSoft)]">
       <span className="text-subtle font-black text-lg">⌕</span>
       <input
         type="text"

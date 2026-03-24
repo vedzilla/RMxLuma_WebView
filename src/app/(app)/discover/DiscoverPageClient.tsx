@@ -65,9 +65,9 @@ export default function DiscoverPageClient({
 
   return (
     <>
-      <div className="max-w-[1120px] mx-auto px-[18px]">
+      <div className="max-w-[1120px] mx-auto px-5">
         {/* Hero */}
-        <div className="pt-[22px] pb-2">
+        <div className="pt-6 pb-2">
           <h1 className="m-0 text-[36px] font-semibold text-text tracking-[-0.03em] leading-[1.1]">
             Discover events in Manchester
           </h1>
@@ -88,8 +88,8 @@ export default function DiscoverPageClient({
         </div>
 
         {/* Upcoming Events */}
-        <div className="mt-[26px]">
-          <div className="flex items-baseline justify-between gap-[10px]">
+        <div className="mt-7">
+          <div className="flex items-baseline justify-between gap-2.5">
             <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">
               Upcoming events
             </h2>
@@ -98,7 +98,7 @@ export default function DiscoverPageClient({
             </Link>
           </div>
           {filteredEvents.length > 0 ? (
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {filteredEvents.slice(0, 6).map((event, index) => (
                 <EventCard key={event.id} event={event} onClick={() => openEvent(event.slug)} priority={index < 3} />
               ))}
@@ -110,13 +110,13 @@ export default function DiscoverPageClient({
 
         {/* Featured Societies */}
         {!searchQuery && !selectedTag && societies.length > 0 && (
-          <div className="mt-[26px]">
-            <div className="flex items-baseline justify-between gap-[10px]">
+          <div className="mt-7">
+            <div className="flex items-baseline justify-between gap-2.5">
               <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">
                 Featured societies
               </h2>
             </div>
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-[14px]">
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3.5">
               {societies.map(society => (
                 <SocietyCard
                   key={society.id}

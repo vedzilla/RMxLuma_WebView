@@ -55,7 +55,7 @@ export default function PrivacyPolicyPage() {
   const content = fs.readFileSync(filePath, 'utf8');
 
   return (
-    <div className="py-12 px-[18px]">
+    <div className="py-12 px-5">
       <div className="max-w-3xl mx-auto">
         <Link
           href="/discover"

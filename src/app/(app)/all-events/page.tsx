@@ -11,7 +11,7 @@ async function AllEventsPage() {
   ]);
 
   return (
-    <Suspense fallback={<div className="max-w-[1120px] mx-auto px-[18px] py-8">Loading...</div>}>
+    <Suspense fallback={<div className="max-w-[1120px] mx-auto px-5 py-8">Loading...</div>}>
       <AllEventsPageClient events={events} tags={tags} />
     </Suspense>
   );

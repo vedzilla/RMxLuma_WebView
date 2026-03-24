@@ -69,7 +69,7 @@ export default function CategoryPageClient({
 
   return (
     <>
-      <div className="max-w-[1120px] mx-auto px-[18px] py-8">
+      <div className="max-w-[1120px] mx-auto px-5 py-8">
         {/* Hero Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           <div>
@@ -128,7 +128,7 @@ export default function CategoryPageClient({
 
         {popularSocieties.length > 0 && (
           <div className="mb-12">
-            <div className="flex items-baseline justify-between gap-[10px] mb-6">
+            <div className="flex items-baseline justify-between gap-2.5 mb-6">
               <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">
                 Popular Calendars
               </h2>
@@ -136,7 +136,7 @@ export default function CategoryPageClient({
                 View all
               </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {popularSocieties.map(society => (
                 <SocietyCard
                   key={society.name}
@@ -151,11 +151,11 @@ export default function CategoryPageClient({
         )}
 
         <div>
-          <div className="flex items-baseline justify-between gap-[10px] mb-6">
+          <div className="flex items-baseline justify-between gap-2.5 mb-6">
             <h2 className="m-0 text-[18px] font-semibold text-text tracking-[-0.02em] leading-[1.2]">Events</h2>
             <span className="text-sm text-subtle">{categoryEvents.length} events</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {categoryEvents.map(event => (
               <EventCard key={event.id} event={event} onClick={() => openEvent(event.slug)} />
             ))}
