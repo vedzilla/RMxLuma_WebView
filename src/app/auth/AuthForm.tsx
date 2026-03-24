@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { createAuthBrowserClient } from '@/supabase_lib/auth/browser';
 
 export default function AuthForm() {
@@ -101,6 +102,12 @@ export default function AuthForm() {
         <p className="text-xs text-[var(--muted)] text-center mt-6">
           &copy; {new Date().getFullYear()} RedefineMe
         </p>
+        <Link
+          href="/society-request"
+          className="block text-sm text-[var(--muted)] hover:text-[var(--text)] text-center mt-2 transition-colors"
+        >
+          Request to join a society &rarr;
+        </Link>
       </div>
     </div>
   );
