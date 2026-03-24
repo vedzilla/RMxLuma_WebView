@@ -43,7 +43,7 @@ export default function Header({ cities, universities }: HeaderProps) {
               alt="RedefineMe"
               width={128}
               height={128}
-              unoptimized
+              priority
               className="absolute inset-0 animate-[logoDotFade_6s_ease-in-out_infinite]"
             />
             <Image
@@ -51,7 +51,7 @@ export default function Header({ cities, universities }: HeaderProps) {
               alt=""
               width={128}
               height={128}
-              unoptimized
+              priority
               className="absolute inset-0"
               aria-hidden
             />

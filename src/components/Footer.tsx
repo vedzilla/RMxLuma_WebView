@@ -13,7 +13,6 @@ export default function Footer() {
                 alt="RedefineMe"
                 width={100}
                 height={100}
-                unoptimized
                 className="absolute inset-0 animate-[logoDotFade_6s_ease-in-out_infinite]"
               />
               <Image
@@ -21,7 +20,6 @@ export default function Footer() {
                 alt=""
                 width={100}
                 height={100}
-                unoptimized
                 className="absolute inset-0 animate-[logoNoDotFade_6s_ease-in-out_infinite]"
                 aria-hidden
               />
