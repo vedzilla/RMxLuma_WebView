@@ -23,6 +23,7 @@ import {
 import { Users, Eye, Heart, CalendarCheck, Plus } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { getMockEngagementData } from "@/lib/mock-data";
+import { DashboardPageHeader, DashboardSection } from "@/components/dashboard/DashboardMotion";
 
 type TimeRange = "7d" | "30d" | "90d";
 
@@ -49,55 +50,62 @@ export default function OverviewPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Overview</h1>
-          <p className="text-muted-foreground">
-            Welcome back, {society?.name ?? "..."}
-          </p>
+      <DashboardPageHeader>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Overview</h1>
+            <p className="text-muted-foreground">
+              Welcome back, {society?.name ?? "..."}
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <DateRangeFilter value={timeRange} onChange={setTimeRange} />
+            <Button className="bg-dashboard-cta hover:bg-dashboard-cta/90 text-white" render={<Link href={nav.href("/events/new")} />}>
+              <Plus className="mr-2 h-4 w-4" />
+              Create Event
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <DateRangeFilter value={timeRange} onChange={setTimeRange} />
-          <Button render={<Link href={nav.href("/events/new")} />}>
-            <Plus className="mr-2 h-4 w-4" />
-            Create Event
-          </Button>
-        </div>
-      </div>
+      </DashboardPageHeader>
 
       {/* Stat cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          title="Total Followers"
-          value={analytics?.followerCount ?? 0}
-          icon={Users}
-          loading={analyticsLoading}
-        />
-        <StatCard
-          title="Event Views"
-          value={posthogData?.totalViews ?? 0}
-          icon={Eye}
-          loading={analyticsLoading}
-        />
-        <StatCard
-          title="Total Likes"
-          value={analytics?.totalLikes ?? 0}
-          icon={Heart}
-          loading={analyticsLoading}
-        />
-        <StatCard
-          title="Total RSVPs"
-          value={analytics?.totalAttending ?? 0}
-          icon={CalendarCheck}
-          loading={analyticsLoading}
-        />
-      </div>
+      <DashboardSection delay={0.08}>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            title="Total Followers"
+            value={analytics?.followerCount ?? 0}
+            icon={Users}
+            loading={analyticsLoading}
+          />
+          <StatCard
+            title="Event Views"
+            value={posthogData?.totalViews ?? 0}
+            icon={Eye}
+            loading={analyticsLoading}
+          />
+          <StatCard
+            title="Total Likes"
+            value={analytics?.totalLikes ?? 0}
+            icon={Heart}
+            loading={analyticsLoading}
+          />
+          <StatCard
+            title="Total RSVPs"
+            value={analytics?.totalAttending ?? 0}
+            icon={CalendarCheck}
+            loading={analyticsLoading}
+          />
+        </div>
+      </DashboardSection>
 
       {/* Engagement chart */}
-      <EngagementChart data={engagementData} loading={analyticsLoading} />
+      <DashboardSection delay={0.16}>
+        <EngagementChart data={engagementData} loading={analyticsLoading} />
+      </DashboardSection>
 
       {/* Top events table */}
-      <Card>
+      <DashboardSection delay={0.24}>
+      <Card className="transition-all duration-[120ms] hover:-translate-y-0.5 hover:shadow-md">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-base">Top Events</CardTitle>
           <Button variant="ghost" size="sm" render={<Link href={nav.href("/events")} />}>
@@ -157,6 +165,7 @@ export default function OverviewPage() {
           )}
         </CardContent>
       </Card>
+      </DashboardSection>
     </div>
   );
 }

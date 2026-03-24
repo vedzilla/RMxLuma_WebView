@@ -5,12 +5,15 @@ import React, { ReactNode } from "react";
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   children: ReactNode;
   showRadialGradient?: boolean;
+  /** Aurora layer opacity 0-100 (default 30) */
+  opacity?: number;
 }
 
 export const AuroraBackground = ({
   className,
   children,
   showRadialGradient = true,
+  opacity = 30,
   ...props
 }: AuroraBackgroundProps) => {
   return (
@@ -39,11 +42,12 @@ export const AuroraBackground = ({
             after:[background-size:200%,_100%] 
             after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
             pointer-events-none
-            absolute -inset-[10px] opacity-30 will-change-transform`,
+            absolute -inset-[10px] will-change-transform`,
 
             showRadialGradient &&
               `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)]`
           )}
+          style={{ opacity: opacity / 100 }}
         ></div>
       </div>
       {/* Content sits on top */}

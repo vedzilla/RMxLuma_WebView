@@ -25,7 +25,7 @@ export function Sidebar() {
   const nav = useDashboardNav();
 
   return (
-    <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-border bg-card">
+    <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-border bg-card/95 backdrop-blur-sm">
       <div className="flex h-16 items-center border-b border-border px-6">
         <Link href={nav.href("/overview")} className="flex items-center gap-2">
           <span className="text-xl font-bold text-foreground">RedefineMe</span>

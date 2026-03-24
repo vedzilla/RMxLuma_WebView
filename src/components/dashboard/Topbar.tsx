@@ -7,6 +7,7 @@ import { useDashboardNav } from "@/hooks/useDashboardNav";
 import { useSocietyAuth } from "@/hooks/useSocietyAuth";
 import { createAuthBrowserClient } from "@/supabase_lib/auth/browser";
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,7 +60,7 @@ export function Topbar() {
 
   return (
     <>
-      <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 md:px-6">
+      <header className="flex h-16 items-center justify-between border-b border-border bg-card/95 backdrop-blur-sm px-4 md:px-6">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
@@ -107,31 +108,39 @@ export function Topbar() {
       </header>
 
       {/* Mobile navigation */}
-      {mobileMenuOpen && (
-        <nav className="border-b border-border bg-card p-4 md:hidden">
-          {navItems.map((item) => {
-            const href = nav.href(item.path);
-            const isActive =
-              pathname === href || pathname.startsWith(href + "/");
-            return (
-              <Link
-                key={item.path}
-                href={href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                )}
-              >
-                <item.icon className="h-5 w-5" />
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-      )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="border-b border-border bg-card/95 backdrop-blur-sm p-4 md:hidden overflow-hidden"
+          >
+            {navItems.map((item) => {
+              const href = nav.href(item.path);
+              const isActive =
+                pathname === href || pathname.startsWith(href + "/");
+              return (
+                <Link
+                  key={item.path}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                >
+                  <item.icon className="h-5 w-5" />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </>
   );
 }
