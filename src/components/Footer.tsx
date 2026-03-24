@@ -32,7 +32,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-sm font-semibold text-text mb-4">Explore</h3>
+            <p className="text-sm font-semibold text-text mb-4">Explore</p>
             <ul className="space-y-1">
               <li>
                 <Link href="/" className="inline-block py-2 text-sm text-subtle hover:text-text transition-colors">
@@ -58,7 +58,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-sm font-semibold text-text mb-4">Get Started</h3>
+            <p className="text-sm font-semibold text-text mb-4">Get Started</p>
             <Link
               href="/about"
               className="inline-block px-4 py-2 text-sm font-medium text-text border border-border rounded-lg hover:bg-bg transition-colors"
