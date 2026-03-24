@@ -37,3 +37,5 @@ supabase-export/
 *.tsbuildinfo
 next-env.d.ts
 
+.claude/worktrees/
+.gstack/
