@@ -62,5 +62,13 @@ export async function updateSession(request: NextRequest) {
     // No admin role check — any authenticated user is allowed
   }
 
+  if (request.nextUrl.pathname.startsWith('/onboarding')) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth';
+      return NextResponse.redirect(url);
+    }
+  }
+
   return response;
 }

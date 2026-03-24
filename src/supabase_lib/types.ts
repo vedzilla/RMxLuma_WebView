@@ -166,6 +166,11 @@ export interface StudyLevelRow {
   name: string;
 }
 
+export interface InterestRow {
+  id: string;
+  name: string;
+}
+
 export interface InteractionTypeRow {
   id: string;
   name: string;
@@ -251,6 +256,16 @@ export interface City {
 }
 
 export interface Category {
+  id: string;
+  name: string;
+}
+
+export interface StudyLevel {
+  id: string;
+  name: string;
+}
+
+export interface Interest {
   id: string;
   name: string;
 }

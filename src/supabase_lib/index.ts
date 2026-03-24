@@ -29,7 +29,10 @@ export type {
   SocietyAccountWithStatus,
   SocietyAccountWithSociety,
   StudyLevelRow,
+  InterestRow,
   InteractionTypeRow,
+  StudyLevel,
+  Interest,
   EventWithRelations,
   SocietyWithUniversity,
 } from './types';
@@ -73,7 +76,16 @@ export { getCategories } from './categories';
 export { getCities, getCityBySlug } from './cities';
 
 // Users
-export { getUserCount, getUserRole, getUserRoles, isAdmin, getSocietyUserDetails } from './users';
+export { getUserCount, getUserRole, getUserRoles, isAdmin, getSocietyUserDetails, checkUserProfileExists } from './users';
+
+// Study Levels
+export { getStudyLevels } from './studyLevels';
+
+// Interests
+export { getInterests } from './interests';
+
+// Onboarding
+export { submitOnboarding, uploadProfilePicture, saveUserInterests } from './onboarding';
 
 // Transform utilities (useful if callers have raw DB rows)
 export {
@@ -83,4 +95,6 @@ export {
   transformUniversity,
   transformCategory,
   transformCity,
+  transformStudyLevel,
+  transformInterest,
 } from './transform';

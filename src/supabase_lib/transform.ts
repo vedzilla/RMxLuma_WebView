@@ -4,12 +4,16 @@ import type {
   UniversityWithCity,
   CityRow,
   CategoryRow,
+  StudyLevelRow,
+  InterestRow,
   Event,
   EventSchedule,
   Society,
   University,
   Category,
   City,
+  StudyLevel,
+  Interest,
 } from './types';
 
 // ---- Helpers ----
@@ -129,4 +133,12 @@ export function transformCategory(row: CategoryRow): Category {
     id: row.id,
     name: row.name,
   };
+}
+
+export function transformStudyLevel(row: StudyLevelRow): StudyLevel {
+  return { id: row.id, name: row.name };
+}
+
+export function transformInterest(row: InterestRow): Interest {
+  return { id: row.id, name: row.name };
 }

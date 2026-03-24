@@ -1,5 +1,5 @@
 import { createAuthServerClient } from '@/supabase_lib/auth/server';
-import { isAdmin } from '@/supabase_lib/users';
+import { isAdmin, checkUserProfileExists } from '@/supabase_lib/users';
 import { NextResponse } from 'next/server';
 
 // Simple in-memory rate limiter for the auth callback
@@ -37,11 +37,25 @@ export async function GET(request: Request) {
       const { data: { user } } = await supabase.auth.getUser();
 
       if (user) {
-        // Role-based redirect: admins → /admin, everyone else → /society/dashboard
-        const destination = (await isAdmin(supabase, user.id))
-          ? '/admin'
-          : '/society';
+        // 1. Admin → /admin
+        if (await isAdmin(supabase, user.id)) {
+          return NextResponse.redirect(`${origin}/admin`);
+        }
 
+        // 2. Society account holder → /society
+        const { data: societyAccounts } = await supabase
+          .from('society_accounts')
+          .select('id')
+          .eq('auth_user_id', user.id)
+          .limit(1);
+
+        if (societyAccounts && societyAccounts.length > 0) {
+          return NextResponse.redirect(`${origin}/society`);
+        }
+
+        // 3. Onboarded student → /discover, new student → /onboarding
+        const profileExists = await checkUserProfileExists(supabase, user.id);
+        const destination = profileExists ? '/discover' : '/onboarding';
         return NextResponse.redirect(`${origin}${destination}`);
       }
     }
