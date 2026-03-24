@@ -208,7 +208,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
               className="relative h-[350px] sm:h-[400px] lg:h-[600px]"
             >
               {/* Glow behind robot */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 rounded-full blur-3xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-brand/10 via-transparent to-brand/10 rounded-full blur-3xl" />
 
               {/* Orbiting Logos - society profile pics from DB */}
               {logoSocieties.map((society, i) => {
@@ -238,7 +238,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                       {/* Circular frame with glow - smaller on mobile */}
                       <div className={`relative rounded-full overflow-hidden border-2 border-white/30 shadow-xl shadow-black/20 bg-white ${isMobile ? 'w-10 h-10' : 'w-14 h-14'}`}>
                         {/* Subtle glow ring */}
-                        <div className="absolute -inset-1 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full blur-sm -z-10" />
+                        <div className="absolute -inset-1 bg-gradient-to-br from-brand/20 to-brand/20 rounded-full blur-sm -z-10" />
                         {/* Logo image */}
                         {society.imageUrl && !failedImages.has(i) ? (
                           <img
@@ -248,7 +248,7 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                             onError={() => setFailedImages(prev => new Set(prev).add(i))}
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-xs font-bold">
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand to-brand-hover text-white text-xs font-bold">
                             {society.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
                           </div>
                         )}

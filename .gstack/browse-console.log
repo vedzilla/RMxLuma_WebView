@@ -1,0 +1,310 @@
+[2026-03-24T11:03:59.753Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:04:00.537Z] [log] [HMR] connected
+[2026-03-24T11:04:00.540Z] [warning] Image with src "/logos/rm-dot-logo.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[2026-03-24T11:04:01.158Z] [warning] updating from  114 to  122
+[2026-03-24T11:04:02.916Z] [warning] [.WebGL-0x2f4c00146000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[2026-03-24T11:04:03.246Z] [error] Loading media from  'data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAABUPbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAD6AAAGL4AAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAFDp0cmFrAAAAXHRraGQAAAADAAAAAAAAAAAAAAABAAAAAAAAGL4AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAC0YAAAZcAAAAAAAkZWR0cwAAABxlbHN0AAAAAAAAAAEAABi+AAACAAABAAAAABOybWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAAA8AAABfABVxAAAAAAALWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAABWaWRlb0hhbmRsZ...MAAAMAIqwvVIAAAIAg2nQAAAMAAAMAAAMAAAMBCDFWMC/86YvIQAAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAFTAAAACMAZ4/akf/AAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADACK/E7YAAAMATXwU7wAAAwAAAwAAAwAAAwBknLWMDAm82rggAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADA+cAAACPQZohSahBbJlMCP/8hAAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAfMA=' violates the following Content Security Policy directive: "default-src 'self'". Note that 'media-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked.
+[2026-03-24T11:04:03.250Z] [warning] [.WebGL-0x2f4c00146000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[2026-03-24T11:04:03.438Z] [warning] [.WebGL-0x2f4c00146000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[2026-03-24T11:04:03.621Z] [warning] [.WebGL-0x2f4c00146000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[2026-03-24T11:05:12.927Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:05:15.363Z] [log] [Fast Refresh] done in 2437ms
+[2026-03-24T11:05:16.581Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:05:17.244Z] [log] [HMR] connected
+[2026-03-24T11:05:19.780Z] [warning] Image with src "https://dgzzf6k1ibya0.cloudfront.net/posts/DVdeYXVCK9C/0.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[2026-03-24T11:05:49.204Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:05:50.858Z] [log] [Fast Refresh] done in 1658ms
+[2026-03-24T11:05:53.292Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:05:54.333Z] [log] [HMR] connected
+[2026-03-24T11:06:07.688Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:06:09.400Z] [log] [Fast Refresh] done in 1721ms
+[2026-03-24T11:06:11.176Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:06:12.262Z] [log] [HMR] connected
+[2026-03-24T11:06:24.960Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:06:25.930Z] [log] [HMR] connected
+[2026-03-24T11:07:19.991Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:07:22.337Z] [log] [Fast Refresh] done in 2348ms
+[2026-03-24T11:07:25.636Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:07:26.755Z] [log] [HMR] connected
+[2026-03-24T11:07:39.982Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:07:41.309Z] [log] [Fast Refresh] done in 1322ms
+[2026-03-24T11:07:42.805Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:07:43.840Z] [log] [HMR] connected
+[2026-03-24T11:07:43.841Z] [warning] Image with src "/logos/rm-dot-logo.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[2026-03-24T11:08:17.933Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:08:19.015Z] [log] [HMR] connected
+[2026-03-24T11:09:11.334Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:09:14.184Z] [log] [Fast Refresh] done in 2853ms
+[2026-03-24T11:09:17.434Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:09:18.547Z] [log] [HMR] connected
+[2026-03-24T11:09:41.482Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:09:43.013Z] [log] [Fast Refresh] done in 1532ms
+[2026-03-24T11:09:46.296Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:09:47.553Z] [log] [HMR] connected
+[2026-03-24T11:09:47.570Z] [warning] Image with src "/logos/rm-dot-logo.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[2026-03-24T11:09:47.734Z] [warning] updating from  114 to  122
+[2026-03-24T11:09:50.503Z] [error] Loading media from  'data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAABUPbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAD6AAAGL4AAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAFDp0cmFrAAAAXHRraGQAAAADAAAAAAAAAAAAAAABAAAAAAAAGL4AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAC0YAAAZcAAAAAAAkZWR0cwAAABxlbHN0AAAAAAAAAAEAABi+AAACAAABAAAAABOybWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAAA8AAABfABVxAAAAAAALWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAABWaWRlb0hhbmRsZ...MAAAMAIqwvVIAAAIAg2nQAAAMAAAMAAAMAAAMBCDFWMC/86YvIQAAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAFTAAAACMAZ4/akf/AAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADACK/E7YAAAMATXwU7wAAAwAAAwAAAwAAAwBknLWMDAm82rggAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADAAADA+cAAACPQZohSahBbJlMCP/8hAAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAAwAAfMA=' violates the following Content Security Policy directive: "default-src 'self'". Note that 'media-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked.
+[2026-03-24T11:30:25.277Z] [log] [HMR] connected
+[2026-03-24T11:31:41.205Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:31:42.338Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:31:43.613Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:31:44.915Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:31:45.918Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:31:50.920Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:31:56.065Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:32:01.173Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:32:06.400Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:32:11.439Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:32:16.619Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:32:21.665Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3HIjxY_BSMl7uiTRKtgZN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:40:03.071Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:40:04.136Z] [log] [HMR] connected
+[2026-03-24T11:40:04.297Z] [error] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/discover" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+            <SegmentViewNode type="page" pagePath="(app)/disc...">
+              <SegmentTrieNode>
+              <DiscoverPage>
+                <Suspense fallback={<div>}>
+                  <DiscoverPageClient events={[...]} tags={[...]} societies={[...]}>
+                    <div className="max-w-[112...">
+                      <div className="pt-[22px] ...">
+                        <h1>
+                        <div>
+                        <div className="flex flex-...">
+                          <SearchBar value="" onChange={function bound dispatchSetState}>
+                            <div className="flex-[1_1_...">
+                              <span>
+                              <input
+                                type="text"
+                                value=""
+                                onChange={function onChange}
+                                placeholder="Search events, societies, or keywords…"
+                                className="flex-1 border-none outline-none w-full text-sm bg-transparent text-text pla..."
+                                aria-label="Search events"
+-                               style={{caret-color:"transparent"}}
+                              >
+                          ...
+                        ...
+                      ...
+            ...
+          ...
+
+[2026-03-24T11:40:49.860Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-03-24T11:40:50.836Z] [log] [HMR] connected
+[2026-03-24T11:40:51.166Z] [warning] Image with src "https://dgzzf6k1ibya0.cloudfront.net/posts/DWAGbpLiOGb/0.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[2026-03-24T11:45:58.353Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:00.233Z] [log] [Fast Refresh] done in 1881ms
+[2026-03-24T11:46:04.897Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:06.176Z] [log] [Fast Refresh] done in 1274ms
+[2026-03-24T11:46:07.880Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:08.192Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:08.466Z] [log] [Fast Refresh] done in 273ms
+[2026-03-24T11:46:08.872Z] [log] [Fast Refresh] done in 654ms
+[2026-03-24T11:46:11.926Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:12.210Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:46:13.053Z] [log] [Fast Refresh] done in 1128ms
+[2026-03-24T11:46:14.155Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:15.039Z] [log] [Fast Refresh] done in 883ms
+[2026-03-24T11:46:15.459Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:16.363Z] [log] [Fast Refresh] done in 904ms
+[2026-03-24T11:46:17.590Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:18.364Z] [log] [Fast Refresh] done in 775ms
+[2026-03-24T11:46:21.620Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:46:51.629Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:53.019Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:53.085Z] [log] [Fast Refresh] done in 68ms
+[2026-03-24T11:46:53.805Z] [log] [Fast Refresh] done in 790ms
+[2026-03-24T11:46:54.280Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:54.906Z] [log] [Fast Refresh] done in 626ms
+[2026-03-24T11:46:55.906Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:46:57.223Z] [log] [Fast Refresh] done in 1301ms
+[2026-03-24T11:47:00.443Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:00.503Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:00.503Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:01.182Z] [log] [Fast Refresh] done in 751ms
+[2026-03-24T11:47:02.650Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:03.586Z] [log] [Fast Refresh] done in 934ms
+[2026-03-24T11:47:04.092Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:04.870Z] [log] [Fast Refresh] done in 775ms
+[2026-03-24T11:47:05.311Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:05.477Z] [log] [Fast Refresh] done in 169ms
+[2026-03-24T11:47:05.913Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:06.469Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:06.624Z] [log] [Fast Refresh] done in 155ms
+[2026-03-24T11:47:07.435Z] [log] [Fast Refresh] done in 967ms
+[2026-03-24T11:47:11.747Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:11.852Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:12.739Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:15.170Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:16.149Z] [log] [Fast Refresh] done in 956ms
+[2026-03-24T11:47:21.673Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:21.673Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:23.417Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:29.023Z] [log] [Fast Refresh] done in 5792ms
+[2026-03-24T11:47:30.323Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:30.340Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:33.484Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:33.897Z] [log] [Fast Refresh] done in 521ms
+[2026-03-24T11:47:35.469Z] [log] [Fast Refresh] done in 2121ms
+[2026-03-24T11:47:35.498Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:35.785Z] [log] [Fast Refresh] done in 293ms
+[2026-03-24T11:47:36.122Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:36.772Z] [log] [Fast Refresh] done in 650ms
+[2026-03-24T11:47:40.043Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:40.043Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:40.125Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:40.752Z] [log] [Fast Refresh] done in 628ms
+[2026-03-24T11:47:41.671Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:42.795Z] [log] [Fast Refresh] done in 1124ms
+[2026-03-24T11:47:43.564Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:43.803Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:43.821Z] [log] [Fast Refresh] done in 18ms
+[2026-03-24T11:47:44.583Z] [log] [Fast Refresh] done in 780ms
+[2026-03-24T11:47:47.027Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:47.534Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:47.832Z] [log] [Fast Refresh] done in 297ms
+[2026-03-24T11:47:48.273Z] [log] [Fast Refresh] done in 739ms
+[2026-03-24T11:47:51.626Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:51.626Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:51.626Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:52.136Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:52.526Z] [log] [Fast Refresh] done in 390ms
+[2026-03-24T11:47:52.860Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:53.338Z] [log] [Fast Refresh] done in 479ms
+[2026-03-24T11:47:53.380Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:53.680Z] [log] [Fast Refresh] done in 298ms
+[2026-03-24T11:47:54.292Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:54.608Z] [log] [Fast Refresh] done in 317ms
+[2026-03-24T11:47:55.102Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:55.330Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:55.463Z] [log] [Fast Refresh] done in 116ms
+[2026-03-24T11:47:55.767Z] [log] [Fast Refresh] done in 435ms
+[2026-03-24T11:47:58.849Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:58.849Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:58.849Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:58.849Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:47:58.993Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:47:59.904Z] [log] [Fast Refresh] done in 912ms
+[2026-03-24T11:48:00.696Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:01.139Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:01.367Z] [log] [Fast Refresh] done in 228ms
+[2026-03-24T11:48:01.564Z] [log] [Fast Refresh] done in 420ms
+[2026-03-24T11:48:01.761Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:02.105Z] [log] [Fast Refresh] done in 344ms
+[2026-03-24T11:48:02.848Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:03.190Z] [log] [Fast Refresh] done in 341ms
+[2026-03-24T11:48:04.597Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:05.676Z] [log] [Fast Refresh] done in 1078ms
+[2026-03-24T11:48:08.940Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:08.940Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:08.940Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:08.940Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:08.940Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:19.458Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:19.798Z] [log] [Fast Refresh] done in 343ms
+[2026-03-24T11:48:22.947Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:22.947Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:22.947Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:22.947Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:22.947Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:23.835Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:24.313Z] [log] [Fast Refresh] done in 479ms
+[2026-03-24T11:48:24.565Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:25.535Z] [log] [Fast Refresh] done in 971ms
+[2026-03-24T11:48:28.739Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:28.739Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:28.739Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:28.739Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:28.739Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:35.378Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:48:36.488Z] [log] [Fast Refresh] done in 1228ms
+[2026-03-24T11:48:51.116Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:51.116Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:51.777Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:51.777Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:51.777Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:48:57.453Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:49:07.319Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:07.320Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:07.320Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:07.320Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:07.320Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:07.439Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:49:07.712Z] [log] [Fast Refresh] done in 258ms
+[2026-03-24T11:49:07.943Z] [log] [Fast Refresh] done in 516ms
+[2026-03-24T11:49:11.237Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352938886 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:11.238Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:11.238Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:11.238Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:11.238Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:11.238Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:15.748Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:49:16.027Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:49:16.124Z] [log] [Fast Refresh] done in 97ms
+[2026-03-24T11:49:16.483Z] [log] [Fast Refresh] done in 452ms
+[2026-03-24T11:49:19.626Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352938886 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:19.627Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:19.627Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:19.627Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:19.627Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:19.627Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:19.627Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352956063 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:20.469Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:49:21.157Z] [log] [Fast Refresh] done in 688ms
+[2026-03-24T11:49:24.396Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352938886 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:24.396Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:24.396Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:24.396Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:24.396Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:24.396Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:24.396Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352956063 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:25.120Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:49:25.667Z] [log] [Fast Refresh] done in 547ms
+[2026-03-24T11:49:28.728Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352938886 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:28.728Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:28.728Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:28.728Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:28.728Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:28.728Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:49:28.728Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352956063 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:54:47.316Z] [log] [Fast Refresh] rebuilding
+[2026-03-24T11:54:49.959Z] [log] [Fast Refresh] done in 2644ms
+[2026-03-24T11:54:53.030Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352938886 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:54:53.030Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352812832 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:54:53.030Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352881033 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:54:53.030Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352875346 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:54:53.030Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352867638 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:54:53.030Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352768421 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:54:53.030Z] [warning] The resource http://localhost:3000/_next/static/css/app/layout.css?v=1774352956063 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[2026-03-24T11:55:23.591Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:24.593Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:25.595Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:26.597Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:27.598Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:32.601Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:37.608Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:42.632Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:47.662Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:52.715Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:55:57.766Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
+[2026-03-24T11:56:03.042Z] [error] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=o9Beii8Rzq3qi4c2U8M1H' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED
