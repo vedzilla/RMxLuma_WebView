@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { createAuthBrowserClient } from '@/supabase_lib/auth/browser';
 
 interface HeaderProps {
   cities: string[];
@@ -16,6 +17,14 @@ export default function Header({ cities, universities }: HeaderProps) {
   const [hamburgerActive, setHamburgerActive] = useState(false);
   const [mobileCitiesOpen, setMobileCitiesOpen] = useState(false);
   const [mobileUnisOpen, setMobileUnisOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const supabase = createAuthBrowserClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setIsLoggedIn(!!user);
+    });
+  }, []);
 
   useEffect(() => {
     if (showMobileMenu) {
@@ -112,11 +121,20 @@ export default function Header({ cities, universities }: HeaderProps) {
 
           {/* Actions */}
           <div className="flex gap-[10px] items-center">
+            {isLoggedIn && (
+              <Link
+                href="/society"
+                className="desktop-only px-4 py-[10px] text-sm font-medium text-text border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all"
+              >
+                Societies
+              </Link>
+            )}
             <Link
               href="/about"
-              className="px-4 py-[10px] text-sm font-medium text-text border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all"
+              className="group relative inline-flex items-center px-4 py-[10px] text-sm font-medium text-white bg-[#DC2626] border-2 border-[#9CA3AF] rounded-lg hover:brightness-110 transition-all overflow-hidden"
             >
-              Get the App
+              <span className="absolute inset-0 bg-[linear-gradient(110deg,transparent_30%,rgba(255,255,255,0.15)_38%,rgba(255,255,255,0.5)_50%,rgba(255,255,255,0.15)_62%,transparent_70%)] bg-[length:200%_100%] bg-[position:200%_0] group-hover:bg-[position:-200%_0] transition-[background-position] duration-1000 ease-in-out" />
+              <span className="relative">Get the App</span>
             </Link>
             <button
               className="hamburger hamburger--emphatic mobile-only"
@@ -214,6 +232,12 @@ export default function Header({ cities, universities }: HeaderProps) {
             </div>
           )}
         </div>
+        {isLoggedIn && (
+          <Link href="/society" onClick={() => setShowMobileMenu(false)}
+            className="block px-4 py-[10px] mt-3 text-sm font-medium text-text text-center border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all">
+            Societies
+          </Link>
+        )}
       </div>
     </div>
     </>

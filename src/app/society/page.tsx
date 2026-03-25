@@ -33,7 +33,7 @@ export default async function SocietyPickerPage() {
 
   return (
     <AuroraBackground className="min-h-screen">
-      <GlobalSpotlight size={400} color="rgba(99, 102, 241, 0.06)" />
+      <GlobalSpotlight size={400} color="rgba(220, 38, 38, 0.06)" />
       <div className="relative z-10">
         {/* Top bar */}
         <header className="sticky top-0 z-30 bg-[var(--surface)]/80 backdrop-blur-md border-b border-[var(--border)] px-6 py-3 flex items-center justify-between">
@@ -44,7 +44,7 @@ export default async function SocietyPickerPage() {
               width={120}
               height={30}
             />
-            <span className="text-xs font-medium text-[var(--accent)] bg-[var(--accentSoft)] px-2 py-0.5 rounded-full">
+            <span className="text-xs font-medium text-[#DC2626] bg-[#DC2626]/10 px-2 py-0.5 rounded-full">
               Society
             </span>
           </div>
@@ -61,7 +61,7 @@ export default async function SocietyPickerPage() {
           </p>
 
           {accounts.length === 0 ? (
-            <p className="text-[var(--muted)]">
+            <p className="text-[var(--muted)] bg-[#DC2626]/5 border border-[#DC2626]/20 rounded-[var(--radius)] px-5 py-4">
               You don&apos;t have access to any societies yet.
             </p>
           ) : (

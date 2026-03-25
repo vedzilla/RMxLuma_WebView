@@ -48,7 +48,7 @@ export function SocietyPickerCards({
                 >
                   <Link
                     href={`/society/${society.id}/dashboard`}
-                    className="flex items-center gap-4 p-4 bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] transition-all duration-[120ms] hover:-translate-y-1 hover:shadow-lg hover:border-[var(--accent)] hover:ring-2 hover:ring-[var(--accent)]/20"
+                    className="flex items-center gap-4 p-4 bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] transition-all duration-[120ms] hover:-translate-y-1 hover:shadow-lg hover:border-[#DC2626] hover:ring-2 hover:ring-[#DC2626]/20"
                   >
                     <Image
                       src={society.image_url || "/logos/rm-dot-logo.png"}
