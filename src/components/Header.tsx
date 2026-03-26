@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { createAuthBrowserClient } from '@/supabase_lib/auth/browser';
 
 interface HeaderProps {
@@ -18,6 +19,7 @@ export default function Header({ cities, universities }: HeaderProps) {
   const [mobileCitiesOpen, setMobileCitiesOpen] = useState(false);
   const [mobileUnisOpen, setMobileUnisOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const supabase = createAuthBrowserClient();
@@ -25,6 +27,13 @@ export default function Header({ cities, universities }: HeaderProps) {
       setIsLoggedIn(!!user);
     });
   }, []);
+
+  const handleSignOut = useCallback(async () => {
+    const supabase = createAuthBrowserClient();
+    await supabase.auth.signOut();
+    setIsLoggedIn(false);
+    router.push('/');
+  }, [router]);
 
   useEffect(() => {
     if (showMobileMenu) {
@@ -121,12 +130,27 @@ export default function Header({ cities, universities }: HeaderProps) {
 
           {/* Actions */}
           <div className="flex gap-[10px] items-center">
-            {isLoggedIn && (
+            {isLoggedIn ? (
+              <>
+                <Link
+                  href="/society"
+                  className="desktop-only px-4 py-[10px] text-sm font-medium text-text border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all"
+                >
+                  Manage Society
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="desktop-only px-4 py-[10px] text-sm font-medium text-[var(--muted)] border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:text-text hover:border-text transition-all cursor-pointer"
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
               <Link
-                href="/society"
+                href="/auth"
                 className="desktop-only px-4 py-[10px] text-sm font-medium text-text border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all"
               >
-                Manage Society
+                Log in
               </Link>
             )}
             <Link
@@ -232,10 +256,23 @@ export default function Header({ cities, universities }: HeaderProps) {
             </div>
           )}
         </div>
-        {isLoggedIn && (
-          <Link href="/society" onClick={() => setShowMobileMenu(false)}
+        {isLoggedIn ? (
+          <>
+            <Link href="/society" onClick={() => setShowMobileMenu(false)}
+              className="block px-4 py-[10px] mt-3 text-sm font-medium text-text text-center border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all">
+              Manage Society
+            </Link>
+            <button
+              onClick={() => { setShowMobileMenu(false); handleSignOut(); }}
+              className="w-full px-4 py-[10px] mt-2 text-sm font-medium text-[var(--muted)] text-center border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:text-text hover:border-text transition-all cursor-pointer"
+            >
+              Sign out
+            </button>
+          </>
+        ) : (
+          <Link href="/auth" onClick={() => setShowMobileMenu(false)}
             className="block px-4 py-[10px] mt-3 text-sm font-medium text-text text-center border border-border rounded-lg bg-transparent hover:bg-[rgba(15,23,42,0.04)] hover:border-text transition-all">
-            Societies
+            Log in
           </Link>
         )}
       </div>
