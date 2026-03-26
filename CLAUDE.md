@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Next.js 16 web frontend for RedefineMe — a university society event aggregator. Read-only, no auth, no mutations. Displays events scraped from Instagram, processed via LLM pipeline, stored in Supabase. Live on Vercel.
+Next.js 16 web frontend for RedefineMe — a university society event aggregator. Displays events scraped from Instagram, processed via LLM pipeline, stored in Supabase. Includes OAuth authentication (Google/Apple), student onboarding flow, and society committee dashboard. Live on Vercel.
 
 ---
 
@@ -14,7 +14,8 @@ Next.js 16 web frontend for RedefineMe — a university society event aggregator
 | Language | TypeScript (strict mode) |
 | Styling | Tailwind CSS 3.3 + CSS custom properties |
 | Animations | Framer Motion |
-| Database | Supabase (read-only, public anon key) |
+| Auth | Supabase Auth (OAuth: Google, Apple) |
+| Database | Supabase (read + auth-gated writes for onboarding) |
 | Deployment | Vercel |
 | Font | Space Grotesk (Google Fonts) |
 | 3D | Spline (landing page robot) |
@@ -35,21 +36,31 @@ src/
 │   │   ├── events/[slug]/      # Event detail (ISR, 300s revalidate)
 │   │   ├── all-events/
 │   │   └── about/ support/ privacy-policy/ delete-account/
+│   ├── auth/                   # OAuth login page + callback route
+│   ├── onboarding/             # Student onboarding wizard (5 steps)
+│   │   ├── OnboardingWizard.tsx
+│   │   ├── components/StepIndicator.tsx
+│   │   └── steps/              # ProfilePicture, University, Course, StudyLevel, Interests, Completion
+│   ├── society/                # Society picker + committee dashboard
 │   ├── layout.tsx              # Root layout (font, metadata)
 │   └── globals.css             # CSS variables, keyframes, base styles
 │
 ├── components/                 # Reusable UI components
 │   ├── EventCard/Modal/Detail/Grid.tsx
-│   ├── Header.tsx              # Sticky nav with city/university dropdowns
+│   ├── Header.tsx              # Sticky nav with city/university dropdowns + auth-aware links
 │   ├── SearchBar.tsx, FilterPills.tsx, SortDropdown.tsx
+│   ├── dashboard/              # Society dashboard shell, sidebar, topbar, stat cards
 │   └── ui/                     # Aurora background, spotlight, Spline wrapper
 │
 ├── supabase_lib/               # Data access layer (ALL Supabase queries go here)
 │   ├── client.ts               # Singleton Supabase client
+│   ├── auth/                   # Auth clients (browser, server, middleware)
 │   ├── types.ts                # DB row types + frontend types
 │   ├── transform.ts            # DB rows → frontend types + slug generation
 │   ├── events.ts               # getEvents(), getEventBySlug(), getTrendingEvents()
+│   ├── onboarding.ts           # submitOnboarding(), uploadProfilePicture(), saveUserInterests()
 │   ├── societies.ts / universities.ts / cities.ts / categories.ts
+│   ├── interests.ts / studyLevels.ts / courses.ts / users.ts
 │   └── index.ts                # Barrel export
 │
 ├── utils/
@@ -138,9 +149,11 @@ npm run lint      # ESLint
 
 ## Things to Know
 
-1. **Read-only app** — no auth, no mutations. All data from scraper pipeline.
+1. **Auth + onboarding** — OAuth (Google/Apple) via Supabase Auth. New students are forced through a 5-step onboarding wizard before accessing the app. Middleware guards all routes.
 2. **No test framework** — manual testing only. Consider Vitest if needed.
 3. **Supabase anon key** is public and safe to embed, but consider env vars for cleanliness.
-4. **Route groups**: `(app)` shares Header/Footer/AuroraBackground layout; `(landing)` has its own.
+4. **Route groups**: `(app)` shares Header/Footer/AuroraBackground layout; `(landing)` has its own; `onboarding/` and `society/` are standalone.
 5. **Framer Motion** used extensively for animations and transitions.
 6. **Event slugs** generated at transform time, not in DB. Lookup fetches all then filters.
+7. **CSP headers** are split: landing page allows Spline scripts; all other routes have a tighter policy. Both allow `unsafe-inline` and `unsafe-eval` for Next.js.
+8. **Middleware** runs on all routes except static assets and `/auth/callback`. Checks: admin → /admin, society account → /society, no profile → /onboarding.
