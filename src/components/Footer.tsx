@@ -35,7 +35,7 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-text mb-4">Explore</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="text-sm text-subtle hover:text-text transition-colors">
+                <Link href="/discover" className="text-sm text-subtle hover:text-text transition-colors">
                   Discover Events
                 </Link>
               </li>

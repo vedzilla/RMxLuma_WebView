@@ -77,7 +77,7 @@ export default function Header({ cities, universities }: HeaderProps) {
 
           {/* Navigation */}
           <nav className="desktop-only flex items-center gap-[14px] text-subtle font-medium text-sm tracking-[-0.01em]">
-            <Link href="/" className="text-inherit no-underline px-[10px] py-2 rounded-[10px] hover:bg-[rgba(15,23,42,0.04)] hover:text-text transition-colors">
+            <Link href="/discover" className="text-inherit no-underline px-[10px] py-2 rounded-[10px] hover:bg-[rgba(15,23,42,0.04)] hover:text-text transition-colors">
               Discover
             </Link>
             <button
@@ -202,7 +202,7 @@ export default function Header({ cities, universities }: HeaderProps) {
 
       {/* Nav links */}
       <div className="px-4 py-3 overflow-y-auto max-h-[calc(100vh-64px)]">
-        <Link href="/" onClick={() => setShowMobileMenu(false)}
+        <Link href="/discover" onClick={() => setShowMobileMenu(false)}
           className="block px-3 py-2 text-sm font-medium text-text rounded-lg hover:bg-[rgba(15,23,42,0.04)] transition-colors">
           Discover
         </Link>
