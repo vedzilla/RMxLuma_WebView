@@ -18,6 +18,8 @@ export function formScheduleToPayload(entries: ScheduleEntry[]): ScheduleEntryIn
       scheduled_at: `${entry.date}T${entry.startTime}:00.000Z`,
       is_end_schedule: false,
       schedule_order: order++,
+      ...(entry.locationId ? { location_id: entry.locationId } : {}),
+      ...(entry.locationName ? { location_name: entry.locationName } : {}),
     });
 
     // End entry (if endTime provided)
@@ -26,6 +28,8 @@ export function formScheduleToPayload(entries: ScheduleEntry[]): ScheduleEntryIn
         scheduled_at: `${entry.date}T${entry.endTime}:00.000Z`,
         is_end_schedule: true,
         schedule_order: order++,
+        ...(entry.locationId ? { location_id: entry.locationId } : {}),
+        ...(entry.locationName ? { location_name: entry.locationName } : {}),
       });
     }
   }

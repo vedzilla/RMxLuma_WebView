@@ -39,12 +39,13 @@ export function useEvents(societyId: string | undefined) {
   ) => {
     if (!societyId) throw new Error("No society selected");
     const supabase = createAuthBrowserClient();
+    const schedule = formScheduleToPayload(formData.schedules);
     const result = await createEventEdge(supabase, {
       society_id: societyId,
       title: formData.title,
       description: formData.description,
-      categories: categoryIds,
-      schedule: formScheduleToPayload(formData.schedules),
+      category_ids: categoryIds,
+      schedule,
       is_online: formData.isOnline,
       is_free: formData.isFree,
       price: formData.isFree ? undefined : formData.price || undefined,
@@ -60,12 +61,13 @@ export function useEvents(societyId: string | undefined) {
     categoryIds: string[]
   ) => {
     const supabase = createAuthBrowserClient();
+    const schedule = formScheduleToPayload(formData.schedules);
     await updateEventEdge(supabase, {
       event_id: eventId,
       title: formData.title,
       description: formData.description,
-      categories: categoryIds,
-      schedule: formScheduleToPayload(formData.schedules),
+      category_ids: categoryIds,
+      schedule,
       is_online: formData.isOnline,
       is_free: formData.isFree,
       price: formData.isFree ? undefined : formData.price || undefined,

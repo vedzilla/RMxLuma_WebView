@@ -194,6 +194,7 @@ export interface ScheduleEntryInput {
   is_end_schedule?: boolean;
   schedule_order?: number;
   location_id?: string;
+  location_name?: string;
 }
 
 export interface CreateEventInput {
@@ -201,7 +202,7 @@ export interface CreateEventInput {
   title: string;
   description: string;
   /** Category UUIDs */
-  categories: string[];
+  category_ids: string[];
   schedule: ScheduleEntryInput[];
   is_online?: boolean;
   is_free?: boolean;
@@ -214,7 +215,7 @@ export interface UpdateEventInput {
   title?: string;
   description?: string;
   /** Category UUIDs */
-  categories?: string[];
+  category_ids?: string[];
   schedule?: ScheduleEntryInput[];
   is_online?: boolean;
   is_free?: boolean;
