@@ -15,7 +15,10 @@ import { ScheduleBuilder, type ScheduleEntry } from "@/components/events/Schedul
 import { ImageUploader } from "@/components/events/ImageUploader";
 import { CategorySelector } from "@/components/events/CategorySelector";
 import { AlertTriangle, Loader2 } from "lucide-react";
+import { APIProvider } from "@vis.gl/react-google-maps";
 import type { Category } from "@/supabase_lib/types";
+
+const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
 
 const eventFormSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -29,6 +32,8 @@ const eventFormSchema = z.object({
         endTime: z.string(),
         locationName: z.string(),
         locationId: z.string().optional(),
+        locationGoogleMapsUrl: z.string().nullish(),
+        roomName: z.string(),
       })
     )
     .min(1, "Add at least one schedule entry"),
@@ -64,6 +69,7 @@ const defaultSchedule: ScheduleEntry = {
   startTime: "",
   endTime: "",
   locationName: "",
+  roomName: "",
 };
 
 export function EventForm({
@@ -109,6 +115,7 @@ export function EventForm({
   }
 
   return (
+    <APIProvider apiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       {isScraped && (
         <div className="flex items-start gap-3 rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-sm text-yellow-800 dark:border-yellow-500/30 dark:bg-yellow-500/10 dark:text-yellow-200">
@@ -272,5 +279,6 @@ export function EventForm({
         </Button>
       </div>
     </form>
+    </APIProvider>
   );
 }

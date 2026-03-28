@@ -25,6 +25,9 @@ export interface LocationRow {
   street: string | null;
   postcode: string | null;
   google_maps_url: string | null;
+  google_place_id: string | null;
+  latitude: number | null;
+  longitude: number | null;
   city_id: string | null;
   created_at: string;
 }
@@ -220,6 +223,7 @@ export interface ScheduleEntryInput {
   schedule_order?: number;
   location_id?: string;
   location_name?: string;
+  room_name?: string;
 }
 
 export interface CreateEventInput {

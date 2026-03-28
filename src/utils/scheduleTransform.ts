@@ -13,13 +13,18 @@ export function formScheduleToPayload(entries: ScheduleEntry[]): ScheduleEntryIn
   for (const entry of entries) {
     if (!entry.date || !entry.startTime) continue;
 
+    const locationFields = {
+      ...(entry.locationId ? { location_id: entry.locationId } : {}),
+      ...(entry.locationName ? { location_name: entry.locationName } : {}),
+      ...(entry.roomName ? { room_name: entry.roomName } : {}),
+    };
+
     // Start entry
     result.push({
       scheduled_at: `${entry.date}T${entry.startTime}:00.000Z`,
       is_end_schedule: false,
       schedule_order: order++,
-      ...(entry.locationId ? { location_id: entry.locationId } : {}),
-      ...(entry.locationName ? { location_name: entry.locationName } : {}),
+      ...locationFields,
     });
 
     // End entry (if endTime provided)
@@ -28,8 +33,7 @@ export function formScheduleToPayload(entries: ScheduleEntry[]): ScheduleEntryIn
         scheduled_at: `${entry.date}T${entry.endTime}:00.000Z`,
         is_end_schedule: true,
         schedule_order: order++,
-        ...(entry.locationId ? { location_id: entry.locationId } : {}),
-        ...(entry.locationName ? { location_name: entry.locationName } : {}),
+        ...locationFields,
       });
     }
   }
@@ -48,12 +52,14 @@ export function dashboardScheduleToForm(
     order: number;
     locationName: string | null;
     locationId: string | null;
+    locationGoogleMapsUrl?: string | null;
+    roomName?: string | null;
   }>
 ): ScheduleEntry[] {
   const startEntries = schedules.filter((s) => !s.isEnd);
 
   if (startEntries.length === 0) {
-    return [{ date: '', startTime: '', endTime: '', locationName: '' }];
+    return [{ date: '', startTime: '', endTime: '', locationName: '', roomName: '' }];
   }
 
   return startEntries.map((start) => {
@@ -74,6 +80,8 @@ export function dashboardScheduleToForm(
       endTime,
       locationName: start.locationName ?? '',
       locationId: start.locationId ?? undefined,
+      locationGoogleMapsUrl: start.locationGoogleMapsUrl ?? null,
+      roomName: start.roomName ?? '',
     };
   });
 }
