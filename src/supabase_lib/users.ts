@@ -73,6 +73,27 @@ export async function isAdmin(
 }
 
 /**
+ * Check whether a public.users row exists for this auth user (i.e. they've completed onboarding).
+ */
+export async function checkUserProfileExists(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<boolean> {
+  const { data, error } = await supabase
+    .from('users')
+    .select('id')
+    .eq('id', userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('[supabase_lib] checkUserProfileExists error:', error.message);
+    return false;
+  }
+
+  return !!data;
+}
+
+/**
  * Fetch name and email for a user with a pending society account
  * via the get-society-user-details edge function.
  */

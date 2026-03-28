@@ -15,7 +15,7 @@ export default function SocietySignOutButton() {
   return (
     <button
       onClick={handleSignOut}
-      className="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+      className="text-sm text-[var(--muted)] hover:text-[#DC2626] transition-colors"
     >
       Sign out
     </button>

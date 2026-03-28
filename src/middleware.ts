@@ -6,5 +6,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/society/:path*'],
+  matcher: [
+    /*
+     * Run middleware on all routes EXCEPT:
+     *  - _next/static, _next/image (Next.js internals)
+     *  - favicon.ico, logos/, images (static assets)
+     *  - auth/callback (must complete OAuth exchange uninterrupted)
+     */
+    '/((?!_next/static|_next/image|favicon\\.ico|logos/|images/|auth/callback).*)',
+  ],
 };

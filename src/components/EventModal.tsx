@@ -17,6 +17,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
   const router = useRouter();
   const [translateX, setTranslateX] = useState('100%');
   const [backdropOpacity, setBackdropOpacity] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   // Slide in on mount — defer one frame so the transition fires
   useEffect(() => {
@@ -52,7 +53,8 @@ export default function EventModal({ event, onClose }: EventModalProps) {
 
   const copyLink = () => {
     navigator.clipboard.writeText(`${window.location.origin}/events/${event.slug}`);
-    // Could add a toast notification here
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -81,12 +83,22 @@ export default function EventModal({ event, onClose }: EventModalProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={copyLink}
-              className="text-sm font-medium text-text hover:text-subtle transition-colors flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-bg"
+              className={`text-sm font-medium transition-all duration-200 flex items-center gap-2 px-3 py-1.5 rounded-lg ${
+                copied
+                  ? 'text-green-600 bg-green-50'
+                  : 'text-text hover:text-subtle hover:bg-bg'
+              }`}
             >
-              <span>Copy Link</span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M6.5 1.5H11.5C12.3284 1.5 13 2.17157 13 3V8M10.5 5.5H4.5C3.67157 5.5 3 6.17157 3 7V12.5C3 13.3284 3.67157 14 4.5 14H9.5C10.3284 14 11 13.3284 11 12.5V8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
+              <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+              {copied ? (
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6.5 1.5H11.5C12.3284 1.5 13 2.17157 13 3V8M10.5 5.5H4.5C3.67157 5.5 3 6.17157 3 7V12.5C3 13.3284 3.67157 14 4.5 14H9.5C10.3284 14 11 13.3284 11 12.5V8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              )}
             </button>
             <a
               href={event.externalUrl}

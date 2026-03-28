@@ -4,16 +4,18 @@ import { createAuthServerClient } from '@/supabase_lib/auth/server';
 import { getEvents } from '@/supabase_lib/events';
 import { getSocieties, getPendingSocietyAccounts } from '@/supabase_lib/societies';
 import { getUniversities } from '@/supabase_lib/universities';
+import { getPushTokens } from '@/supabase_lib/notifications';
 import AdminSignOutButton from './AdminSignOutButton';
 
 export default async function AdminDashboard() {
   const supabase = await createAuthServerClient();
 
-  const [events, societies, universities, pendingAccounts] = await Promise.all([
+  const [events, societies, universities, pendingAccounts, pushTokens] = await Promise.all([
     getEvents({ upcomingOnly: false }),
     getSocieties(),
     getUniversities(),
     getPendingSocietyAccounts(supabase),
+    getPushTokens(supabase),
   ]);
 
   const pendingApplications = pendingAccounts.length;
@@ -23,6 +25,7 @@ export default async function AdminDashboard() {
     { label: 'Societies', value: societies.length },
     { label: 'Universities', value: universities.length },
     { label: 'Pending Applications', value: pendingApplications, href: '/admin/applications' },
+    { label: 'Push Tokens', value: pushTokens.length, href: '/admin/notifications' },
   ];
 
   return (
@@ -117,14 +120,21 @@ export default async function AdminDashboard() {
           </Link>
 
           <Link
-            href="/admin/user-roles"
+            href="/admin/notifications"
             className="bg-[var(--surface)] rounded-[var(--radius)] border border-[var(--border)] p-5 hover:border-[var(--accent)] transition-colors group"
           >
-            <p className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
-              Committee Roles
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                Push Notifications
+              </p>
+              {pushTokens.length > 0 && (
+                <span className="text-xs font-medium bg-[var(--accent)] text-white px-2 py-0.5 rounded-full">
+                  {pushTokens.length}
+                </span>
+              )}
+            </div>
             <p className="text-xs text-[var(--muted)] mt-1">
-              Manage society committee member roles
+              Send push notifications to registered devices
             </p>
           </Link>
         </div>

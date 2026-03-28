@@ -2,14 +2,20 @@ import type {
   EventWithRelations,
   SocietyWithUniversity,
   UniversityWithCity,
+  UniversityCourseWithDegreeType,
   CityRow,
   CategoryRow,
+  StudyLevelRow,
+  InterestRow,
   Event,
   EventSchedule,
   Society,
   University,
   Category,
   City,
+  StudyLevel,
+  Interest,
+  UniversityCourse,
 } from './types';
 
 // ---- Helpers ----
@@ -128,5 +134,23 @@ export function transformCategory(row: CategoryRow): Category {
   return {
     id: row.id,
     name: row.name,
+  };
+}
+
+export function transformStudyLevel(row: StudyLevelRow): StudyLevel {
+  return { id: row.id, name: row.name };
+}
+
+export function transformInterest(row: InterestRow): Interest {
+  return { id: row.id, name: row.name };
+}
+
+export function transformUniversityCourse(row: UniversityCourseWithDegreeType): UniversityCourse {
+  return {
+    id: row.id,
+    name: row.name,
+    degreeTypeName: row.degree_types?.name ?? '',
+    courseLength: row.course_length,
+    yearInIndustry: row.year_in_industry,
   };
 }

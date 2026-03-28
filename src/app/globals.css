@@ -42,6 +42,8 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-dashboard-cta: var(--dashboard-cta);
+  --color-dashboard-cta-soft: var(--dashboard-cta-soft);
 
   /* Sidebar tokens */
   --color-sidebar: var(--sidebar);
@@ -97,35 +99,48 @@
 /* ── shadcn/ui variables (dashboard uses these) ── */
 :root {
   --background: #FAFAFA;
-  --foreground: #1C1C1E;
+  --foreground: #0F172A;
   --card: #FFFFFF;
-  --card-foreground: #1C1C1E;
+  --card-foreground: #0F172A;
   --popover: #FFFFFF;
-  --popover-foreground: #1C1C1E;
-  --primary: #C04138;
+  --popover-foreground: #0F172A;
+  --primary: #6366F1;
   --primary-foreground: #FFFFFF;
-  --secondary: #F2F2F7;
-  --secondary-foreground: #1C1C1E;
-  --muted-bg: #F2F2F7;
-  --muted-foreground: #8E8E93;
-  --accent-bg: #F5C4C2;
-  --accent-foreground: #1C1C1E;
-  --destructive: #FF3B30;
-  --input: #E5E5EA;
-  --ring: #C04138;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0F172A;
+  --muted-bg: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent-bg: #EEF2FF;
+  --accent-foreground: #0F172A;
+  --destructive: #D94040;
+  --input: #E5E7EB;
+  --ring: #6366F1;
   --chart-1: #C04138;
   --chart-2: #E8765E;
   --chart-3: #F2A07B;
   --chart-4: #F7C59F;
   --chart-5: #FAEBD7;
+  --dashboard-cta: #D94040;
+  --dashboard-cta-soft: rgba(217, 64, 64, 0.1);
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #1C1C1E;
-  --sidebar-primary: #C04138;
+  --sidebar-foreground: #0F172A;
+  --sidebar-primary: #6366F1;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #FFF1F0;
-  --sidebar-accent-foreground: #1C1C1E;
-  --sidebar-border: #E5E5EA;
-  --sidebar-ring: #C04138;
+  --sidebar-accent: #EEF2FF;
+  --sidebar-accent-foreground: #0F172A;
+  --sidebar-border: #E5E7EB;
+  --sidebar-ring: #6366F1;
+}
+
+/* ── Dashboard-scoped primary: red instead of indigo ── */
+.dashboard-scope {
+  --primary: #EF4444;
+  --primary-hover: #B91C1C;
+  --ring: #EF4444;
+  --sidebar-primary: #EF4444;
+  --sidebar-ring: #EF4444;
+  --accent-bg: #FEF2F2;
+  --sidebar-accent: #FEF2F2;
 }
 
 /* ── Base styles ── */
@@ -161,7 +176,7 @@
 }
 
 .dashboard-scope {
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
 }
 

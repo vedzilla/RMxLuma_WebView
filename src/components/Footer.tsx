@@ -34,7 +34,7 @@ export default function Footer() {
             <p className="text-sm font-semibold text-text mb-4">Explore</p>
             <ul className="space-y-1">
               <li>
-                <Link href="/" className="inline-block py-2 text-sm text-subtle hover:text-text transition-colors">
+                <Link href="/discover" className="text-sm text-subtle hover:text-text transition-colors">
                   Discover Events
                 </Link>
               </li>

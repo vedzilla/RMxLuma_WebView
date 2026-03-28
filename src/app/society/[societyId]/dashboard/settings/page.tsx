@@ -26,11 +26,12 @@ import {
 } from "@/components/ui/dialog";
 import { Image, Instagram, LogOut, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
+import { DashboardPageHeader, DashboardSection } from "@/components/dashboard/DashboardMotion";
 
 const approvalStatusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800",
   approved: "bg-green-100 text-green-800",
-  trusted: "bg-blue-100 text-blue-800",
+  trusted: "bg-green-100 text-green-800",
   rejected: "bg-red-100 text-red-800",
 };
 
@@ -200,15 +201,18 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="text-muted-foreground">
-          Manage your society profile and account settings
-        </p>
-      </div>
+      <DashboardPageHeader>
+        <div>
+          <h1 className="text-2xl font-bold">Settings</h1>
+          <p className="text-muted-foreground">
+            Manage your society profile and account settings
+          </p>
+        </div>
+      </DashboardPageHeader>
 
       {/* Society image */}
-      <Card>
+      <DashboardSection delay={0.08}>
+      <Card className="transition-all duration-[120ms] hover:-translate-y-0.5 hover:shadow-md">
         <CardHeader>
           <CardTitle className="text-base">Society Image</CardTitle>
         </CardHeader>
@@ -240,6 +244,7 @@ export default function SettingsPage() {
           </Button>
         </CardContent>
       </Card>
+      </DashboardSection>
 
       {/* Crop dialog */}
       <Dialog open={cropDialogOpen} onOpenChange={setCropDialogOpen}>
@@ -285,7 +290,8 @@ export default function SettingsPage() {
       </Dialog>
 
       {/* Account status */}
-      <Card>
+      <DashboardSection delay={0.16}>
+      <Card className="transition-all duration-[120ms] hover:-translate-y-0.5 hover:shadow-md">
         <CardHeader>
           <CardTitle className="text-base">Account Status</CardTitle>
         </CardHeader>
@@ -317,9 +323,11 @@ export default function SettingsPage() {
           )}
         </CardContent>
       </Card>
+      </DashboardSection>
 
       {/* Profile settings */}
-      <Card>
+      <DashboardSection delay={0.24}>
+      <Card className="transition-all duration-[120ms] hover:-translate-y-0.5 hover:shadow-md">
         <CardHeader>
           <CardTitle className="text-base">Society Profile</CardTitle>
         </CardHeader>
@@ -350,6 +358,7 @@ export default function SettingsPage() {
           </form>
         </CardContent>
       </Card>
+      </DashboardSection>
 
       <Separator />
 

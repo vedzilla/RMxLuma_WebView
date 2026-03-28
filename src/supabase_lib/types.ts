@@ -110,9 +110,29 @@ export interface UserRow {
   id: string;
   university_id: string | null;
   study_level_id: string | null;
+  university_course_id: string | null;
   profile_url: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface DegreeTypeRow {
+  id: string;
+  name: string;
+}
+
+export interface UniversityCourseRow {
+  id: string;
+  university_id: string;
+  degree_type_id: string;
+  name: string;
+  course_length: number;
+  year_in_industry: boolean;
+  created_at: string;
+}
+
+export interface UniversityCourseWithDegreeType extends UniversityCourseRow {
+  degree_types: Pick<DegreeTypeRow, 'id' | 'name'> | null;
 }
 
 export interface UserRoleRow {
@@ -162,6 +182,11 @@ export interface SocietyAccountRow {
 }
 
 export interface StudyLevelRow {
+  id: string;
+  name: string;
+}
+
+export interface InterestRow {
   id: string;
   name: string;
 }
@@ -293,6 +318,24 @@ export interface City {
 export interface Category {
   id: string;
   name: string;
+}
+
+export interface StudyLevel {
+  id: string;
+  name: string;
+}
+
+export interface Interest {
+  id: string;
+  name: string;
+}
+
+export interface UniversityCourse {
+  id: string;
+  name: string;
+  degreeTypeName: string;
+  courseLength: number;
+  yearInIndustry: boolean;
 }
 
 // ---- Society management permission types ----

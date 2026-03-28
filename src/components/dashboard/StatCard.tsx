@@ -21,7 +21,7 @@ export function StatCard({ title, value, change, icon: Icon, loading }: StatCard
     );
 
   return (
-    <Card>
+    <Card className="transition-all duration-[120ms] hover:-translate-y-0.5 hover:shadow-md">
       <CardContent className="p-6">
         {loading ? (
           <div className="space-y-3">

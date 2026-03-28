@@ -5,6 +5,7 @@ import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 
 export function DashboardShell({
   societyId,
@@ -16,15 +17,17 @@ export function DashboardShell({
   return (
     <DashboardProvider societyId={societyId}>
       <TooltipProvider>
-        <div className="dashboard-scope flex h-screen">
-          <Sidebar />
-          <div className="flex flex-1 flex-col overflow-hidden">
-            <Topbar />
-            <main className="flex-1 overflow-y-auto bg-background p-4 md:p-6">
-              {children}
-            </main>
+        <AuroraBackground opacity={12} showRadialGradient={false} className="h-screen !min-h-0">
+          <div className="dashboard-scope flex h-screen">
+            <Sidebar />
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <Topbar />
+              <main className="flex-1 overflow-y-auto p-4 md:p-6">
+                {children}
+              </main>
+            </div>
           </div>
-        </div>
+        </AuroraBackground>
         <Toaster />
       </TooltipProvider>
     </DashboardProvider>

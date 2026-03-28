@@ -161,19 +161,28 @@ export default function LandingPageClient({ societyCount, universityCount, stude
                 transition={{ delay: 0.6, duration: 0.6 }}
                 className="flex flex-wrap gap-3 justify-center lg:justify-start"
               >
-                <PublicButton asChild className="group">
-                  <Link href="/discover">
-                    Explore Events
-                    <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </PublicButton>
-                <PublicButton variant="outline" asChild>
-                  <Link href="/about">
-                    Learn More
-                  </Link>
-                </PublicButton>
+                <Link
+                  href="/discover"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-text text-white font-medium rounded-lg hover:bg-gray-800 transition-all text-sm group"
+                >
+                  Explore Events
+                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+                <Link
+                  href="/auth"
+                  className="group relative inline-flex items-center gap-2 px-6 py-3 bg-[#DC2626] text-white font-medium rounded-lg hover:brightness-110 transition-all text-sm overflow-hidden"
+                >
+                  <span className="absolute inset-0 bg-[linear-gradient(110deg,transparent_30%,rgba(255,255,255,0.15)_38%,rgba(255,255,255,0.5)_50%,rgba(255,255,255,0.15)_62%,transparent_70%)] bg-[length:200%_100%] bg-[position:200%_0] group-hover:bg-[position:-200%_0] transition-[background-position] duration-1000 ease-in-out" />
+                  <span className="relative">Get Started</span>
+                </Link>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-transparent text-text font-medium rounded-lg border border-border hover:bg-surface hover:border-text/30 transition-all text-sm"
+                >
+                  Learn More
+                </Link>
               </motion.div>
 
               {/* Stats */}

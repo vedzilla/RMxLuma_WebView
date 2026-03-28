@@ -33,7 +33,14 @@ export type {
   CommitteeMemberDetail,
   CommitteeApplicantDetail,
   StudyLevelRow,
+  InterestRow,
   InteractionTypeRow,
+  DegreeTypeRow,
+  UniversityCourseRow,
+  UniversityCourseWithDegreeType,
+  StudyLevel,
+  Interest,
+  UniversityCourse,
   EventWithRelations,
   SocietyWithUniversity,
   ScheduleEntryInput,
@@ -88,7 +95,23 @@ export { getCategories } from './categories';
 export { getCities, getCityBySlug } from './cities';
 
 // Users
-export { getUserCount, getUserRole, getUserRoles, isAdmin, getSocietyUserDetails } from './users';
+export { getUserCount, getUserRole, getUserRoles, isAdmin, getSocietyUserDetails, checkUserProfileExists } from './users';
+
+// Study Levels
+export { getStudyLevels } from './studyLevels';
+
+// Interests
+export { getInterests } from './interests';
+
+// Courses
+export { getUniversityCourses } from './courses';
+
+// Notifications
+export { getPushTokens, getAllUserDetails } from './notifications';
+export type { PushTokenRow, UserDetails } from './notifications';
+
+// Onboarding
+export { submitOnboarding, uploadProfilePicture, saveUserInterests } from './onboarding';
 
 // Event management (authenticated — edge functions)
 export { createEvent, updateEvent, deleteEvent } from './event-management';
@@ -104,4 +127,7 @@ export {
   transformUniversity,
   transformCategory,
   transformCity,
+  transformStudyLevel,
+  transformInterest,
+  transformUniversityCourse,
 } from './transform';

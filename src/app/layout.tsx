@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -21,6 +22,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          defer
+          src="https://www.ameportal.com/tracker.js"
+          data-website-id="m57btcgbe5cqv4xyagvcw95zz583pg7g"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={spaceGrotesk.className}>
         {children}
       </body>
