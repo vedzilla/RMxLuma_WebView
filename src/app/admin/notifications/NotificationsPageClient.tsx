@@ -72,7 +72,7 @@ export default function NotificationsPageClient({ tokens }: NotificationsPageCli
   // Derive unique user IDs from selected tokens
   const selectedUserIds = useMemo(() => {
     const userIds = new Set<string>();
-    for (const key of selected) {
+    for (const key of Array.from(selected)) {
       const userId = key.split(':')[0];
       userIds.add(userId);
     }
