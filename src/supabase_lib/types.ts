@@ -222,8 +222,9 @@ export interface ScheduleEntryInput {
   is_end_schedule?: boolean;
   schedule_order?: number;
   location_id?: string;
-  location_name?: string;
-  room_name?: string;
+  building_id?: string;
+  room_id?: string;
+  description?: string;
 }
 
 export interface CreateEventInput {

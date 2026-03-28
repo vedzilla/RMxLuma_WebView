@@ -110,8 +110,9 @@ export { getUniversityCourses } from './courses';
 export { getPushTokens, getAllUserDetails } from './notifications';
 export type { PushTokenRow, UserDetails } from './notifications';
 
-// Locations
-export { searchLocations, insertLocation } from './locations';
+// Buildings & Rooms
+export { searchBuildings, getRoomsForBuilding, uploadLocation } from './buildings';
+export type { BuildingOption, RoomOption } from './buildings';
 
 // Onboarding
 export { submitOnboarding, uploadProfilePicture, saveUserInterests } from './onboarding';

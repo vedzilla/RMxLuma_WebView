@@ -207,13 +207,16 @@ export default function EventDetailPage() {
                           </span>
                         )}
                       </p>
-                      {entry.locationName && (
+                      {(entry.buildingName || entry.locationName) && (
                         <div className="flex items-center gap-1 text-sm text-muted-foreground">
                           <MapPin className="h-3 w-3" />
-                          <span>{entry.locationName}</span>
-                          {entry.locationGoogleMapsUrl && (
+                          <span>
+                            {entry.buildingName ?? entry.locationName}
+                            {entry.roomName && ` — ${entry.roomName}`}
+                          </span>
+                          {(entry.buildingGoogleMapsUrl || entry.locationGoogleMapsUrl) && (
                             <a
-                              href={entry.locationGoogleMapsUrl}
+                              href={(entry.buildingGoogleMapsUrl ?? entry.locationGoogleMapsUrl)!}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-primary hover:underline"
@@ -222,6 +225,9 @@ export default function EventDetailPage() {
                             </a>
                           )}
                         </div>
+                      )}
+                      {entry.description && (
+                        <p className="text-sm text-muted-foreground italic">{entry.description}</p>
                       )}
                     </div>
                   </div>

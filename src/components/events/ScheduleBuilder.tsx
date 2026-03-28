@@ -7,15 +7,18 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, X, MapPin } from "lucide-react";
 import { LocationCombobox } from "./LocationCombobox";
+import { RoomCombobox } from "./RoomCombobox";
 
 export interface ScheduleEntry {
   date: string;
   startTime: string;
   endTime: string;
-  locationName: string;
-  locationId?: string;
-  locationGoogleMapsUrl?: string | null;
+  buildingName: string;
+  buildingId?: string;
+  buildingGoogleMapsUrl?: string | null;
   roomName: string;
+  roomId?: string;
+  description: string;
 }
 
 interface ScheduleBuilderProps {
@@ -27,8 +30,9 @@ const emptyEntry: ScheduleEntry = {
   date: "",
   startTime: "",
   endTime: "",
-  locationName: "",
+  buildingName: "",
   roomName: "",
+  description: "",
 };
 
 export function ScheduleBuilder({ value, onChange }: ScheduleBuilderProps) {
@@ -41,23 +45,44 @@ export function ScheduleBuilder({ value, onChange }: ScheduleBuilderProps) {
     onChange(updated);
   }
 
-  function selectLocation(index: number, name: string, id: string, googleMapsUrl: string | null) {
+  function selectBuilding(index: number, name: string, id: string, googleMapsUrl: string | null) {
     const updated = value.map((entry, i) =>
       i === index
-        ? { ...entry, locationName: name, locationId: id, locationGoogleMapsUrl: googleMapsUrl }
+        ? { ...entry, buildingName: name, buildingId: id, buildingGoogleMapsUrl: googleMapsUrl, roomName: "", roomId: undefined }
         : entry
     );
     onChange(updated);
   }
 
-  function clearLocation(index: number) {
+  function clearBuilding(index: number) {
     const updated = value.map((entry, i) =>
       i === index
-        ? { ...entry, locationName: "", locationId: undefined, locationGoogleMapsUrl: null }
+        ? { ...entry, buildingName: "", buildingId: undefined, buildingGoogleMapsUrl: null, roomName: "", roomId: undefined }
         : entry
     );
     onChange(updated);
     setMapOpenIndex(null);
+  }
+
+  function selectRoom(index: number, name: string, id: string) {
+    const updated = value.map((entry, i) =>
+      i === index ? { ...entry, roomName: name, roomId: id } : entry
+    );
+    onChange(updated);
+  }
+
+  function clearRoom(index: number) {
+    const updated = value.map((entry, i) =>
+      i === index ? { ...entry, roomName: "", roomId: undefined } : entry
+    );
+    onChange(updated);
+  }
+
+  function setRoomFreeText(index: number, name: string) {
+    const updated = value.map((entry, i) =>
+      i === index ? { ...entry, roomName: name, roomId: undefined } : entry
+    );
+    onChange(updated);
   }
 
   function addEntry() {
@@ -126,30 +151,55 @@ export function ScheduleBuilder({ value, onChange }: ScheduleBuilderProps) {
               {/* Row 2: Building + Room */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label htmlFor={`schedule-location-${index}`}>Building</Label>
+                  <Label htmlFor={`schedule-building-${index}`}>Building</Label>
                   <LocationCombobox
-                    id={`schedule-location-${index}`}
-                    locationName={entry.locationName}
-                    locationId={entry.locationId}
-                    googleMapsUrl={entry.locationGoogleMapsUrl}
-                    onSelect={(name, id, url) => selectLocation(index, name, id, url)}
-                    onClear={() => clearLocation(index)}
+                    id={`schedule-building-${index}`}
+                    buildingName={entry.buildingName}
+                    buildingId={entry.buildingId}
+                    googleMapsUrl={entry.buildingGoogleMapsUrl}
+                    onSelect={(name, id, url) => selectBuilding(index, name, id, url)}
+                    onClear={() => clearBuilding(index)}
                   />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor={`schedule-room-${index}`}>Room</Label>
-                  <Input
-                    id={`schedule-room-${index}`}
-                    type="text"
-                    placeholder="e.g. Room 3.204"
-                    value={entry.roomName}
-                    onChange={(e) => updateEntry(index, "roomName", e.target.value)}
-                  />
+                  {entry.buildingId ? (
+                    <RoomCombobox
+                      id={`schedule-room-${index}`}
+                      buildingId={entry.buildingId}
+                      roomName={entry.roomName}
+                      roomId={entry.roomId}
+                      onSelect={(name, id) => selectRoom(index, name, id)}
+                      onClear={() => clearRoom(index)}
+                      onFreeText={(name) => setRoomFreeText(index, name)}
+                    />
+                  ) : (
+                    <Input
+                      id={`schedule-room-${index}`}
+                      type="text"
+                      placeholder="Select a building first"
+                      disabled
+                    />
+                  )}
                 </div>
               </div>
 
-              {/* Google Maps preview button + embed */}
-              {entry.locationId && entry.locationGoogleMapsUrl && (
+              {/* Row 3: Description */}
+              <div className="space-y-1.5">
+                <Label htmlFor={`schedule-desc-${index}`}>
+                  Activity <span className="text-muted-foreground font-normal">(optional)</span>
+                </Label>
+                <Input
+                  id={`schedule-desc-${index}`}
+                  type="text"
+                  placeholder="e.g. Pottery making, Networking drinks"
+                  value={entry.description}
+                  onChange={(e) => updateEntry(index, "description", e.target.value)}
+                />
+              </div>
+
+              {/* Google Maps preview */}
+              {entry.buildingId && entry.buildingGoogleMapsUrl && (
                 <div>
                   <button
                     type="button"
@@ -163,8 +213,8 @@ export function ScheduleBuilder({ value, onChange }: ScheduleBuilderProps) {
                   {mapOpenIndex === index && (
                     <div className="mt-2 overflow-hidden rounded-lg border border-border">
                       <iframe
-                        title={`Map — ${entry.locationName}`}
-                        src={buildMapEmbedUrl(entry.locationGoogleMapsUrl)}
+                        title={`Map — ${entry.buildingName}`}
+                        src={buildMapEmbedUrl(entry.buildingGoogleMapsUrl)}
                         className="h-52 w-full border-0"
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
@@ -188,17 +238,10 @@ export function ScheduleBuilder({ value, onChange }: ScheduleBuilderProps) {
 
 /**
  * Convert a Google Maps URL into an embeddable URL.
- * Accepts formats like:
- *   https://maps.google.com/?q=...
- *   https://www.google.com/maps/place/...
- *   https://goo.gl/maps/...
- * Falls back to a search-based embed using the URL as the query.
  */
 function buildMapEmbedUrl(googleMapsUrl: string): string {
-  // If it's already an embed URL, return as-is
   if (googleMapsUrl.includes("/maps/embed")) return googleMapsUrl;
 
-  // Try to extract a query parameter
   try {
     const url = new URL(googleMapsUrl);
     const q = url.searchParams.get("q");
@@ -209,12 +252,15 @@ function buildMapEmbedUrl(googleMapsUrl: string): string {
     // not a valid URL
   }
 
-  // Try to extract place name from /maps/place/PLACE_NAME/ format
   const placeMatch = googleMapsUrl.match(/\/maps\/place\/([^/@]+)/);
   if (placeMatch) {
     return `https://maps.google.com/maps?q=${encodeURIComponent(decodeURIComponent(placeMatch[1]))}&output=embed`;
   }
 
-  // Fallback: embed the entire URL as a query
+  const placeIdMatch = googleMapsUrl.match(/place_id[=:]([A-Za-z0-9_-]+)/);
+  if (placeIdMatch) {
+    return `https://maps.google.com/maps?q=place_id:${placeIdMatch[1]}&output=embed`;
+  }
+
   return `https://maps.google.com/maps?q=${encodeURIComponent(googleMapsUrl)}&output=embed`;
 }

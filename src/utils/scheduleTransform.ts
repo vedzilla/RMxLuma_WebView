@@ -4,7 +4,6 @@ import type { ScheduleEntryInput } from '@/supabase_lib/types';
 /**
  * Convert EventForm schedule entries to the edge function payload format.
  * Each form entry produces 1-2 ScheduleEntryInput objects (start + optional end).
- * Timestamps are constructed as UTC.
  */
 export function formScheduleToPayload(entries: ScheduleEntry[]): ScheduleEntryInput[] {
   const result: ScheduleEntryInput[] = [];
@@ -13,11 +12,10 @@ export function formScheduleToPayload(entries: ScheduleEntry[]): ScheduleEntryIn
   for (const entry of entries) {
     if (!entry.date || !entry.startTime) continue;
 
-    const locationFields = {
-      ...(entry.locationId ? { location_id: entry.locationId } : {}),
-      ...(entry.locationName ? { location_name: entry.locationName } : {}),
-      ...(entry.roomName ? { room_name: entry.roomName } : {}),
-    };
+    const locationFields: Partial<ScheduleEntryInput> = {};
+    if (entry.buildingId) locationFields.building_id = entry.buildingId;
+    if (entry.roomId) locationFields.room_id = entry.roomId;
+    if (entry.description) locationFields.description = entry.description;
 
     // Start entry
     result.push({
@@ -27,13 +25,12 @@ export function formScheduleToPayload(entries: ScheduleEntry[]): ScheduleEntryIn
       ...locationFields,
     });
 
-    // End entry (if endTime provided)
+    // End entry — no building/room/description per backend constraint
     if (entry.endTime) {
       result.push({
         scheduled_at: `${entry.date}T${entry.endTime}:00.000Z`,
         is_end_schedule: true,
         schedule_order: order++,
-        ...locationFields,
       });
     }
   }
@@ -50,20 +47,21 @@ export function dashboardScheduleToForm(
     scheduledAt: string;
     isEnd: boolean;
     order: number;
-    locationName: string | null;
-    locationId: string | null;
-    locationGoogleMapsUrl?: string | null;
-    roomName?: string | null;
+    buildingName: string | null;
+    buildingId: string | null;
+    buildingGoogleMapsUrl: string | null;
+    roomName: string | null;
+    roomId: string | null;
+    description: string | null;
   }>
 ): ScheduleEntry[] {
   const startEntries = schedules.filter((s) => !s.isEnd);
 
   if (startEntries.length === 0) {
-    return [{ date: '', startTime: '', endTime: '', locationName: '', roomName: '' }];
+    return [{ date: '', startTime: '', endTime: '', buildingName: '', roomName: '', description: '' }];
   }
 
   return startEntries.map((start) => {
-    // Find matching end entry (next in order)
     const matchingEnd = schedules.find(
       (s) => s.isEnd && s.order === start.order + 1
     );
@@ -78,10 +76,12 @@ export function dashboardScheduleToForm(
       date: startDate,
       startTime,
       endTime,
-      locationName: start.locationName ?? '',
-      locationId: start.locationId ?? undefined,
-      locationGoogleMapsUrl: start.locationGoogleMapsUrl ?? null,
+      buildingName: start.buildingName ?? '',
+      buildingId: start.buildingId ?? undefined,
+      buildingGoogleMapsUrl: start.buildingGoogleMapsUrl ?? null,
       roomName: start.roomName ?? '',
+      roomId: start.roomId ?? undefined,
+      description: start.description ?? '',
     };
   });
 }

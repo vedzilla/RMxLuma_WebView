@@ -3,21 +3,21 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { Input } from "@/components/ui/input";
-import { Check, MapPin, Search, X } from "lucide-react";
-import { searchLocations } from "@/supabase_lib/locations";
-import { insertLocation } from "@/supabase_lib/locations";
+import { Check, MapPin, Search, X, Loader2 } from "lucide-react";
+import { searchBuildings, uploadLocation } from "@/supabase_lib/buildings";
+import { createAuthBrowserClient } from "@/supabase_lib/auth/browser";
 import { GooglePlacesSearch, type GooglePlaceResult } from "./GooglePlacesSearch";
 import { cn } from "@/lib/utils";
 
-interface LocationOption {
+interface BuildingOption {
   id: string;
   name: string;
   google_maps_url: string | null;
 }
 
 interface LocationComboboxProps {
-  locationName: string;
-  locationId?: string;
+  buildingName: string;
+  buildingId?: string;
   googleMapsUrl?: string | null;
   onSelect: (name: string, id: string, googleMapsUrl: string | null) => void;
   onClear: () => void;
@@ -25,25 +25,26 @@ interface LocationComboboxProps {
 }
 
 export function LocationCombobox({
-  locationName,
-  locationId,
+  buildingName,
+  buildingId,
   googleMapsUrl,
   onSelect,
   onClear,
   id,
 }: LocationComboboxProps) {
   const [query, setQuery] = useState("");
-  const [options, setOptions] = useState<LocationOption[]>([]);
+  const [options, setOptions] = useState<BuildingOption[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [showGoogleSearch, setShowGoogleSearch] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const inputRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
 
-  const isConfirmed = !!locationId;
+  const isConfirmed = !!buildingId;
 
   const updatePosition = useCallback(() => {
     if (!inputRef.current) return;
@@ -55,7 +56,7 @@ export function LocationCombobox({
     });
   }, []);
 
-  // Search Supabase locations with debounce
+  // Search buildings with debounce
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
@@ -69,7 +70,7 @@ export function LocationCombobox({
     debounceRef.current = setTimeout(async () => {
       setLoading(true);
       updatePosition();
-      const results = await searchLocations(query, 5);
+      const results = await searchBuildings(query, 5);
       setOptions(results);
       setOpen(true);
       setSearched(true);
@@ -96,7 +97,7 @@ export function LocationCombobox({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  function handleSelect(option: LocationOption) {
+  function handleSelect(option: BuildingOption) {
     onSelect(option.name, option.id, option.google_maps_url);
     setQuery("");
     setOpen(false);
@@ -111,23 +112,31 @@ export function LocationCombobox({
   }
 
   async function handleGooglePlaceConfirm(place: GooglePlaceResult) {
-    // Save the new location to Supabase, then select it
-    const newLocation = await insertLocation({
-      name: place.name,
-      address: place.address,
-      latitude: place.latitude,
-      longitude: place.longitude,
-      google_maps_url: place.googleMapsUrl,
-      google_place_id: place.googlePlaceId,
-    });
+    setUploading(true);
+    try {
+      // Call the edge function to upsert the building
+      const supabase = createAuthBrowserClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error("[LocationCombobox] No active session");
+        return;
+      }
 
-    if (newLocation) {
-      onSelect(newLocation.name, newLocation.id, newLocation.google_maps_url);
+      const result = await uploadLocation(session.access_token, {
+        place_id: place.googlePlaceId,
+      });
+
+      if (result) {
+        onSelect(result.building_name, result.building_id, result.google_maps_url);
+      }
+    } catch (err) {
+      console.error("[LocationCombobox] upload error:", err);
+    } finally {
+      setUploading(false);
+      setQuery("");
+      setOpen(false);
+      setShowGoogleSearch(false);
     }
-
-    setQuery("");
-    setOpen(false);
-    setShowGoogleSearch(false);
   }
 
   // Confirmed state
@@ -140,7 +149,7 @@ export function LocationCombobox({
         )}
       >
         <Check className="h-3.5 w-3.5 shrink-0 text-primary" />
-        <span className="truncate flex-1">{locationName}</span>
+        <span className="truncate flex-1">{buildingName}</span>
         <button
           type="button"
           onClick={handleClear}
@@ -152,7 +161,17 @@ export function LocationCombobox({
     );
   }
 
-  // Google Places search panel (replaces input)
+  // Uploading state (after Google Places confirm)
+  if (uploading) {
+    return (
+      <div className="flex h-8 items-center gap-1.5 rounded-lg border border-input bg-transparent px-2.5 text-sm">
+        <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
+        <span className="text-muted-foreground">Adding building...</span>
+      </div>
+    );
+  }
+
+  // Google Places search panel
   if (showGoogleSearch) {
     return (
       <GooglePlacesSearch
@@ -215,7 +234,7 @@ export function LocationCombobox({
 
                 {searched && options.length === 0 && (
                   <p className="px-3 pt-3 pb-1 text-center text-sm text-muted-foreground">
-                    No saved locations found
+                    No saved buildings found
                   </p>
                 )}
 

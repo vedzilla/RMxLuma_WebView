@@ -173,7 +173,12 @@ export interface DashboardEvent {
     locationName: string | null;
     locationId: string | null;
     locationGoogleMapsUrl: string | null;
+    buildingName: string | null;
+    buildingId: string | null;
+    buildingGoogleMapsUrl: string | null;
     roomName: string | null;
+    roomId: string | null;
+    description: string | null;
   }>;
 }
 

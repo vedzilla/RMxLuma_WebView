@@ -164,7 +164,7 @@ const DASHBOARD_EVENT_SELECT = `
   event_categories(categories(id, name)),
   event_societies!inner(society_id),
   event_images(post_id, image_index, post_images(full_url)),
-  schedule_entries(id, scheduled_at, is_end_schedule, schedule_order, location_id, room_name, locations(id, name, google_maps_url)),
+  schedule_entries(id, scheduled_at, is_end_schedule, schedule_order, location_id, building_id, room_id, description, locations(id, name, google_maps_url), buildings(id, name, google_maps_url), rooms(id, name)),
   n8n_event_status(status)
 `.trim();
 
@@ -225,7 +225,12 @@ function toDashboardEvent(row: any): DashboardEvent {
         locationName: e.locations?.name ?? null,
         locationId: e.location_id ?? null,
         locationGoogleMapsUrl: e.locations?.google_maps_url ?? null,
-        roomName: e.room_name ?? null,
+        buildingName: e.buildings?.name ?? null,
+        buildingId: e.building_id ?? null,
+        buildingGoogleMapsUrl: e.buildings?.google_maps_url ?? null,
+        roomName: e.rooms?.name ?? null,
+        roomId: e.room_id ?? null,
+        description: e.description ?? null,
       })
     ),
   };

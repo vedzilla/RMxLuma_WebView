@@ -30,10 +30,12 @@ const eventFormSchema = z.object({
         date: z.string().min(1, "Date is required"),
         startTime: z.string().min(1, "Start time is required"),
         endTime: z.string(),
-        locationName: z.string(),
-        locationId: z.string().optional(),
-        locationGoogleMapsUrl: z.string().nullish(),
+        buildingName: z.string(),
+        buildingId: z.string().optional(),
+        buildingGoogleMapsUrl: z.string().nullish(),
         roomName: z.string(),
+        roomId: z.string().optional(),
+        description: z.string(),
       })
     )
     .min(1, "Add at least one schedule entry"),
@@ -68,8 +70,9 @@ const defaultSchedule: ScheduleEntry = {
   date: "",
   startTime: "",
   endTime: "",
-  locationName: "",
+  buildingName: "",
   roomName: "",
+  description: "",
 };
 
 export function EventForm({
