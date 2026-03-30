@@ -1,16 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { createAuthBrowserClient } from "@/supabase_lib/auth/browser";
-import { getEventsForSociety } from "@/supabase_lib/events";
-import {
-  createEvent as createEventEdge,
-  updateEvent as updateEventEdge,
-  deleteEvent as deleteEventEdge,
-} from "@/supabase_lib/event-management";
-import { formScheduleToPayload } from "@/utils/scheduleTransform";
-import type { EventFormData } from "@/components/events/EventForm";
 import type { DashboardEvent } from "@/lib/supabase/types";
+import { mockEvents } from "@/lib/mock-data";
 
 export function useEvents(societyId: string | undefined) {
   const [events, setEvents] = useState<DashboardEvent[]>([]);
@@ -21,74 +13,49 @@ export function useEvents(societyId: string | undefined) {
     if (!societyId) return;
     setLoading(true);
     setError(null);
-    try {
-      const supabase = createAuthBrowserClient();
-      const data = await getEventsForSociety(supabase, societyId);
-      setEvents(data);
-    } catch (err) {
-      console.error("[useEvents] fetchEvents error:", err);
-      setError(err instanceof Error ? err.message : "Failed to load events");
-    } finally {
-      setLoading(false);
-    }
+
+    // Simulate network delay
+    await new Promise((r) => setTimeout(r, 200));
+
+    setEvents(mockEvents);
+    setLoading(false);
   }, [societyId]);
 
-  const createEvent = async (
-    formData: EventFormData,
-    categoryIds: string[]
-  ) => {
-    if (!societyId) throw new Error("No society selected");
-    const supabase = createAuthBrowserClient();
-    const schedule = formScheduleToPayload(formData.schedules);
-    const result = await createEventEdge(supabase, {
-      society_id: societyId,
-      title: formData.title,
-      description: formData.description,
-      category_ids: categoryIds,
-      schedule,
-      is_online: formData.isOnline,
-      is_free: formData.isFree,
-      price: formData.isFree ? undefined : formData.price || undefined,
-      registration_url: formData.registrationUrl || undefined,
-    });
-    await fetchEvents();
-    return result;
+  const createEvent = async (formData: Record<string, unknown>, _categoryIds?: string[]) => {
+    const newEvent: DashboardEvent = {
+      id: `e-${Date.now()}`,
+      title: (formData.title as string) ?? "New Event",
+      description: (formData.description as string) ?? "",
+      date: new Date().toISOString(),
+      status: "ingested",
+      source: "manual",
+      likes: 0,
+      attending: 0,
+      categories: [],
+      imageUrl: null,
+      registrationUrl: null,
+      isOnline: false,
+      isFree: true,
+      price: null,
+      schedules: [],
+    };
+    setEvents((prev) => [newEvent, ...prev]);
+    return { event_id: newEvent.id, status: "ingested" };
   };
 
-  const updateEvent = async (
-    eventId: string,
-    formData: EventFormData,
-    categoryIds: string[]
-  ) => {
-    const supabase = createAuthBrowserClient();
-    const schedule = formScheduleToPayload(formData.schedules);
-    await updateEventEdge(supabase, {
-      event_id: eventId,
-      title: formData.title,
-      description: formData.description,
-      category_ids: categoryIds,
-      schedule,
-      is_online: formData.isOnline,
-      is_free: formData.isFree,
-      price: formData.isFree ? undefined : formData.price || undefined,
-      registration_url: formData.registrationUrl || undefined,
-    });
-    await fetchEvents();
+  const updateEvent = async (eventId: string, formData: Record<string, unknown>, _categoryIds?: string[]) => {
+    setEvents((prev) =>
+      prev.map((e) =>
+        e.id === eventId
+          ? { ...e, ...(formData as Partial<DashboardEvent>) }
+          : e
+      )
+    );
   };
 
   const deleteEvent = async (eventId: string) => {
-    const supabase = createAuthBrowserClient();
-    await deleteEventEdge(supabase, eventId);
     setEvents((prev) => prev.filter((e) => e.id !== eventId));
   };
 
-  return {
-    events,
-    loading,
-    error,
-    fetchEvents,
-    createEvent,
-    updateEvent,
-    deleteEvent,
-  };
+  return { events, loading, error, fetchEvents, createEvent, updateEvent, deleteEvent };
 }

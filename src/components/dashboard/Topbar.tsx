@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useDashboardNav } from "@/hooks/useDashboardNav";
 import { useSocietyAuth } from "@/hooks/useSocietyAuth";
-import { createAuthBrowserClient } from "@/supabase_lib/auth/browser";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -47,9 +46,7 @@ export function Topbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSignOut = async () => {
-    const supabase = createAuthBrowserClient();
-    await supabase.auth.signOut();
-    router.push("/auth");
+    router.push("/society");
   };
 
   const initials = society?.name

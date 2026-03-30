@@ -4,8 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { Input } from "@/components/ui/input";
 import { Check, MapPin, Search, X, Loader2 } from "lucide-react";
-import { searchBuildings, uploadLocation } from "@/supabase_lib/buildings";
-import { createAuthBrowserClient } from "@/supabase_lib/auth/browser";
 import { GooglePlacesSearch, type GooglePlaceResult } from "./GooglePlacesSearch";
 import { cn } from "@/lib/utils";
 
@@ -70,7 +68,15 @@ export function LocationCombobox({
     debounceRef.current = setTimeout(async () => {
       setLoading(true);
       updatePosition();
-      const results = await searchBuildings(query, 5);
+      // Mock building search
+      const mockBuildings: BuildingOption[] = [
+        { id: "b-001", name: "Kilburn Building", google_maps_url: "https://maps.google.com/?q=Kilburn+Building+Manchester" },
+        { id: "b-002", name: "University Place", google_maps_url: null },
+        { id: "b-005", name: "Alan Turing Building", google_maps_url: null },
+        { id: "b-004", name: "Kimpton Clocktower Hotel", google_maps_url: "https://maps.google.com/?q=Kimpton+Clocktower+Manchester" },
+      ];
+      const q = query.toLowerCase();
+      const results = mockBuildings.filter((b) => b.name.toLowerCase().includes(q));
       setOptions(results);
       setOpen(true);
       setSearched(true);
@@ -113,30 +119,14 @@ export function LocationCombobox({
 
   async function handleGooglePlaceConfirm(place: GooglePlaceResult) {
     setUploading(true);
-    try {
-      // Call the edge function to upsert the building
-      const supabase = createAuthBrowserClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        console.error("[LocationCombobox] No active session");
-        return;
-      }
-
-      const result = await uploadLocation(session.access_token, {
-        place_id: place.googlePlaceId,
-      });
-
-      if (result) {
-        onSelect(result.building_name, result.building_id, result.google_maps_url);
-      }
-    } catch (err) {
-      console.error("[LocationCombobox] upload error:", err);
-    } finally {
-      setUploading(false);
-      setQuery("");
-      setOpen(false);
-      setShowGoogleSearch(false);
-    }
+    // Mock: create a fake building from the Google Place result
+    await new Promise((r) => setTimeout(r, 500));
+    const mockId = `b-${Date.now()}`;
+    onSelect(place.name, mockId, place.googleMapsUrl ?? null);
+    setUploading(false);
+    setQuery("");
+    setOpen(false);
+    setShowGoogleSearch(false);
   }
 
   // Confirmed state

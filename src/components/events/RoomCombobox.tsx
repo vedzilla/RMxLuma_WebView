@@ -4,7 +4,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { Input } from "@/components/ui/input";
 import { Check, DoorOpen, X } from "lucide-react";
-import { getRoomsForBuilding, type RoomOption } from "@/supabase_lib/buildings";
+interface RoomOption {
+  id: string;
+  name: string;
+  floor: string | null;
+}
 import { cn } from "@/lib/utils";
 
 interface RoomComboboxProps {
@@ -37,14 +41,25 @@ export function RoomCombobox({
 
   const isConfirmed = !!roomId;
 
-  // Load rooms when building changes
+  // Load mock rooms when building changes
   useEffect(() => {
     setLoaded(false);
     setAllRooms([]);
-    getRoomsForBuilding(buildingId).then((rooms) => {
-      setAllRooms(rooms);
+    const mockRooms: Record<string, RoomOption[]> = {
+      "b-001": [
+        { id: "r-001", name: "LF15", floor: "Lower Ground" },
+        { id: "r-002", name: "LF31", floor: "Lower Ground" },
+        { id: "r-003", name: "2.15", floor: "2" },
+      ],
+      "b-002": [
+        { id: "r-004", name: "Theatre A", floor: "Ground" },
+        { id: "r-005", name: "Theatre B", floor: "Ground" },
+      ],
+    };
+    setTimeout(() => {
+      setAllRooms(mockRooms[buildingId] ?? []);
       setLoaded(true);
-    });
+    }, 100);
   }, [buildingId]);
 
   // Filter rooms by query

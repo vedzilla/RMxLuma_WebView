@@ -1,36 +1,23 @@
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
-import { createAuthServerClient } from '@/supabase_lib/auth/server';
-import { getSocietyAccountsForUser } from '@/supabase_lib/societies';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { GlobalSpotlight } from '@/components/ui/spotlight';
 import { SocietyPickerCards } from './SocietyPickerCards';
 import SocietySignOutButton from './[societyId]/dashboard/SocietySignOutButton';
 
-export default async function SocietyPickerPage() {
-  const supabase = await createAuthServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+const mockApprovedAccounts = [
+  {
+    id: "sa-001",
+    society_account_approval_status: { name: "trusted" },
+    societies: {
+      id: "s-001",
+      name: "UoM Computer Science Society",
+      image_url: null,
+      universities: { name: "University of Manchester" },
+    },
+  },
+];
 
-  if (!user) {
-    redirect('/auth');
-  }
-
-  const accounts = await getSocietyAccountsForUser(supabase, user.id);
-
-  const approvedAccounts = accounts
-    .filter((a) => {
-      const status = a.society_account_approval_status.name;
-      return status === 'approved' || status === 'trusted';
-    })
-    .sort((a, b) => (a.societies?.name ?? '').localeCompare(b.societies?.name ?? ''));
-
-  const pendingAccounts = accounts
-    .filter((a) => {
-      const status = a.society_account_approval_status.name;
-      return status !== 'approved' && status !== 'trusted';
-    })
-    .sort((a, b) => (a.societies?.name ?? '').localeCompare(b.societies?.name ?? ''));
-
+export default function SocietyPickerPage() {
   return (
     <AuroraBackground className="min-h-screen">
       <GlobalSpotlight size={400} color="rgba(220, 38, 38, 0.06)" />
@@ -60,16 +47,10 @@ export default async function SocietyPickerPage() {
             Select a society to manage.
           </p>
 
-          {accounts.length === 0 ? (
-            <p className="text-[var(--muted)] bg-[#DC2626]/5 border border-[#DC2626]/20 rounded-[var(--radius)] px-5 py-4">
-              You don&apos;t have access to any societies yet.
-            </p>
-          ) : (
-            <SocietyPickerCards
-              approvedAccounts={approvedAccounts}
-              pendingAccounts={pendingAccounts}
-            />
-          )}
+          <SocietyPickerCards
+            approvedAccounts={mockApprovedAccounts}
+            pendingAccounts={[]}
+          />
         </main>
       </div>
     </AuroraBackground>
