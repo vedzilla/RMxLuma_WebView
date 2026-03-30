@@ -31,7 +31,7 @@ import {
   ArrowLeft,
   RefreshCw,
 } from "lucide-react";
-import type { StatisticsData } from "@/lib/posthog";
+import type { StatisticsData } from "@/supabase_lib/analytics";
 
 type TimeRange = "7d" | "30d" | "90d";
 
