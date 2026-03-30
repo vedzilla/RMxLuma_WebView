@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAuthServerClient } from "@/supabase_lib/auth/server";
 import { isAdmin } from "@/supabase_lib/users";
-import { fetchStatistics } from "@/lib/posthog";
+import { fetchAdminAnalytics, type TimeRange } from "@/supabase_lib/analytics";
 
-const VALID_PERIODS: Record<string, number> = {
-  "7d": 7,
-  "30d": 30,
-  "90d": 90,
-};
+const VALID_PERIODS = new Set<TimeRange>(["7d", "30d", "90d"]);
 
 export async function GET(request: NextRequest) {
-  // Auth check
   const supabase = await createAuthServerClient();
   const {
     data: { user },
@@ -20,10 +15,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Parse period
-  const period = request.nextUrl.searchParams.get("period") ?? "30d";
-  const days = VALID_PERIODS[period];
-  if (!days) {
+  const period = (request.nextUrl.searchParams.get("period") ?? "30d") as TimeRange;
+  if (!VALID_PERIODS.has(period)) {
     return NextResponse.json(
       { error: "Invalid period. Use 7d, 30d, or 90d." },
       { status: 400 }
@@ -31,7 +24,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const data = await fetchStatistics(days);
+    const data = await fetchAdminAnalytics(supabase, period);
     return NextResponse.json(data, {
       headers: { "Cache-Control": "private, max-age=300" },
     });

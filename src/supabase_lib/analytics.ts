@@ -1,7 +1,30 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import type { AnalyticsData, PostHogAnalyticsData } from '@/lib/supabase/types';
 
-type TimeRange = '7d' | '30d' | '90d';
+export type TimeRange = '7d' | '30d' | '90d';
+
+// ── Admin statistics types ──────────────────────────────────────────────────
+
+export interface StatisticsData {
+  totalUsers: number;
+  newUsersTrend: Array<{ date: string; count: number }>;
+  activeUsers: number;
+  retentionTrend: Array<{ week: string; count: number }>;
+  returningUsers: number;
+  avgEventsPerUser: number;
+  topEvents: Array<{ title: string; opens: number; uniqueUsers: number }>;
+  rsvpRates: Array<{ title: string; rsvps: number; unrsvps: number }>;
+  likesPerEvent: Array<{ title: string; likes: number; unlikes: number }>;
+  screenViews: Array<{ screen: string; views: number }>;
+  societyFollowerGrowth: Array<{ name: string; net: number; followed: number; unfollowed: number }>;
+  societyProfileViews: Array<{ name: string; views: number }>;
+}
+
+const ADMIN_QUERIES = [
+  'totalUsers', 'newUsersTrend', 'activeUsers', 'retentionTrend',
+  'returningUsers', 'avgEventsPerUser', 'topEventsByOpens', 'rsvpRates',
+  'likesPerEvent', 'screenViews', 'societyFollowerGrowth', 'societyProfileViews',
+] as const;
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 
@@ -115,4 +138,79 @@ export async function fetchPostHogAnalytics(
     ),
     registrationClicks: raw.registrationClicks ?? 0,
   };
+}
+
+// ── Admin analytics ─────────────────────────────────────────────────────────
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function transformAdminResults(results: Record<string, any>): StatisticsData {
+  const scalar = (key: string): number => results[key]?.value ?? 0;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const trend = (key: string): Array<{ date: string; count: number }> =>
+    results[key]?.trend ?? [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const items = (key: string): Array<Record<string, any>> =>
+    results[key]?.items ?? [];
+
+  return {
+    totalUsers: scalar('totalUsers'),
+    newUsersTrend: trend('newUsersTrend'),
+    activeUsers: scalar('activeUsers'),
+    retentionTrend: trend('retentionTrend').map(d => ({ week: d.date, count: d.count })),
+    returningUsers: scalar('returningUsers'),
+    avgEventsPerUser: Math.round(scalar('avgEventsPerUser') * 10) / 10,
+    topEvents: items('topEventsByOpens').map(i => ({
+      title: String(i.name),
+      opens: Number(i.opens) || 0,
+      uniqueUsers: Number(i.uniqueUsers) || 0,
+    })),
+    rsvpRates: items('rsvpRates').map(i => ({
+      title: String(i.name),
+      rsvps: Number(i.rsvps) || 0,
+      unrsvps: Number(i.unrsvps) || 0,
+    })),
+    likesPerEvent: items('likesPerEvent').map(i => ({
+      title: String(i.name),
+      likes: Number(i.likes) || 0,
+      unlikes: Number(i.unlikes) || 0,
+    })),
+    screenViews: items('screenViews').map(i => ({
+      screen: String(i.name),
+      views: Number(i.count) || 0,
+    })),
+    societyFollowerGrowth: items('societyFollowerGrowth').map(i => {
+      const followed = Number(i.follows) || 0;
+      const unfollowed = Number(i.unfollows) || 0;
+      return { name: String(i.name), followed, unfollowed, net: followed - unfollowed };
+    }),
+    societyProfileViews: items('societyProfileViews').map(i => ({
+      name: String(i.name),
+      views: Number(i.count) || 0,
+    })),
+  };
+}
+
+/**
+ * Fetch admin analytics via the society-posthog-analytics edge function.
+ */
+export async function fetchAdminAnalytics(
+  supabase: SupabaseClient,
+  period: TimeRange,
+): Promise<StatisticsData> {
+  const token = await getAccessToken(supabase);
+  const { ok, status, data } = await callEdgeFunction(token, 'society-posthog-analytics', {
+    dashboard: 'admin',
+    period,
+    queries: [...ADMIN_QUERIES],
+  });
+
+  if (!ok) {
+    throw new Error(
+      (data.error as string) ?? `Admin analytics failed with status ${status}`
+    );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const raw = data as any;
+  return transformAdminResults(raw.results ?? {});
 }
