@@ -26,7 +26,7 @@ export default function RootLayout({
         <Script
           defer
           src="https://www.ameportal.com/tracker.js"
-          data-website-id="m57btcgbe5cqv4xyagvcw95zz583pg7g"
+          data-website-id="m57b1sb5p4q4rq6cbdg884c2cs83w0mv"
           strategy="afterInteractive"
         />
       </head>
