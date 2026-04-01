@@ -20,6 +20,16 @@ import type {
 
 // ---- Helpers ----
 
+function isValidUrl(value: string | null): boolean {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 export function generateSlug(title: string): string {
   return title
     .toLowerCase()
@@ -89,7 +99,7 @@ export function transformEvent(row: EventWithRelations): Event {
     locationGoogleMapsUrl: startEntry?.locations?.google_maps_url ?? null,
     schedules,
     imageUrl,
-    externalUrl: row.registration_url ?? row.source_post_url ?? '',
+    externalUrl: isValidUrl(row.registration_url) ? row.registration_url! : (row.source_post_url ?? ''),
     tags: category ? [capitalizeCategory(category.name)] : ['General'],
     interestedCount: row.likes,
     attendingCount: row.attending,
